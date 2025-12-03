@@ -32,6 +32,7 @@ public class PlayerSkillController : MonoBehaviour
         basicAttackCooldownTimer = basicAttackSkill.Data.cooldown;
 
         Debug.Log("Basic atak yapýldý");
+        // InputHandler içine Event tetikleme yapýlabilir
     }
 
     public void UseSkillSlot(int index, IAttackSource source)
@@ -45,5 +46,6 @@ public class PlayerSkillController : MonoBehaviour
         slotCooldownTimer[index] = skill.Data.cooldown;
 
         Debug.Log("Skill atýldý");
+        // InputHandler içine Event tetikleme yapýlabilir
     }
 }

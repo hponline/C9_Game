@@ -24,11 +24,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //PlayerMove();
+        PlayerMove();
         PlayerJump();
     }
 
-    public void PlayerMove() // vector ??
+    public void PlayerMove()
     {
         Vector3 moveDirection = GetMoveDirection();
 
@@ -36,8 +36,9 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.MovePosition(rb.position + moveDirection * characterStatSO.moveSpeed * Time.fixedDeltaTime);
 
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, playerRotationSpeed * Time.deltaTime);
+            Quaternion toRotation = Quaternion.LookRotation(moveDirection);
+            rb.MoveRotation (Quaternion.Slerp(rb.rotation, toRotation, playerRotationSpeed * Time.fixedDeltaTime));
+            Debug.Log("Karakter gidiyo");
         }
     }
 

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e95145a08c6d24f8377cd066d175c4, type: 3}
   m_Name: Wawe_Orc1
   m_EditorClassIdentifier: 
-  enemies: []
+  enemies:
+  - enemyConfigSO: {fileID: 11400000, guid: 3d3992ea2fbb3484ca42c2b6c4b5fffe, type: 2}
+    count: 1
   spawnInternal: 1

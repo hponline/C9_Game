@@ -10,7 +10,7 @@ public enum SkillType
 [CreateAssetMenu(menuName = "C9/SkillData")]
 public class SkillDataSO : ScriptableObject
 {
-    SkillType skillType;
+    public SkillType skillType;
     public string displayName;
     public float damage = 50f;
     public float cooldown = 3f;

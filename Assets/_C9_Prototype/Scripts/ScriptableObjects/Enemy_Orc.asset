@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec1188791ec0b7643b68f634ae482a1a, type: 3}
-  m_Name: Player
+  m_Name: Enemy_Orc
   m_EditorClassIdentifier: 
   maxHealth: 100
-  attackPower: 100
-  defense: 50
+  attackPower: 10
+  defense: 10
   moveSpeed: 3
-  jumpForce: 3
+  jumpForce: 0

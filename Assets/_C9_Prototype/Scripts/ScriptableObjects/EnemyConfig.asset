@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1188791ec0b7643b68f634ae482a1a, type: 3}
-  m_Name: Player
+  m_Script: {fileID: 11500000, guid: eb01b495f9f87f34cbaf6f0af4868bd4, type: 3}
+  m_Name: EnemyConfig
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  attackPower: 100
-  defense: 50
-  moveSpeed: 3
-  jumpForce: 3
+  enemyRace: 0
+  characterStat: {fileID: 11400000, guid: e251b23d533d45943a72484c05c8a754, type: 2}
+  prefab: {fileID: 0}

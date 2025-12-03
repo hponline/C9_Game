@@ -257,8 +257,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.34293464, y: -0.000000027995092, z: 0.0000000102202495, w: 0.9393593}
-  m_LocalPosition: {x: 0, y: 6.507058, z: -6.5371695}
+  m_LocalRotation: {x: 0.3429346, y: 1.0098298e-28, z: -3.686615e-29, w: 0.9393593}
+  m_LocalPosition: {x: 0, y: 5.566058, z: -6.5371695}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -951,10 +951,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2145766726}
   - {fileID: 5528621226741457107}
   - {fileID: 1943630534}
   - {fileID: 1007558132}
-  - {fileID: 2145766726}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1350640201
@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5769e041fa5d16f4eaf3075c6374adac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillData: {fileID: 0}
+  skillData: {fileID: 11400000, guid: 67d6f47c384f40b4398ba165d2e482fd, type: 2}
   radius: 3
   hitMask:
     serializedVersion: 2
@@ -1570,7 +1570,7 @@ GameObject:
   - component: {fileID: 2145766732}
   - component: {fileID: 2145766734}
   m_Layer: 0
-  m_Name: FreeLook Camera
+  m_Name: CinemachineCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1584,8 +1584,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2145766725}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.34293464, y: -0.00000002799509, z: 0.0000000102202495, w: 0.9393593}
-  m_LocalPosition: {x: 0, y: 6.507058, z: -6.5371695}
+  m_LocalRotation: {x: 0.3429346, y: 1.644176e-28, z: -2.1062495e-28, w: 0.9393593}
+  m_LocalPosition: {x: 0, y: 5.566058, z: -6.5371695}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1611,7 +1611,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 1943630534}
+    TrackingTarget: {fileID: 5528621226741457107}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -1788,7 +1788,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 0.5, y: 0.5}
+  Damping: {x: 0, y: 0}
   Lookahead:
     Enabled: 0
     Time: 0
@@ -2644,7 +2644,7 @@ GameObject:
   - component: {fileID: 2799250199512664380}
   - component: {fileID: 5174690323541060322}
   m_Layer: 0
-  m_Name: Maria_J_J_Ong
+  m_Name: SkinnedMeshRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3132,7 +3132,7 @@ GameObject:
   - component: {fileID: 5528621226741457108}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3193,7 +3193,7 @@ Transform:
   m_GameObject: {fileID: 5184288696755272297}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.059, z: 0}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 1
   m_Children:
