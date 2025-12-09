@@ -16,4 +16,4 @@ MonoBehaviour:
   attackPower: 100
   defense: 50
   moveSpeed: 3
-  jumpForce: 3
+  jumpForce: 10000

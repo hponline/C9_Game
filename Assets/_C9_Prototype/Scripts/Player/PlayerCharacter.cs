@@ -26,7 +26,7 @@ public class PlayerCharacter : MonoBehaviour, IAttackSource
         }
 
         if (playerInput.skill1Pressed)
-        {
+        {            
             skillController.UseSkillSlot(0, this);
         }
         playerInput.ConsumeInputs();

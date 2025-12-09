@@ -12,21 +12,26 @@ public class MeleSkillBehaviour : SkillBehaviour
 
         foreach (var hit in hits)
         {
-            if (hit.TryGetComponent<IDamageable>(out var dmg))
+            if (hit.TryGetComponent<IDamageable>(out var target))
             {
-                if (dmg.Transform.CompareTag("Enemy"))
+                if (target.Transform.CompareTag("Enemy"))
                 {
                     var ctx = new DamageContext
                     {
-                        amount = Data.damage,
+                        amount = skillData.damage,
                         hitPoint = hit.ClosestPoint(origin),
                         hitNormal = Vector3.up
                     };
-                    dmg.TakeDamage(ctx);
+                    target.TakeDamage(ctx);
+                    // damagePopup                     
                 }
-
             }
         }
+
+        //if (skillData.skillPrefab != null)
+        //{
+        //    // skillData.SkillPrefab üzerinden Vfx/Sound/Spawn tetikleme yeri
+        //}
     }
     private void OnDrawGizmosSelected()
     {

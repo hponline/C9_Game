@@ -9,9 +9,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] InputHandler inputHandler;
     [SerializeField] Transform cameraTransform;
     [SerializeField] CharacterStatSO characterStatSO;
+    [SerializeField] GameObject player;
 
     [Header("Player Variables")]
     [SerializeField] float playerRotationSpeed = 10f;
+    [SerializeField] float checkGroundRaycast = .5f;
+    [SerializeField] LayerMask groundLayer;
 
     Rigidbody rb;
 
@@ -26,6 +29,12 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerMove();
         PlayerJump();
+
+        RaycastHit hit;
+        if (Physics.Raycast(player.transform.position, Vector3.down, out hit, checkGroundRaycast, groundLayer))
+        {
+            Debug.DrawRay(player.transform.position, transform.TransformDirection(Vector3.down) * checkGroundRaycast, Color.red);
+        }
     }
 
     public void PlayerMove()
@@ -38,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
 
             Quaternion toRotation = Quaternion.LookRotation(moveDirection);
             rb.MoveRotation (Quaternion.Slerp(rb.rotation, toRotation, playerRotationSpeed * Time.fixedDeltaTime));
-            Debug.Log("Karakter gidiyo");
         }
     }
 
@@ -56,10 +64,11 @@ public class PlayerMovement : MonoBehaviour
         return moveDir;
     }
 
-    void PlayerJump()
+    public void PlayerJump()
     {
         if (inputHandler.ConsumeJump())
         {
+            
             rb.AddForce(Vector3.up * characterStatSO.jumpForce, ForceMode.Impulse);
         }
     }

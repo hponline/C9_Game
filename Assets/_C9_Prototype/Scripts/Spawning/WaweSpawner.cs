@@ -7,6 +7,12 @@ public class WaweSpawner : MonoBehaviour
     [SerializeField] WaweConfigSO waweConfigSO;
     [SerializeField] EnemySpawnPoint[] spawnPoints;
 
+    private void Start()
+    {
+
+        //StartWawe();        
+    }
+
     public void StartWawe()
     {
         StartCoroutine(SpawnWaweCoroutine());

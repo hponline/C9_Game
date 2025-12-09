@@ -15,6 +15,7 @@ public class SkillDataSO : ScriptableObject
     public float damage = 50f;
     public float cooldown = 3f;
     public float skillRange = 10f;
+    public AnimationClip animationClip;
 
     public GameObject skillPrefab;
     public string animationTriggerName;
