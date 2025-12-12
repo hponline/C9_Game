@@ -5,15 +5,15 @@ public class InputHandler : MonoBehaviour
 {
     PlayerInput playerInput;
 
-    [HideInInspector] public Vector2 moveInput;
-    [HideInInspector] public bool jumpPressed;
-    [HideInInspector] public bool primaryAttackPressed;
-    [HideInInspector] public bool skill1Pressed;
+    public Vector2 moveInput;
+    public bool jumpPressed;
+    public bool primaryAttackPressed;
+    public bool skill1Pressed;
 
 
     private void Awake()
     {
-        playerInput = new PlayerInput();        
+        playerInput = new PlayerInput();
     }
 
     private void OnEnable()
@@ -27,7 +27,6 @@ public class InputHandler : MonoBehaviour
         playerInput.Player.PrimaryAttack.performed += OnPrimaryAttack;
         playerInput.Player.Skill1Pressed.performed += OnSkill1;
     }
-
 
     private void OnDisable()
     {
@@ -45,13 +44,11 @@ public class InputHandler : MonoBehaviour
     {
         if (ctx.performed)
             skill1Pressed = true;
-        Debug.Log("Skill basýldý");
     }
     void OnPrimaryAttack(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
             primaryAttackPressed = true;
-        Debug.Log("basic attack yapýldý");
     }
 
     void OnJump(InputAction.CallbackContext ctx)
@@ -65,7 +62,7 @@ public class InputHandler : MonoBehaviour
         moveInput = ctx.ReadValue<Vector2>();
     }
 
-    public bool ConsumeJump() // ground check
+    public bool ConsumeJump()
     {
         if (jumpPressed)
         {

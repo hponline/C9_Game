@@ -5,4 +5,5 @@ public struct DamageContext
     public float amount;
     public Vector3 hitPoint;
     public Vector3 hitNormal;
+    public GameObject sourceOwner;
 }

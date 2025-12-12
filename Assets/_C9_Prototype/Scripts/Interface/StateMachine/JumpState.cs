@@ -1,10 +1,8 @@
-
 using UnityEngine;
 
 public class JumpState : IState
 {
     PlayerStateMachine owner;
-    bool jumped = false;
 
     public JumpState(PlayerStateMachine owner)
     {
@@ -13,20 +11,13 @@ public class JumpState : IState
 
     public void EnterState()
     {
-        if (!jumped)
+        if (owner.InputHandler.ConsumeJump())
         {
-            if (owner.InputHandler != null && owner.InputHandler.ConsumeJump())
-            {
-                owner.InputHandler.ConsumeJump();
-                owner.playerMovement.PlayerJump();
-                jumped = true;
-                if (owner.animator != null)
-                {
-                    owner.animator.SetTrigger("IsJump");
-                }
-            }
+            owner.playerMovement.RequestJump();
         }
+        owner.playerMovement.SetCanMove(false);
     }
+
     public void UpdateState()
     {
         Debug.Log("JumpState");
@@ -34,7 +25,6 @@ public class JumpState : IState
 
     public void ExitState()
     {
-        jumped = false;
+        owner.playerMovement.SetCanMove(true);
     }
-
 }

@@ -1,50 +1,110 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerSkillController : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] public SkillDataSO[] skillDataSO;
     [SerializeField] SkillBehaviour basicAttackSkill;
     [SerializeField] SkillBehaviour[] skillSlots;
 
+    [Header("Variables")]
     [SerializeField] float basicAttackCooldownTimer;
     [SerializeField] float[] slotCooldownTimer;
 
+    Animator animator;
+    // Pending state: anim beklenirken hangi skill hangi kaynak ile iliþkilendirildi
+    int pendingIndex = -1; // -1 
+    IAttackSource cachedSource = null; // Saldýranýn sahibi (player)
+
     private void Awake()
     {
+        animator = GetComponentInChildren<Animator>();
         slotCooldownTimer = new float[skillSlots.Length];
+
+        // Burada kaldýk
     }
 
     private void Update()
     {
-        basicAttackCooldownTimer -= Time.time;
-        for (int i = 0; i < slotCooldownTimer.Length; i++)
-        {
-            slotCooldownTimer[i] -= Time.deltaTime;
-        }
+        SkillTimerLimit();
     }
+
+    public SkillDataSO GetSkillDataSO(int index)
+    {
+        if (skillDataSO == null) return null;
+        if (index < 0 || index >= skillDataSO.Length) return null;
+        return skillDataSO[index];
+    } 
 
     public void UseBasicAttack(IAttackSource source)
     {
         if (basicAttackSkill == null) return;
         if (basicAttackCooldownTimer > 0f) return;
 
+        animator.SetTrigger(basicAttackSkill.Data.animationTriggerName);
         basicAttackSkill.Execute(source);
         basicAttackCooldownTimer = basicAttackSkill.Data.cooldown;
 
         Debug.Log("Basic atak yapýldý");
-        // InputHandler içine Event tetikleme yapýlabilir
     }
 
-    public void UseSkillSlot(int index, IAttackSource source)
+    public void UseSkillSlot(int index, IAttackSource source, bool viaAnimation = true)
     {
         if (index < 0 || index >= skillSlots.Length) return;
         var skill = skillSlots[index];
-        if (skill == null) return;
+        if (skill == null || index >= skillSlots.Length) return;
         if (slotCooldownTimer[index] > 0f) return;
 
-        skill.Execute(source);
+        var skillPrefab = skillSlots.Length > index ? skillSlots[index] : null;
         slotCooldownTimer[index] = skill.Data.cooldown;
 
+        cachedSource = source;
+        if (viaAnimation && !string.IsNullOrEmpty(skill.Data.animationTriggerName))
+        {
+            pendingIndex = index;
+            animator.SetTrigger(skill.Data.animationTriggerName);
+
+            if (skill.Data.hitDelay > 0f && skillPrefab != null)
+                StartCoroutine(ExecuteAfterDelay(skill.Data.hitDelay, skillPrefab, source));
+        }
+        else
+        {
+            skillPrefab?.Execute(source);
+            pendingIndex = -1;
+            cachedSource = null;
+        }
+
         Debug.Log("Skill atýldý");
-        // InputHandler içine Event tetikleme yapýlabilir
+    }
+    IEnumerator ExecuteAfterDelay(float delay, SkillBehaviour prefab, IAttackSource source)
+    {
+        yield return new WaitForSeconds(delay);
+        if (prefab != null) prefab.Execute(source);
+
+        pendingIndex = -1;
+        cachedSource = null;
+    }
+
+    void SkillTimerLimit()
+    {
+        basicAttackCooldownTimer = Mathf.Max(0f, basicAttackCooldownTimer - Time.time);
+
+        for (int i = 0; i < slotCooldownTimer.Length; i++)
+        {
+            slotCooldownTimer[i] = Mathf.Max(0f, slotCooldownTimer[i] - Time.deltaTime);
+        }
+    }
+
+
+    public void OnAnimationHit()
+    {
+        if (pendingIndex < 0 || cachedSource == null) return;
+        if (skillSlots == null || pendingIndex >= skillSlots.Length) return;
+
+        skillSlots[pendingIndex]?.Execute(cachedSource); // hasar
+
+        pendingIndex = -1;
+        cachedSource = null;
     }
 }

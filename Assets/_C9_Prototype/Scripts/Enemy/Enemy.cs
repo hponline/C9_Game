@@ -9,6 +9,8 @@ public abstract class Enemy : MonoBehaviour, IAttackSource
     [SerializeField] Transform attackOrigin;
     public Transform AttackOrigin => attackOrigin;
 
+    public GameObject Owner => throw new NotImplementedException();
+
     protected RunTimeStats stats;
     protected Health health;
 

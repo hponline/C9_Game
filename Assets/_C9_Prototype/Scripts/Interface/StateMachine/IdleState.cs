@@ -16,15 +16,15 @@ public class IdleState : IState
         {
             owner.animator.SetBool("IsRun", false);
         }
+
     }
     public void UpdateState()
     {
-        Debug.Log($"CurrentState Idle");
+        Debug.Log($"IdleState");        
     }
 
     public void ExitState()
     {
         Debug.Log($"Exit Idle");
     }
-
 }

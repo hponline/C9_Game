@@ -11,10 +11,13 @@ public class PlayerStateMachine : MonoBehaviour
     public Animator animator;
     public Health health;
 
-    IState idleState;
+    [Header("Skill State Setting")]
+    public int pendingSkillIndex = 0;
+    public IState idleState;
     IState runState;
     IState jumpState;
     IState skillState;
+    IState basicAttackState;
 
     IState currentState;
 
@@ -24,6 +27,7 @@ public class PlayerStateMachine : MonoBehaviour
         runState = new RunState(this);
         jumpState = new JumpState(this);
         skillState = new SkillState(this);
+        basicAttackState = new BasicAttackState(this);
 
         InputHandler = GetComponent<InputHandler>();
         animator = GetComponentInChildren<Animator>();
@@ -46,34 +50,50 @@ public class PlayerStateMachine : MonoBehaviour
             return;
         }
 
+        if (InputHandler.primaryAttackPressed)
+        {
+            if (currentState != basicAttackState) ChangeState(basicAttackState);
+            Debug.Log($"basicAttackState");
+        }
+
         if (InputHandler.skill1Pressed)
         {
             // Skill basýldýysa ("C") burasý çalýþcak
             if (currentState != skillState) ChangeState(skillState);
             Debug.Log($"SkillState");
-            return;
         }
 
-        if (InputHandler.jumpPressed)
+        else if (InputHandler.jumpPressed)
         {
             // Karakter Zýpladýysa burasý çalýþcak
-            if (currentState != jumpState) ChangeState(jumpState);
             Debug.Log($"JumpState");
-            return;
+            if (currentState != jumpState) ChangeState(jumpState);
         }
 
-        if (InputHandler.moveInput.sqrMagnitude > 0.01f)
+        else if (InputHandler.moveInput.sqrMagnitude > 0.01f)
         {
             if (currentState != runState) ChangeState(runState);
             Debug.Log($"RunState");
-            return;
         }
 
-        if (currentState != idleState)
+        else
         {
-            ChangeState(idleState);
+            if (currentState != idleState) ChangeState(idleState);
             Debug.Log($"IdleState");
         }
+
+        currentState?.UpdateState();
+
+        if (currentState == runState)
+        {
+            playerMovement?.SetMoveInput(InputHandler.moveInput);
+        }
+        else
+        {
+            playerMovement?.SetMoveInput(Vector2.zero);
+        }
+
+        InputHandler.ConsumeInputs();
     }
 
     public void ChangeState(IState newState)
@@ -82,5 +102,10 @@ public class PlayerStateMachine : MonoBehaviour
         currentState?.ExitState();
         currentState = newState;
         currentState?.EnterState();
+    }
+
+    public void RequestSkill(int index)
+    {
+        pendingSkillIndex = index;
     }
 }

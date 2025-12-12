@@ -3,7 +3,8 @@ using UnityEngine;
 public class SkillState : IState
 {
     PlayerStateMachine owner;
-    bool isStarted = false;
+    float timer;
+    int index;
 
     public SkillState(PlayerStateMachine owner)
     {
@@ -12,20 +13,24 @@ public class SkillState : IState
 
     public void EnterState()
     {
-        if (!isStarted)
-        {
-            isStarted = true;
-            Debug.Log($"SkillState baþladý: ");
-        }
+        Debug.Log($"SkillState baþladý: ");
+
+        index = owner.pendingSkillIndex;
+        var data = owner.playerSkillController.GetSkillDataSO(index);
+
+        timer = data.animDuration;
+        owner.playerMovement.SetCanMove(false);
+
+        //owner.playerSkillController.UseSkillSlot(index, owner.source)
+       
     }
     public void UpdateState()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("SkillState");
     }
 
     public void ExitState()
     {
         Debug.Log($"SkillState bitti: ");
-        isStarted = false; 
     }
 }

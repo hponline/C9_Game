@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent (typeof(InputHandler))]
 public class PlayerMovement : MonoBehaviour
@@ -9,14 +10,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] InputHandler inputHandler;
     [SerializeField] Transform cameraTransform;
     [SerializeField] CharacterStatSO characterStatSO;
-    [SerializeField] GameObject player;
+    [SerializeField] Transform playerRoot;
 
     [Header("Player Variables")]
-    [SerializeField] float playerRotationSpeed = 10f;
-    [SerializeField] float checkGroundRaycast = .5f;
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] float playerRotationSpeed = 10f;
+    [SerializeField] float groundCheckRaycast = .5f;
+    [SerializeField] bool canMove = true;
+    [SerializeField] bool requestJump = false;
 
     Rigidbody rb;
+    Vector2 currentMoveInput = Vector2.zero;
 
     private void Awake()
     {
@@ -29,25 +33,52 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerMove();
         PlayerJump();
-
-        RaycastHit hit;
-        if (Physics.Raycast(player.transform.position, Vector3.down, out hit, checkGroundRaycast, groundLayer))
-        {
-            Debug.DrawRay(player.transform.position, transform.TransformDirection(Vector3.down) * checkGroundRaycast, Color.red);
-        }
     }
 
-    public void PlayerMove()
+    public void SetMoveInput(Vector2 moveInput) // Dýþardan çaðrýlcak
     {
+        currentMoveInput = moveInput;
+    }
+
+    public void RequestJump()
+    {
+        requestJump = true;
+    }
+
+    public void SetCanMove(bool value)
+    {
+        canMove = value;
+        if (!canMove) currentMoveInput = Vector2.zero;
+    }
+
+    public bool SetMove()
+    {
+        return canMove;
+    }
+
+    void PlayerMove()
+    {
+        if (!canMove) return;
+
         Vector3 moveDirection = GetMoveDirection();
 
         if (moveDirection.sqrMagnitude > 0.001f)
         {
             rb.MovePosition(rb.position + moveDirection * characterStatSO.moveSpeed * Time.fixedDeltaTime);
-
             Quaternion toRotation = Quaternion.LookRotation(moveDirection);
-            rb.MoveRotation (Quaternion.Slerp(rb.rotation, toRotation, playerRotationSpeed * Time.fixedDeltaTime));
+            rb.MoveRotation(Quaternion.Slerp(rb.rotation, toRotation, playerRotationSpeed * Time.fixedDeltaTime));
         }
+    }
+
+    void PlayerJump()
+    {
+        if (!requestJump) return;
+        if (IsGrounded())
+        {
+            Debug.Log("Karkter zýpladý");
+            rb.AddForce(Vector3.up * characterStatSO.jumpForce, ForceMode.Impulse);
+        }
+        requestJump = false;
     }
 
     Vector3 GetMoveDirection()
@@ -60,16 +91,19 @@ public class PlayerMovement : MonoBehaviour
         forward.Normalize();
         right.Normalize();
 
-        Vector3 moveDir = forward * inputHandler.moveInput.y + right * inputHandler.moveInput.x;
+        Vector3 moveDir = forward * currentMoveInput.y + right * currentMoveInput.x;
         return moveDir;
     }
 
-    public void PlayerJump()
+    public bool IsGrounded()
     {
-        if (inputHandler.ConsumeJump())
-        {
-            
-            rb.AddForce(Vector3.up * characterStatSO.jumpForce, ForceMode.Impulse);
-        }
+        Vector3 origin = playerRoot.position + Vector3.up * 0.1f;
+        float maxDistance = groundCheckRaycast + 0.1f;
+        return Physics.Raycast(origin, Vector3.down, maxDistance, groundLayer);
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(playerRoot.position, Vector3.down * groundCheckRaycast);
     }
 }

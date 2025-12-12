@@ -8,6 +8,8 @@ public class PlayerCharacter : MonoBehaviour, IAttackSource
 {
     public Transform AttackOrigin => attackOrigin;
 
+    public GameObject Owner => throw new System.NotImplementedException();
+
     [SerializeField] Transform attackOrigin;
     [SerializeField] PlayerSkillController skillController;
 

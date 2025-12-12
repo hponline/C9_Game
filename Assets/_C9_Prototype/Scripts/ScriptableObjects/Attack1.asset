@@ -12,9 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ee1e872871a1d4cb244948163e46e9, type: 3}
   m_Name: Attack1
   m_EditorClassIdentifier: 
+  skillType: 0
   displayName: Attack1
   damage: 50
-  cooldown: 3
-  skillRange: 10
+  cooldown: 1
+  skillRange: 3
+  animDuration: 0.8
+  hitDelay: 0.4
+  animationTriggerName: IsAttack
+  animationClip: {fileID: 0}
   skillPrefab: {fileID: 0}
-  animationTriggerName: 
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 64
+  soundEffect: {fileID: 0}
