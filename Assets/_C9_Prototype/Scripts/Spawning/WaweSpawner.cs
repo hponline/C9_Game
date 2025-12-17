@@ -10,7 +10,7 @@ public class WaweSpawner : MonoBehaviour
     private void Start()
     {
 
-        //StartWawe();        
+        StartWawe();        
     }
 
     public void StartWawe()

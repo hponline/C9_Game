@@ -53,33 +53,33 @@ public class PlayerStateMachine : MonoBehaviour
         if (InputHandler.primaryAttackPressed)
         {
             if (currentState != basicAttackState) ChangeState(basicAttackState);
-            Debug.Log($"basicAttackState");
+            //Debug.Log($"basicAttackState");
         }
 
         if (InputHandler.skill1Pressed)
         {
             // Skill basýldýysa ("C") burasý çalýþcak
             if (currentState != skillState) ChangeState(skillState);
-            Debug.Log($"SkillState");
+           // Debug.Log($"SkillState");
         }
 
         else if (InputHandler.jumpPressed)
         {
             // Karakter Zýpladýysa burasý çalýþcak
             Debug.Log($"JumpState");
-            if (currentState != jumpState) ChangeState(jumpState);
+            //if (currentState != jumpState) ChangeState(jumpState);
         }
 
         else if (InputHandler.moveInput.sqrMagnitude > 0.01f)
         {
             if (currentState != runState) ChangeState(runState);
-            Debug.Log($"RunState");
+            //Debug.Log($"RunState");
         }
 
         else
         {
             if (currentState != idleState) ChangeState(idleState);
-            Debug.Log($"IdleState");
+           // Debug.Log($"IdleState");
         }
 
         currentState?.UpdateState();

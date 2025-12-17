@@ -1811,6 +1811,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8642667053734136336, guid: baf2c78d86f0c5f4f9d5fd36634c0b5c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 9056824804854243079, guid: baf2c78d86f0c5f4f9d5fd36634c0b5c, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1871,6 +1875,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3149278572809932353, guid: d6fb5ae6fcc68f840a4dfd97ee351aed, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 5184288696755272301}
     - target: {fileID: 3754542838646516549, guid: d6fb5ae6fcc68f840a4dfd97ee351aed, type: 3}
       propertyPath: m_Name
       value: Enemy_Orc

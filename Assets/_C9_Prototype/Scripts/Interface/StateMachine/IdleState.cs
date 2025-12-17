@@ -11,7 +11,7 @@ public class IdleState : IState
 
     public void EnterState()
     {
-        Debug.Log($"Enter Idle");
+        //Debug.Log($"Enter Idle");
         if (owner.animator != null)
         {
             owner.animator.SetBool("IsRun", false);
@@ -20,11 +20,11 @@ public class IdleState : IState
     }
     public void UpdateState()
     {
-        Debug.Log($"IdleState");        
+        //Debug.Log($"IdleState");        
     }
 
     public void ExitState()
     {
-        Debug.Log($"Exit Idle");
+        //Debug.Log($"Exit Idle");
     }
 }

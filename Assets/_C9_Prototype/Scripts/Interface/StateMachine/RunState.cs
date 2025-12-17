@@ -11,7 +11,7 @@ public class RunState : IState
 
     public void EnterState()
     {
-        Debug.Log("Enter RunState");
+       // Debug.Log("Enter RunState");
     }
 
     public void UpdateState()
@@ -29,7 +29,7 @@ public class RunState : IState
         {
             owner.animator.SetBool("IsRun", false);
         }
-        Debug.Log("Exit RunState");
+        //Debug.Log("Exit RunState");
     }
 
 }
