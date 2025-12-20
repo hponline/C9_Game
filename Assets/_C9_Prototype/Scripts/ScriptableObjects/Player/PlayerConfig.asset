@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1188791ec0b7643b68f634ae482a1a, type: 3}
-  m_Name: Player
+  m_Script: {fileID: 11500000, guid: d360d831f11d67742b6ff3071024e11d, type: 3}
+  m_Name: PlayerConfig
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  attackPower: 100
-  defense: 50
-  moveSpeed: 3
-  jumpForce: 5
+  baseHealth: 100
+  baseDamage: 10
+  baseMoveSpeed: 3
+  baseAttackSpeed: 1
+  jumpForce: 3
+  basicAttack: {fileID: 0}
+  startingSkills: []

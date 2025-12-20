@@ -9,7 +9,7 @@ public class PlayerStateMachine : MonoBehaviour
     public PlayerMovement playerMovement;
     public PlayerSkillController playerSkillController;
     public Animator animator;
-    public Health health;
+    public PlayerHealth health;
 
     [Header("Skill State Setting")]
     public int pendingSkillIndex = 0;
@@ -31,7 +31,7 @@ public class PlayerStateMachine : MonoBehaviour
 
         InputHandler = GetComponent<InputHandler>();
         animator = GetComponentInChildren<Animator>();
-        health = GetComponent<Health>();
+        health = GetComponent<PlayerHealth>();
         playerSkillController = GetComponent<PlayerSkillController>();
     }
 

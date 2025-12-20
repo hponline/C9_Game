@@ -9,7 +9,6 @@ public enum EnemyState
 public class EnemyMelee : Enemy
 {
     public EnemyState curretState;
-    public EnemyStatSO enemyStatSO;
 
     [SerializeField] float chaseRange = 15f;
     [SerializeField] float moveSpeed = 5f;
@@ -58,11 +57,41 @@ public class EnemyMelee : Enemy
         }
     }
 
-    void EnemyInitialize()
+    public void DoAttack(IDamageable target)
     {
-        baseAttackSpeed = enemyStatSO.finalAttackSpeed;
+        if (target == null) return;
+        Debug.Log("Attack");
+
+        var ctx = new DamageContext
+        {
+            amount = runTimeStats.Damage,
+            hitPoint = transform.position,
+            hitNormal = transform.forward,
+            //sourceOwner = this
+        };
+        target.TakeDamage(ctx);
+
+        transform.position += new Vector3(0,.5f,0); // örnek gösterim
+        // Damage at 
+        // Anim Tetikle
     }
 
+    void EnemyMoveToPlayer()
+    {
+        Vector3 moveDir = (target.position - transform.position).normalized;
+        transform.position += moveDir * moveSpeed * Time.deltaTime;
+        moveDir.y = 0;
+        if (moveDir != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(moveDir);
+    }
+    protected override void HandleDeath(EnemyHealth health)
+    {
+        // Animasyon, loot, event, pool vs.
+        Debug.Log($"{name}: öldü");
+        throw new System.NotImplementedException();
+    }
+
+    #region State
     void IdleState(float distance)
     {
         if (distance <= chaseRange)
@@ -81,7 +110,7 @@ public class EnemyMelee : Enemy
 
         if (distance <= attackRange)
         {
-            curretState = EnemyState.Attack;
+            curretState = EnemyState.Attack;            
             return;
         }
 
@@ -99,18 +128,13 @@ public class EnemyMelee : Enemy
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
         {
-            DoAttack();
+            //DoAttack();
+            Debug.Log("EnemyAttackState attack");
             attackTimer = attackCooldown;
         }
     }
+    #endregion
 
-    void DoAttack()
-    {
-        Debug.Log("Attack");
-        transform.position += new Vector3(0,.5f,0); // örnek gösterim
-        // Damage at 
-        // Anim Tetikle
-    }
 
     #region AttackSpeed
     public void AttackSpeedBuff(float multiplier)
@@ -127,15 +151,6 @@ public class EnemyMelee : Enemy
     }
     #endregion
 
-    void EnemyMoveToPlayer()
-    {
-        Vector3 moveDir = (target.position - transform.position).normalized;
-        transform.position += moveDir * enemyStatSO.moveSpeed * Time.deltaTime;
-        moveDir.y = 0;
-        if (moveDir != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(moveDir);
-    }
-
 
     private void OnDrawGizmosSelected()
     {
@@ -144,10 +159,4 @@ public class EnemyMelee : Enemy
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
-    protected override void HandleDeath(Health health)
-    {
-        // Animasyon, loot, event, pool vs.
-        Debug.Log($"{name}: öldü");
-        throw new System.NotImplementedException();
-    }
 }

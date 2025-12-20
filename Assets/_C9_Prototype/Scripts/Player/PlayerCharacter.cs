@@ -1,8 +1,8 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInput))]
-[RequireComponent(typeof(RunTimeStats))]
-[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(PlayerRunTimeStats))]
+[RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(PlayerSkillController))]
 public class PlayerCharacter : MonoBehaviour, IAttackSource
 {
