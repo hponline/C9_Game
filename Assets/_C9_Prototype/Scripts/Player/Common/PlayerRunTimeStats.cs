@@ -7,6 +7,7 @@ public class PlayerRunTimeStats : MonoBehaviour
     float baseDamage;
     float baseMoveSpeed;
     float baseAttackSpeed;
+    float jumpForce;
 
     float currentHealth;
 
@@ -16,6 +17,7 @@ public class PlayerRunTimeStats : MonoBehaviour
     float damageMultiplier = 1f;
     float moveSpeedMultiplier = 1f;
     float attackSpeedMultiplier = 1f;
+    float jumpForceMultiplier = 1f;
 
     [Header("RUNTIME STATS")]
     public float MaxHealth { get; private set; }
@@ -24,6 +26,7 @@ public class PlayerRunTimeStats : MonoBehaviour
     public float Damage => baseDamage * damageMultiplier;
     public float MoveSpeed => baseMoveSpeed * moveSpeedMultiplier;
     public float AttackSpeed => baseAttackSpeed * attackSpeedMultiplier;
+    public float JumpForce => jumpForce * jumpForceMultiplier;
     // Player Statlarý levele göre artmýcak
 
     public void Init(PlayerConfigSO playerConfigSO)
@@ -32,6 +35,7 @@ public class PlayerRunTimeStats : MonoBehaviour
         baseDamage = playerConfigSO.baseDamage;
         baseMoveSpeed = playerConfigSO.baseMoveSpeed;
         baseAttackSpeed = playerConfigSO.baseAttackSpeed;
+        jumpForce = playerConfigSO.jumpForce;
 
         RecalculateHealth();
     }

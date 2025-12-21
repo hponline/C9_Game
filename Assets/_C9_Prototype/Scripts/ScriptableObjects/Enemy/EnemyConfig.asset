@@ -13,5 +13,10 @@ MonoBehaviour:
   m_Name: EnemyConfig
   m_EditorClassIdentifier: 
   enemyRace: 0
-  characterStat: {fileID: 11400000, guid: e251b23d533d45943a72484c05c8a754, type: 2}
   prefab: {fileID: 3754542838646516549, guid: d6fb5ae6fcc68f840a4dfd97ee351aed, type: 3}
+  baseHealth: 100
+  baseDamage: 10
+  baseMoveSpeed: 8.61
+  baseAttackSpeed: 1
+  healthPerLevel: 20
+  damagePerLevel: 3

@@ -5,14 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyHealth))]
 public abstract class Enemy : MonoBehaviour, IAttackSource
 {
+    [Header("References")]
     [SerializeField] protected EnemyConfigSO enemyConfigSO;
-    [SerializeField] protected Transform attackOrigin;
-    public Transform AttackOrigin => attackOrigin;
-
-    public GameObject Owner => throw new NotImplementedException();
-
+    protected Transform attackOrigin;
     protected EnemyRunTimeStats runTimeStats;
     protected EnemyHealth health;
+    protected Animator animator;
+
+    public GameObject Owner => throw new NotImplementedException();
+    public Transform AttackOrigin => attackOrigin;
 
     //[Header("Level Scaling")]
     //public int level = 1;
@@ -22,7 +23,9 @@ public abstract class Enemy : MonoBehaviour, IAttackSource
     {
         runTimeStats = GetComponent<EnemyRunTimeStats>();
         health = GetComponent<EnemyHealth>();
-        //health.OnDied += HandleDeath;
+        animator= GetComponent<Animator>();
+
+        health.OnDied += OnEnemyDead;
 
         runTimeStats.Init(enemyConfigSO, 1);
 
@@ -36,6 +39,11 @@ public abstract class Enemy : MonoBehaviour, IAttackSource
         runTimeStats.Init(maxHealth);
         runTimeStats.SetDamage(damage);
          */
+    }
+
+    void OnEnemyDead()
+    {
+        HandleDeath(health);
     }
 
     protected abstract void HandleDeath(EnemyHealth health);

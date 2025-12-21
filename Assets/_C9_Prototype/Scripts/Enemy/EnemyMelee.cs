@@ -8,12 +8,15 @@ public enum EnemyState
 }
 public class EnemyMelee : Enemy
 {
+    [Header("References")]
     public EnemyState curretState;
-
-    [SerializeField] float chaseRange = 15f;
-    [SerializeField] float moveSpeed = 5f;
     [SerializeField] SkillBehaviour meleeSkill;
     [SerializeField] Transform target;
+
+
+    [Header("Patrol")]
+    [SerializeField] float chaseRange = 15f;
+    [SerializeField] float moveSpeed = 5f;
 
     [Header("Attack")]
     [SerializeField] float attackRange = 3f;
@@ -21,7 +24,13 @@ public class EnemyMelee : Enemy
     float attackSpeedMultiplier;
     float baseAttackSpeed = 1f;
     float attackCooldown;
-    float attackTimer;      
+    float attackTimer;
+    // çarpanlara bak EnemyRuntimeStats ile çakýþýyor mu
+
+    [Header("Death")]
+    [SerializeField] GameObject deathVFX;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] float destroyDelay = 1.5f;
 
 
     protected override void Awake()
@@ -33,6 +42,8 @@ public class EnemyMelee : Enemy
     {
         target = GameObject.FindWithTag("Player").transform;
         attackCooldown = 1f / baseAttackSpeed;
+
+        Debug.Log("EnemyRuntimeStats scriptini baðla");
     }
 
     private void Update()
@@ -84,12 +95,52 @@ public class EnemyMelee : Enemy
         if (moveDir != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(moveDir);
     }
+
+    #region Death
     protected override void HandleDeath(EnemyHealth health)
     {
+
         // Animasyon, loot, event, pool vs.
+        //lootDropper?.DropLoot(transform.position); //drobu event ile yap baþka scriptte
         Debug.Log($"{name}: öldü");
-        throw new System.NotImplementedException();
+
+        if (animator != null)
+        {
+            Debug.Log($"ölüm animasyonu tetikle");
+            //animator.SetTrigger("Die");
+        }
+
+        if (deathVFX != null)
+        {
+            Debug.Log("ölüm vfx tetikle");
+            //Instantiate(deathVFX, transform.position, Quaternion.identity);
+        }
+
+        if (deathSound != null)
+        {
+            Debug.Log("ölüm sound tetikle");
+            //AudioSource.PlayClipAtPoint(deathSound, transform.position); // Geçici olarak o yerde 3d ses ekler ve siler, -- AudioManager a geç
+        }
+
+        DisableEnemy();
+        //Destroy(gameObject, destroyDelay);
     }
+
+    void DisableEnemy()
+    {
+        var collider = GetComponent<Collider>();
+        if (collider) collider.enabled = false;
+
+        var rb = GetComponent<Rigidbody>();
+        if (rb) rb.isKinematic = true;
+    }
+
+    public void OnDeathAnimationFinished()
+    {
+        gameObject.SetActive(false);
+    }
+
+    #endregion
 
     #region State
     void IdleState(float distance)
@@ -127,7 +178,7 @@ public class EnemyMelee : Enemy
 
         attackTimer -= Time.deltaTime;
         if (attackTimer <= 0)
-        {
+        {            
             //DoAttack();
             Debug.Log("EnemyAttackState attack");
             attackTimer = attackCooldown;

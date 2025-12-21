@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement Instance { get; private set; }
 
     [Header("References")]
+    [SerializeField] PlayerRunTimeStats playerRunTimeStats;
     [SerializeField] InputHandler inputHandler;
     [SerializeField] Transform cameraTransform;
     [SerializeField] Transform playerRoot;
@@ -17,8 +18,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float groundCheckRaycast = .5f;
     [SerializeField] bool canMove = true;
     [SerializeField] bool requestJump = false;
-    public float moveSpeed = 3f;
-    public float jumpForce = 3f;
 
     Rigidbody rb;
     Vector2 currentMoveInput = Vector2.zero;
@@ -28,8 +27,6 @@ public class PlayerMovement : MonoBehaviour
         Instance = this;
 
         rb = GetComponentInChildren<Rigidbody>();
-
-        Debug.Log("SO dan MoveSpeed jump çek");
     }
 
     private void FixedUpdate()
@@ -67,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveDirection.sqrMagnitude > 0.001f)
         {
-            rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+            rb.MovePosition(rb.position + moveDirection * playerRunTimeStats.MoveSpeed * Time.fixedDeltaTime);
             Quaternion toRotation = Quaternion.LookRotation(moveDirection);
             rb.MoveRotation(Quaternion.Slerp(rb.rotation, toRotation, playerRotationSpeed * Time.fixedDeltaTime));
         }
@@ -79,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsGrounded())
         {
             Debug.Log("Karkter zýpladý");
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * playerRunTimeStats.JumpForce, ForceMode.Impulse);
         }
         requestJump = false;
     }

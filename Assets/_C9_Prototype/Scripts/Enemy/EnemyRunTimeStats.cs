@@ -8,7 +8,7 @@ public class EnemyRunTimeStats : MonoBehaviour
     float baseMoveSpeed;
     float baseAttackSpeed;
 
-    float currentHealth;
+    [SerializeField] float currentHealth;
 
     [Header("RUNTIME STATS")]
     public float MaxHealth { get; private set; }
@@ -32,10 +32,6 @@ public class EnemyRunTimeStats : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, MaxHealth);
-        if (currentHealth <= 0)
-        {
-            Debug.Log($"Enemy {this.name} öldü");
-        }
+        currentHealth = Mathf.Clamp(currentHealth, 0f, MaxHealth);        
     }
 }

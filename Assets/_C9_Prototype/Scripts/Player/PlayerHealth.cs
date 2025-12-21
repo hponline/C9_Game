@@ -19,6 +19,5 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (!IsAlive) return;
 
         playerRunTimeStats.TakeDamage(ctx.amount);
-
     }
 }

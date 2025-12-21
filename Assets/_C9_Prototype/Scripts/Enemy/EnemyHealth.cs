@@ -24,6 +24,12 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         OnDamaged?.Invoke(ctx);
 
         if (!IsAlive)
-            OnDied?.Invoke();
+            Die();
+    }
+
+    void Die()
+    {
+        OnDied?.Invoke();
+        //Destroy(gameObject);
     }
 }
