@@ -11,14 +11,14 @@ public class RunState : IState
 
     public void EnterState()
     {
-       // Debug.Log("Enter RunState");
+        //Debug.Log("Enter RunState");
     }
 
     public void UpdateState()
     {
         if (owner.animator != null)
         {
-            owner.animator.SetBool("IsRun", true);
+            owner.animator.SetBool(GameTags.PlayerAnimationTags.PLAYER_RUN_TAG, true);
             owner.playerMovement.SetMoveInput(owner.InputHandler.moveInput);
         }
     }
@@ -27,7 +27,7 @@ public class RunState : IState
     {
         if (owner.animator != null)
         {
-            owner.animator.SetBool("IsRun", false);
+            owner.animator.SetBool(GameTags.PlayerAnimationTags.PLAYER_RUN_TAG, false);
         }
         //Debug.Log("Exit RunState");
     }

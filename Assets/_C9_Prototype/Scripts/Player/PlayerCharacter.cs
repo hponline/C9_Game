@@ -8,7 +8,7 @@ public class PlayerCharacter : MonoBehaviour, IAttackSource
 {
     public Transform AttackOrigin => attackOrigin;
 
-    public GameObject Owner => throw new System.NotImplementedException();
+    //public GameObject Owner => throw new System.NotImplementedException();
 
     [SerializeField] Transform attackOrigin;
     [SerializeField] PlayerSkillController skillController;
@@ -20,17 +20,17 @@ public class PlayerCharacter : MonoBehaviour, IAttackSource
         playerInput = GetComponent<InputHandler>();
     }
 
-    private void Update()
-    {
-        if (playerInput.primaryAttackPressed)
-        {
-            skillController.UseBasicAttack(this);
-        }
+    //private void Update()
+    //{
+    //    if (playerInput.primaryAttackPressed)
+    //    {
+    //        skillController.UseBasicAttack(this);
+    //    }
 
-        if (playerInput.skill1Pressed)
-        {            
-            skillController.UseSkillSlot(0, this);
-        }
-        playerInput.ConsumeInputs();
-    }
+    //    if (playerInput.skill1Pressed)
+    //    {            
+    //        skillController.UseSkillSlot(0, this);
+    //    }
+    //    playerInput.ConsumeInputs();
+    //}
 }

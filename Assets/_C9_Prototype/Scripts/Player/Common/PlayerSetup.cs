@@ -18,11 +18,6 @@ public class PlayerSetup : MonoBehaviour
         health = GetComponent<PlayerHealth>();
 
         runTimeStats.Init(playerConfig);
-
-        Debug.Log("Enemy scriptine bakýlacak, eventlere bakýlacak, " +
-            "PlayerHealth health " +
-            "PlayerSkillController playerSkillController " +
-            "bunlara bakýlacak");
     }
 
 }

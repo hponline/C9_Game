@@ -12,13 +12,12 @@ public class MeleSkillBehaviour : SkillBehaviour
         foreach (var hit in hits)
         {
             if (!hit.TryGetComponent<IDamageable>(out var target)) continue;
-            // tag kontrol opsiyonal
             var ctx = new DamageContext
             {
                 amount = skillData.damage,
                 hitPoint = hit.ClosestPoint(origin),
                 hitNormal = (hit.transform.position - origin).normalized,
-                sourceOwner = source.Owner // ??
+                //sourceOwner = source.Owner // ??
             };
             target.TakeDamage(ctx);
             // damagePopup   

@@ -4,9 +4,12 @@ using UnityEngine;
 public class PlayerSkillController : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] SkillDataSO basicAttackData;
     [SerializeField] public SkillDataSO[] skillDataSO;
     [SerializeField] SkillBehaviour basicAttackSkill;
     [SerializeField] SkillBehaviour[] skillSlots;
+
+    public SkillDataSO BasicAttackData => basicAttackData;
 
     [Header("Variables")]
     [SerializeField] float basicAttackCooldownTimer;
@@ -21,8 +24,6 @@ public class PlayerSkillController : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         slotCooldownTimer = new float[skillSlots.Length];
-
-        // Burada kaldýk
     }
 
     private void Update()
@@ -35,18 +36,18 @@ public class PlayerSkillController : MonoBehaviour
         if (skillDataSO == null) return null;
         if (index < 0 || index >= skillDataSO.Length) return null;
         return skillDataSO[index];
-    } 
+    }
 
     public void UseBasicAttack(IAttackSource source)
     {
         if (basicAttackSkill == null) return;
         if (basicAttackCooldownTimer > 0f) return;
 
-        animator.SetTrigger(basicAttackSkill.Data.animationTriggerName);
-        basicAttackSkill.Execute(source);
-        basicAttackCooldownTimer = basicAttackSkill.Data.cooldown;
+        cachedSource = source;
+        pendingIndex = -1; // basic attack
 
-        Debug.Log("Basic atak yapýldý");
+        animator.SetTrigger(basicAttackData.animationTriggerName);
+        basicAttackCooldownTimer = basicAttackData.cooldown;
     }
 
     public void UseSkillSlot(int index, IAttackSource source, bool viaAnimation = true)
@@ -99,10 +100,8 @@ public class PlayerSkillController : MonoBehaviour
 
     public void OnAnimationHit()
     {
-        if (pendingIndex < 0 || cachedSource == null) return;
-        if (skillSlots == null || pendingIndex >= skillSlots.Length) return;
-
-        skillSlots[pendingIndex]?.Execute(cachedSource); // hasar
+        if (cachedSource == null) return;
+        basicAttackSkill.Execute(cachedSource);
 
         pendingIndex = -1;
         cachedSource = null;

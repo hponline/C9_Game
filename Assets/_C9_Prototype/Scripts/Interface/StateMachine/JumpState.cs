@@ -15,7 +15,7 @@ public class JumpState : IState
         {
             owner.playerMovement.RequestJump();
         }
-        owner.playerMovement.SetCanMove(false);
+        //owner.playerMovement.SetCanMove(false);
     }
 
     public void UpdateState()
@@ -25,6 +25,6 @@ public class JumpState : IState
 
     public void ExitState()
     {
-        owner.playerMovement.SetCanMove(true);
+        //owner.playerMovement.SetCanMove(true);
     }
 }

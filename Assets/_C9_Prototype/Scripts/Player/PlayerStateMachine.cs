@@ -38,29 +38,30 @@ public class PlayerStateMachine : MonoBehaviour
     private void Start()
     {
         ChangeState(idleState);
-        // statemachine videosuna bak ve chatgpt örneðine bak 
+        Debug.Log("Player koþarken attack yapýnca attackState direkt geçmiyor");
     }
 
     private void Update()
     {
         if (health != null && !health.IsAlive)
         {
-            // Karakter öldüyse burasý çalýþcak
             Debug.Log($"DeadState");
             return;
         }
 
         if (InputHandler.primaryAttackPressed)
         {
-            if (currentState != basicAttackState) ChangeState(basicAttackState);
-            //Debug.Log($"basicAttackState");
+            if (currentState != basicAttackState)
+            {
+                ChangeState(basicAttackState);
+            }
         }
 
-        if (InputHandler.skill1Pressed)
+        else if (InputHandler.skill1Pressed)
         {
             // Skill basýldýysa ("C") burasý çalýþcak
             if (currentState != skillState) ChangeState(skillState);
-           // Debug.Log($"SkillState");
+            // Debug.Log($"SkillState");
         }
 
         else if (InputHandler.jumpPressed)
@@ -73,25 +74,20 @@ public class PlayerStateMachine : MonoBehaviour
         else if (InputHandler.moveInput.sqrMagnitude > 0.01f)
         {
             if (currentState != runState) ChangeState(runState);
-            //Debug.Log($"RunState");
         }
 
         else
         {
             if (currentState != idleState) ChangeState(idleState);
-           // Debug.Log($"IdleState");
         }
 
         currentState?.UpdateState();
 
         if (currentState == runState)
-        {
             playerMovement?.SetMoveInput(InputHandler.moveInput);
-        }
         else
-        {
             playerMovement?.SetMoveInput(Vector2.zero);
-        }
+
 
         InputHandler.ConsumeInputs();
     }
@@ -102,6 +98,11 @@ public class PlayerStateMachine : MonoBehaviour
         currentState?.ExitState();
         currentState = newState;
         currentState?.EnterState();
+    }
+
+    public void OnAttackAnimationEnd()
+    {
+        ChangeState(idleState);
     }
 
     public void RequestSkill(int index)

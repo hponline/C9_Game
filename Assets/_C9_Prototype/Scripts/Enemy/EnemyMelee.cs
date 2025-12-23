@@ -43,7 +43,7 @@ public class EnemyMelee : Enemy
         target = GameObject.FindWithTag("Player").transform;
         attackCooldown = 1f / baseAttackSpeed;
 
-        Debug.Log("EnemyRuntimeStats scriptini baðla");
+        //Debug.Log("EnemyRuntimeStats scriptini baðla");
     }
 
     private void Update()

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent (typeof(InputHandler))]
+[RequireComponent(typeof(InputHandler))]
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Instance { get; private set; }
@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] bool canMove = true;
     [SerializeField] bool requestJump = false;
 
+    public bool CanMove => canMove;
+
     Rigidbody rb;
     Vector2 currentMoveInput = Vector2.zero;
 
@@ -35,20 +37,20 @@ public class PlayerMovement : MonoBehaviour
         PlayerJump();
     }
 
-    public void SetMoveInput(Vector2 moveInput) // Dýþardan çaðrýlcak
+    public void SetMoveInput(Vector2 moveInput)
     {
         currentMoveInput = moveInput;
     }
 
-    public void RequestJump()
-    {
-        requestJump = true;
-    }
 
     public void SetCanMove(bool value)
     {
         canMove = value;
-        if (!canMove) currentMoveInput = Vector2.zero;
+        if (!canMove)
+        {
+            currentMoveInput = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
+        }
     }
 
     public bool SetMove()
@@ -59,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
     void PlayerMove()
     {
         if (!canMove) return;
-
+        
         Vector3 moveDirection = GetMoveDirection();
 
         if (moveDirection.sqrMagnitude > 0.001f)
@@ -68,17 +70,6 @@ public class PlayerMovement : MonoBehaviour
             Quaternion toRotation = Quaternion.LookRotation(moveDirection);
             rb.MoveRotation(Quaternion.Slerp(rb.rotation, toRotation, playerRotationSpeed * Time.fixedDeltaTime));
         }
-    }
-
-    void PlayerJump()
-    {
-        if (!requestJump) return;
-        if (IsGrounded())
-        {
-            Debug.Log("Karkter zýpladý");
-            rb.AddForce(Vector3.up * playerRunTimeStats.JumpForce, ForceMode.Impulse);
-        }
-        requestJump = false;
     }
 
     Vector3 GetMoveDirection()
@@ -95,6 +86,22 @@ public class PlayerMovement : MonoBehaviour
         return moveDir;
     }
 
+    #region Jump
+    public void RequestJump()
+    {
+        requestJump = true;
+    }
+    void PlayerJump()
+    {
+        if (!requestJump) return;
+        if (IsGrounded())
+        {
+            Debug.Log("Karkter zýpladý");
+            rb.AddForce(Vector3.up * playerRunTimeStats.JumpForce, ForceMode.Impulse);
+        }
+        requestJump = false;
+    }
+
     public bool IsGrounded()
     {
         Vector3 origin = playerRoot.position + Vector3.up * 0.1f;
@@ -106,4 +113,5 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawRay(playerRoot.position, Vector3.down * groundCheckRaycast);
     }
+    #endregion
 }
