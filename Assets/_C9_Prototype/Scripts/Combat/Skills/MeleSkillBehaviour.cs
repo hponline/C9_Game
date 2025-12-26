@@ -3,12 +3,14 @@ using UnityEngine;
 public class MeleSkillBehaviour : SkillBehaviour
 {
     [SerializeField] float radius = 2f;
+    Vector3 gizmosRadius;
 
     public override void Execute(IAttackSource source)
     {
         Vector3 origin = source.AttackOrigin.position;
-        Collider[] hits = Physics.OverlapSphere(origin, radius, skillData.hitMask);
-        //NonAlloc yapýlabilir
+        gizmosRadius = source.AttackOrigin.position;
+
+        Collider[] hits = Physics.OverlapSphere(origin, radius, skillData.hitMask); //NonAlloc yapýlabilir
         foreach (var hit in hits)
         {
             if (!hit.TryGetComponent<IDamageable>(out var target)) continue;
@@ -31,6 +33,7 @@ public class MeleSkillBehaviour : SkillBehaviour
     }
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(gizmosRadius, radius);
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent (typeof(PlayerRunTimeStats))]
@@ -7,7 +8,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public bool IsAlive => playerRunTimeStats.CurrentHealth > 0f;
     public Transform Transform => transform;
 
-    //public Action<Health> OnDied;
+    public event Action OnDied;
+    public event Action<DamageContext> OnDamaged;
 
     private void Awake()
     {
@@ -19,5 +21,15 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (!IsAlive) return;
 
         playerRunTimeStats.TakeDamage(ctx.amount);
+        OnDamaged?.Invoke(ctx);
+
+        if (!IsAlive)
+            Die();
+    }
+
+    void Die()
+    {
+        Debug.Log("Player öldü");
+        OnDied?.Invoke();
     }
 }

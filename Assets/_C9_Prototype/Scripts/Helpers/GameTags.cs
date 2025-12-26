@@ -18,6 +18,7 @@ public static class GameTags
 
     public static class EnemyAnimationTags
     {
+        public const string ENEMY_GETHIT_TAG = "GetHit";
         public const string ENEMY_IDLE_TAG = "IsIdle";
         public const string ENEMY_ATTACK_TAG = "IsAttack";
         public const string ENEMY_RUN_TAG = "IsRun";

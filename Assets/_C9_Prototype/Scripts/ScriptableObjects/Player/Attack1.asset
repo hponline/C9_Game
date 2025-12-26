@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillType: 0
   displayName: Attack1
-  damage: 50
+  damage: 300
   cooldown: 1
   skillRange: 3
   animDuration: 0.8

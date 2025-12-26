@@ -2,34 +2,38 @@ using UnityEngine;
 
 public class EnemyHitVFXController : MonoBehaviour
 {
-    [SerializeField] ParticleSystem hitVfx;
+    [SerializeField] ParticleSystem getHitVfx;
     EnemyHealth enemyHealth;
+    Animator animator;
 
 
     private void Awake()
     {
         enemyHealth = GetComponent<EnemyHealth>();
+        animator = GetComponent<Animator>();
     }
 
-    void PlayHitVFX(DamageContext ctx)
+    void OnDamaged(DamageContext ctx)
     {
-        Instantiate(hitVfx, ctx.hitPoint, Quaternion.LookRotation(ctx.hitNormal));
+        animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_GETHIT_TAG);
+        if (getHitVfx != null)
+            Instantiate(getHitVfx, ctx.hitPoint + new Vector3(0,1,0), Quaternion.LookRotation(ctx.hitNormal));
     }
 
-    void PlayDeathVFX()
+    void OnDeath()
     {
         Debug.Log("Dead vfx");
     }
 
     private void OnEnable()
     {
-        enemyHealth.OnDamaged += PlayHitVFX; 
-        enemyHealth.OnDied += PlayDeathVFX; 
+        enemyHealth.OnDamaged += OnDamaged; 
+        enemyHealth.OnDied += OnDeath; 
     }
 
     private void OnDisable()
     {
-        enemyHealth.OnDamaged -= PlayHitVFX;
-        enemyHealth.OnDied -= PlayDeathVFX;
+        enemyHealth.OnDamaged -= OnDamaged;
+        enemyHealth.OnDied -= OnDeath;
     }
 }

@@ -7,10 +7,10 @@ public abstract class Enemy : MonoBehaviour, IAttackSource
 {
     [Header("References")]
     [SerializeField] protected EnemyConfigSO enemyConfigSO;
-    protected Transform attackOrigin;
+    [SerializeField] protected Transform attackOrigin;
+    [SerializeField] protected Animator animator;
     protected EnemyRunTimeStats runTimeStats;
     protected EnemyHealth health;
-    protected Animator animator;
 
     public GameObject Owner => throw new NotImplementedException();
     public Transform AttackOrigin => attackOrigin;

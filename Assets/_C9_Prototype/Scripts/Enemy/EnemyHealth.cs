@@ -11,6 +11,10 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public event Action OnDied;
     public event Action<DamageContext> OnDamaged;
 
+    [Header("HealthBar")]
+    [HideInInspector] public float CurrentHealth => enemyRunTimeStats.CurrentHealth;
+    [HideInInspector] public float MaxHealth => enemyRunTimeStats.MaxHealth;
+
     private void Awake()
     {
         enemyRunTimeStats = GetComponent<EnemyRunTimeStats>();

@@ -9,7 +9,7 @@ public class PlayerRunTimeStats : MonoBehaviour
     float baseAttackSpeed;
     float jumpForce;
 
-    float currentHealth;
+    [SerializeField] float currentHealth;
 
     [Header("Stat Çarpanlarý")]
     [Tooltip("1f deðerin kendisi (1.2f) %20 buff // 0.5f %50 debuff anlamýna gelir")]    
@@ -44,11 +44,6 @@ public class PlayerRunTimeStats : MonoBehaviour
     {
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, MaxHealth);
-
-        if (currentHealth < 0)
-        {
-            Debug.Log($"Player {this.name} öldü");
-        }
     }
 
     public void SetHealth(float amount)

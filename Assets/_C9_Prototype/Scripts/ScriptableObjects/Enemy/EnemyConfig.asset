@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyRace: 0
   prefab: {fileID: 3754542838646516549, guid: d6fb5ae6fcc68f840a4dfd97ee351aed, type: 3}
-  baseHealth: 100
+  baseHealth: 1000
   baseDamage: 10
-  baseMoveSpeed: 8.61
+  baseMoveSpeed: 5
   baseAttackSpeed: 1
   healthPerLevel: 20
   damagePerLevel: 3

@@ -38,7 +38,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void Start()
     {
         ChangeState(idleState);
-        Debug.Log("Player koþarken attack yapýnca attackState direkt geçmiyor");
+        //Debug.Log("Player koþarken attack yapýnca attackState direkt geçmiyor");
     }
 
     private void Update()

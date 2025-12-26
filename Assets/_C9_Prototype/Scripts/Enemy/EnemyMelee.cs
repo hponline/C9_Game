@@ -9,17 +9,19 @@ public enum EnemyState
 public class EnemyMelee : Enemy
 {
     [Header("References")]
-    public EnemyState curretState;
+    [SerializeField] EnemyState curretState;
     [SerializeField] SkillBehaviour meleeSkill;
     [SerializeField] Transform target;
 
 
     [Header("Patrol")]
     [SerializeField] float chaseRange = 15f;
-    [SerializeField] float moveSpeed = 5f;
 
     [Header("Attack")]
     [SerializeField] float attackRange = 3f;
+    [SerializeField] LayerMask layerMask;
+    bool isAttacking;
+
     float finalAttackSpeed;
     float attackSpeedMultiplier;
     float baseAttackSpeed = 1f;
@@ -32,7 +34,7 @@ public class EnemyMelee : Enemy
     [SerializeField] AudioClip deathSound;
     [SerializeField] float destroyDelay = 1.5f;
 
-
+    public Collider[] hits;
     protected override void Awake()
     {
         base.Awake();
@@ -68,29 +70,39 @@ public class EnemyMelee : Enemy
         }
     }
 
-    public void DoAttack(IDamageable target)
+    #region Attack
+    public void DoAttack()
     {
         if (target == null) return;
-        Debug.Log("Attack");
 
-        var ctx = new DamageContext
+        hits = Physics.OverlapSphere(AttackOrigin.transform.position, attackRange, layerMask);
+        foreach (var hit in hits)
         {
-            amount = runTimeStats.Damage,
-            hitPoint = transform.position,
-            hitNormal = transform.forward,
-            //sourceOwner = this
-        };
-        target.TakeDamage(ctx);
+            var damageable = hit.GetComponentInParent<IDamageable>();
+            if (damageable == null) return;
 
-        transform.position += new Vector3(0,.5f,0); // örnek gösterim
-        // Damage at 
-        // Anim Tetikle
+            var ctx = new DamageContext
+            {
+                amount = runTimeStats.Damage,
+                hitPoint = transform.position,
+                hitNormal = transform.forward,
+                //sourceOwner = this
+            };
+            damageable.TakeDamage(ctx);
+
+        }
     }
 
+    public void AttackFinished()
+    {
+        isAttacking = false;
+    }
+
+    #endregion
     void EnemyMoveToPlayer()
     {
         Vector3 moveDir = (target.position - transform.position).normalized;
-        transform.position += moveDir * moveSpeed * Time.deltaTime;
+        transform.position += moveDir * enemyConfigSO.baseMoveSpeed * Time.deltaTime;
         moveDir.y = 0;
         if (moveDir != Vector3.zero)
             transform.rotation = Quaternion.LookRotation(moveDir);
@@ -142,9 +154,10 @@ public class EnemyMelee : Enemy
 
     #endregion
 
-    #region State
+    #region StateMachine
     void IdleState(float distance)
     {
+        animator.SetBool(GameTags.EnemyAnimationTags.ENEMY_RUN_TAG, false);
         if (distance <= chaseRange)
         {
             curretState = EnemyState.Chase;
@@ -161,29 +174,28 @@ public class EnemyMelee : Enemy
 
         if (distance <= attackRange)
         {
-            curretState = EnemyState.Attack;            
+            curretState = EnemyState.Attack;
             return;
         }
 
         EnemyMoveToPlayer();
+        animator.SetBool(GameTags.EnemyAnimationTags.ENEMY_RUN_TAG, true);
     }
 
     void AttackState(float distance)
     {
+        animator.SetBool(GameTags.EnemyAnimationTags.ENEMY_RUN_TAG, false);
         if (distance > attackRange)
         {
             curretState = EnemyState.Chase;
             return;
         }
 
-        attackTimer -= Time.deltaTime;
-        if (attackTimer <= 0)
-        {            
-            //DoAttack();
-            Debug.Log("EnemyAttackState attack");
-            attackTimer = attackCooldown;
-        }
+        if (isAttacking) return;
+        isAttacking = true;
+        animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_ATTACK_TAG);
     }
+
     #endregion
 
 

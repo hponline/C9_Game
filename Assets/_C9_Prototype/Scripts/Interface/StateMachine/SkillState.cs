@@ -16,9 +16,9 @@ public class SkillState : IState
         Debug.Log($"SkillState baþladý: ");
 
         index = owner.pendingSkillIndex;
-        var data = owner.playerSkillController.GetSkillDataSO(index);
+        //var data = owner.playerSkillController.GetSkillDataSO(index);
 
-        timer = data.animDuration;
+        //timer = data.animDuration;
         owner.playerMovement.SetCanMove(false);
 
         //owner.playerSkillController.UseSkillSlot(index, owner.source)
