@@ -23,7 +23,7 @@ public static class GameTags
         public const string ENEMY_ATTACK_TAG = "IsAttack";
         public const string ENEMY_RUN_TAG = "IsRun";
         public const string ENEMY_SKILL_TAG = "IsSkill";
-        public const string ENEMY_JUMP_TAG = "IsJump";
+        public const string ENEMY_DEATH_TAG = "IsDeath";
     }
 
 }

@@ -35,6 +35,10 @@ public class EnemyCanvasHealthBar : MonoBehaviour
     {
         float target = current / max;
         healthImage.fillAmount = target;
+        if (healthImage.fillAmount == 0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
 }

@@ -8,6 +8,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public bool IsAlive => playerRunTimeStats.CurrentHealth > 0f;
     public Transform Transform => transform;
 
+    [Header("HealthBar")]
+    [HideInInspector] public float CurrentHealth => playerRunTimeStats.CurrentHealth;
+    [HideInInspector] public float MaxHealth => playerRunTimeStats.MaxHealth;
+
     public event Action OnDied;
     public event Action<DamageContext> OnDamaged;
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum EnemyState
@@ -12,6 +13,7 @@ public class EnemyMelee : Enemy
     [SerializeField] EnemyState curretState;
     [SerializeField] SkillBehaviour meleeSkill;
     [SerializeField] Transform target;
+    [SerializeField] EnemyHealth enemyHealth;
 
 
     [Header("Patrol")]
@@ -20,14 +22,15 @@ public class EnemyMelee : Enemy
     [Header("Attack")]
     [SerializeField] float attackRange = 3f;
     [SerializeField] LayerMask layerMask;
-    bool isAttacking;
+    public bool isAttacking;
+    public bool canDealDamage;
 
     float finalAttackSpeed;
     float attackSpeedMultiplier;
     float baseAttackSpeed = 1f;
     float attackCooldown;
     float attackTimer;
-    // çarpanlara bak EnemyRuntimeStats ile çakýþýyor mu
+
 
     [Header("Death")]
     [SerializeField] GameObject deathVFX;
@@ -79,7 +82,7 @@ public class EnemyMelee : Enemy
         foreach (var hit in hits)
         {
             var damageable = hit.GetComponentInParent<IDamageable>();
-            if (damageable == null) return;
+            if (damageable == null) continue;
 
             var ctx = new DamageContext
             {
@@ -89,13 +92,22 @@ public class EnemyMelee : Enemy
                 //sourceOwner = this
             };
             damageable.TakeDamage(ctx);
-
         }
+    }
+
+    public void CancelAttack()
+    {
+        isAttacking = false;
+        canDealDamage = false;
+        Debug.Log($"{name} attack cancel");
+        animator.ResetTrigger(GameTags.EnemyAnimationTags.ENEMY_ATTACK_TAG);
+        animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_GETHIT_TAG);
     }
 
     public void AttackFinished()
     {
         isAttacking = false;
+        canDealDamage = false;
     }
 
     #endregion
@@ -111,16 +123,9 @@ public class EnemyMelee : Enemy
     #region Death
     protected override void HandleDeath(EnemyHealth health)
     {
-
         // Animasyon, loot, event, pool vs.
         //lootDropper?.DropLoot(transform.position); //drobu event ile yap baþka scriptte
         Debug.Log($"{name}: öldü");
-
-        if (animator != null)
-        {
-            Debug.Log($"ölüm animasyonu tetikle");
-            //animator.SetTrigger("Die");
-        }
 
         if (deathVFX != null)
         {
@@ -134,8 +139,25 @@ public class EnemyMelee : Enemy
             //AudioSource.PlayClipAtPoint(deathSound, transform.position); // Geçici olarak o yerde 3d ses ekler ve siler, -- AudioManager a geç
         }
 
+        OnDeath();
+    }
+
+    void OnDeath()
+    {
+        animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_DEATH_TAG);
+        Despawn();
         DisableEnemy();
-        //Destroy(gameObject, destroyDelay);
+    }
+
+    void Despawn()
+    {
+        StartCoroutine(DespawnCoroutine());
+    }
+
+    IEnumerator DespawnCoroutine()
+    {
+        yield return new WaitForSeconds(destroyDelay);
+        gameObject.SetActive(false);
     }
 
     void DisableEnemy()
@@ -157,11 +179,12 @@ public class EnemyMelee : Enemy
     #region StateMachine
     void IdleState(float distance)
     {
-        animator.SetBool(GameTags.EnemyAnimationTags.ENEMY_RUN_TAG, false);
         if (distance <= chaseRange)
         {
             curretState = EnemyState.Chase;
         }
+        animator.SetBool(GameTags.EnemyAnimationTags.ENEMY_RUN_TAG, false);
+        animator.SetBool(GameTags.EnemyAnimationTags.ENEMY_IDLE_TAG, true);
     }
 
     void ChaseState(float distance)
@@ -184,15 +207,15 @@ public class EnemyMelee : Enemy
 
     void AttackState(float distance)
     {
-        animator.SetBool(GameTags.EnemyAnimationTags.ENEMY_RUN_TAG, false);
         if (distance > attackRange)
         {
             curretState = EnemyState.Chase;
             return;
         }
+        animator.SetBool(GameTags.EnemyAnimationTags.ENEMY_RUN_TAG, false);
 
-        if (isAttacking) return;
-        isAttacking = true;
+        //if (isAttacking) return;
+        //isAttacking = true;
         animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_ATTACK_TAG);
     }
 
@@ -221,5 +244,15 @@ public class EnemyMelee : Enemy
         Gizmos.DrawWireSphere(transform.position, chaseRange);
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
+
+    //private void OnEnable()
+    //{
+    //    enemyHealth.OnDied += OnDeath;
+    //}
+
+    //private void OnDisable()
+    //{
+    //    enemyHealth.OnDied -= OnDeath;
+    //}
 
 }

@@ -18,22 +18,15 @@ public class EnemyHitVFXController : MonoBehaviour
         animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_GETHIT_TAG);
         if (getHitVfx != null)
             Instantiate(getHitVfx, ctx.hitPoint + new Vector3(0,1,0), Quaternion.LookRotation(ctx.hitNormal));
-    }
-
-    void OnDeath()
-    {
-        Debug.Log("Dead vfx");
-    }
+    }    
 
     private void OnEnable()
     {
         enemyHealth.OnDamaged += OnDamaged; 
-        enemyHealth.OnDied += OnDeath; 
     }
 
     private void OnDisable()
     {
         enemyHealth.OnDamaged -= OnDamaged;
-        enemyHealth.OnDied -= OnDeath;
     }
 }
