@@ -5,20 +5,20 @@ public class MeleSkillBehaviour : SkillBehaviour
     [SerializeField] float radius = 2f;
     Vector3 gizmosRadius;
 
-    public override void Execute(IAttackSource source)
+    public override void Execute()
     {
-        Vector3 origin = source.AttackOrigin.position;
-        gizmosRadius = source.AttackOrigin.position;
+        //Vector3 origin = source.AttackOrigin.position;
+        //gizmosRadius = source.AttackOrigin.position;
 
-        Collider[] hits = Physics.OverlapSphere(origin, radius, skillData.hitMask); //NonAlloc yapýlabilir
+        Collider[] hits = Physics.OverlapSphere(transform.position, radius, skillData.hitMask); //NonAlloc yapýlabilir
         foreach (var hit in hits)
         {
             if (!hit.TryGetComponent<IDamageable>(out var target)) continue;
             var ctx = new DamageContext
             {
                 amount = skillData.damage,
-                hitPoint = hit.ClosestPoint(origin),
-                hitNormal = (hit.transform.position - origin).normalized,
+                hitPoint = hit.ClosestPoint(transform.position),
+                hitNormal = (hit.transform.position - transform.position).normalized,
                 //sourceOwner = source.Owner // ??
             };
             target.TakeDamage(ctx);
@@ -31,6 +31,12 @@ public class MeleSkillBehaviour : SkillBehaviour
         //    // skillData.SkillPrefab üzerinden Vfx/Sound/Spawn tetikleme yeri
         //}
     }
+
+    public override void Stop()
+    {
+        Debug.Log("Basic ATTACK End");
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

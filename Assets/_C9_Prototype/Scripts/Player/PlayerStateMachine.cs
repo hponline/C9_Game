@@ -12,7 +12,6 @@ public class PlayerStateMachine : MonoBehaviour
     public PlayerHealth health;
 
     [Header("Skill State Setting")]
-    public int pendingSkillIndex = 0;
     public IState idleState;
     IState runState;
     IState jumpState;
@@ -26,7 +25,6 @@ public class PlayerStateMachine : MonoBehaviour
         idleState = new IdleState(this);
         runState = new RunState(this);
         jumpState = new JumpState(this);
-        skillState = new SkillState(this);
         basicAttackState = new BasicAttackState(this);
 
         InputHandler = GetComponent<InputHandler>();
@@ -103,10 +101,5 @@ public class PlayerStateMachine : MonoBehaviour
     public void OnAttackAnimationEnd()
     {
         ChangeState(idleState);
-    }
-
-    public void RequestSkill(int index)
-    {
-        pendingSkillIndex = index;
     }
 }

@@ -33,7 +33,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skill1Pressed",
+                    "name": "SkillWhirlwind",
+                    "type": "Button",
+                    "id": "2d847ee7-b63f-4d04-9d34-3fe071ab2973",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SkillLine",
                     "type": "Button",
                     "id": "0f373893-45dc-4228-8ce5-f8e5e8a4c03a",
                     "expectedControlType": "",
@@ -123,11 +132,22 @@
                 {
                     "name": "",
                     "id": "82dec587-2ada-45fc-bd1a-6dc148403f58",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SkillLine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5f4225c5-dd36-451c-a37f-ac065c084539",
                     "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Skill1Pressed",
+                    "action": "SkillWhirlwind",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

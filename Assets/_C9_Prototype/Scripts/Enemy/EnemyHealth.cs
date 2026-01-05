@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
     EnemyRunTimeStats enemyRunTimeStats;
-    EnemyMelee enemyMelee;
 
     public bool IsAlive => enemyRunTimeStats.CurrentHealth > 0f;
     public Transform Transform => transform;
@@ -20,13 +19,11 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private void Awake()
     {
         enemyRunTimeStats = GetComponent<EnemyRunTimeStats>();
-        enemyMelee = GetComponent<EnemyMelee>();
     }
 
     public void TakeDamage(DamageContext ctx)
     {
         if (!IsAlive) return;
-        OnTakeDamage();
 
         enemyRunTimeStats.TakeDamage(ctx.amount);
         OnDamaged?.Invoke(ctx);
@@ -35,17 +32,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             Die();
     }
 
-    void OnTakeDamage()
-    {
-        if (enemyMelee.isAttacking && !enemyMelee.canDealDamage)
-        {
-            enemyMelee.CancelAttack();
-        }
-    }
-
     void Die()
     {
         OnDied?.Invoke();
-        //Destroy(gameObject);
     }
 }

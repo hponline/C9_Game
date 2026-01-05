@@ -13,13 +13,14 @@ public class SkillDataSO : ScriptableObject
     public SkillType skillType;
     public string displayName;
     public float damage = 50f;
-    public float cooldown = 3f;
+    public float cooldown = 5f;
     public float skillRange = 10f;
-    public float animDuration = 0.8f;
-    public float hitDelay = 0.4f;
+    public float damageRadius = 5f;
+    public float pullRadius = 10f;
+    public float pullForce = 5f;
+    public float tickInterval = 0.15f;
 
     public string animationTriggerName;
-    public AnimationClip animationClip;
     public GameObject skillPrefab; // VFX/Projectile prefab
     public LayerMask hitMask;
     public AudioClip soundEffect;

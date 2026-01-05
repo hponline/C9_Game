@@ -12,7 +12,7 @@ public static class GameTags
         public const string PLAYER_IDLE_TAG = "IsIdle";
         public const string PLAYER_ATTACK_TAG = "IsAttack";
         public const string PLAYER_RUN_TAG = "IsRun";
-        public const string PLAYER_SKILL_TAG = "IsSkill";
+        public const string PLAYER_SKILL_TAG = "Whirlwind";
         public const string PLAYER_JUMP_TAG = "IsJump";
     }
 

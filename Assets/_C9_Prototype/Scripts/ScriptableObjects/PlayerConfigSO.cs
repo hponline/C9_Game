@@ -9,8 +9,4 @@ public class PlayerConfigSO : ScriptableObject
     public float baseMoveSpeed = 3f;
     public float baseAttackSpeed = 1f;
     public float jumpForce = 3f;
-
-    [Header("Starting Skills")]
-    public SkillDataSO basicAttack;
-    public SkillDataSO[] startingSkills;
 }

@@ -1,10 +1,24 @@
 using UnityEngine;
 
-public class AnimationEventProxy : MonoBehaviour
+public class PlayerAnimationEvents : MonoBehaviour
 {
     public PlayerSkillController skillController;
     public PlayerStateMachine stateMachine;
 
+    #region Skill
+
+    public void OnSkillStart()
+    {
+        skillController.OnSkillStart();
+    }
+    public void OnSkillEnd()
+    {
+        skillController.OnSkillEnd();
+    }
+
+    #endregion
+
+    #region Basic Attack
     public void OnAnimationHit()
     {
         skillController?.OnAnimationHit();        
@@ -14,6 +28,8 @@ public class AnimationEventProxy : MonoBehaviour
     {
         stateMachine?.OnAttackAnimationEnd();        
     }
+
+    #endregion
 
     public void PlayerMoveStart()
     {

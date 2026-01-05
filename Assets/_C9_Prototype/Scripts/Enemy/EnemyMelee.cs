@@ -95,6 +95,14 @@ public class EnemyMelee : Enemy
         }
     }
 
+    void HandleDamaged(DamageContext ctx)
+    {
+        if (isAttacking && !canDealDamage)
+        {
+            CancelAttack();
+        }
+    }
+
     public void CancelAttack()
     {
         isAttacking = false;
@@ -245,14 +253,14 @@ public class EnemyMelee : Enemy
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
-    //private void OnEnable()
-    //{
-    //    enemyHealth.OnDied += OnDeath;
-    //}
+    private void OnEnable()
+    {
+        enemyHealth.OnDamaged += HandleDamaged;
+    }
 
-    //private void OnDisable()
-    //{
-    //    enemyHealth.OnDied -= OnDeath;
-    //}
+    private void OnDisable()
+    {
+        enemyHealth.OnDamaged -= HandleDamaged;
+    }
 
 }
