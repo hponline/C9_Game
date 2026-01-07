@@ -1,13 +1,21 @@
 using System.Collections;
 using UnityEngine;
 
+[System.Serializable]
+public class SkillSlot
+{
+    public SkillBehaviour skillBehaviour;
+    public float CooldownRemaining;
+}
+
 public class PlayerSkillController : MonoBehaviour
 {
     [Header("References")]
     InputHandler inputHandler;
     [SerializeField] SkillBehaviour basicAttackSkill;
-    [SerializeField] SkillBehaviour[] skills;
+    [SerializeField] SkillSlot[] skillSlots;
 
+    public SkillSlot[] GetSkillSlots() => skillSlots;
 
     IAttackSource attackSource;
     SkillBehaviour currentSkill;
@@ -31,6 +39,15 @@ public class PlayerSkillController : MonoBehaviour
         Debug.Log("Yeni skil ekle veya Mevcut skile efekt ekle");
     }
 
+    private void Update()
+    {
+        foreach (var slot in skillSlots)
+        {
+            if (slot.CooldownRemaining > 0f)
+                slot.CooldownRemaining -= Time.deltaTime;
+        }
+    }
+
     #region Basic Attack
     // Baþka yere taþýnabilir
     public void UseBasicAttack(IAttackSource source)
@@ -50,24 +67,27 @@ public class PlayerSkillController : MonoBehaviour
 
     #region Skills
 
-    void HandleSkillInput(int slot)
+    void HandleSkillInput(int slotIndex)
     {
         if (isBusy) return;
-        if (slot < 0 || slot >= skills.Length) return;
+        if (slotIndex < 0 || slotIndex >= skillSlots.Length) return;
 
-        UseSkill(skills[slot]);
+        UseSkill(skillSlots[slotIndex]);
     }
 
-    void UseSkill(SkillBehaviour skill)
+    void UseSkill(SkillSlot slot)
     {
+        if (slot.CooldownRemaining > 0f) return;
+
         isBusy = true;
-        currentSkill = skill;
-        animator?.SetTrigger(skill.PlayerSkillSOData.animationTriggerName);
+        currentSkill = slot.skillBehaviour;
+        slot.CooldownRemaining = slot.skillBehaviour.PlayerSkillSOData.cooldown;
+        animator.SetTrigger(slot.skillBehaviour.PlayerSkillSOData.animationTriggerName);
     }
 
     public void OnSkillStart()
     {
-        currentSkill?.Execute();       
+        currentSkill?.Execute();
     }
 
     public void OnSkillEnd()
