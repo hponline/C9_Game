@@ -1,0 +1,11 @@
+{
+    "asset": "d773ba403527278498a6934682fa0d8e",
+    "fileName": "019b9e27-0c59-7b16-aedc-94a43eaed9cd.pose.json",
+    "prompt": "Bir karakter olduğu yerde iki kolunu açarak elinde kılıç varmış gibi dönme animasyonu",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 2089494213,
+    "w3CTraceId": "68f8eaf892643c0fabd065bb3749ae68",
+    "isTrimmed": false
+}

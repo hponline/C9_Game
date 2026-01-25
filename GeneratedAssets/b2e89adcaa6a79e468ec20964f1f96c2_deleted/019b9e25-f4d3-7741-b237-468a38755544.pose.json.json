@@ -1,0 +1,11 @@
+{
+    "asset": "b2e89adcaa6a79e468ec20964f1f96c2",
+    "fileName": "019b9e25-f4d3-7741-b237-468a38755544.pose.json",
+    "prompt": "whirlwind skill animation",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 227457188,
+    "w3CTraceId": "4411a2641b9f9b4fbbb415b888b9790a",
+    "isTrimmed": false
+}

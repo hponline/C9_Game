@@ -1,0 +1,11 @@
+{
+    "asset": "f097eac8c3034324e8bba325662370f8",
+    "fileName": "019b9e1d-1b8f-73fd-926d-57f80024236d.pose.json",
+    "prompt": "karakter iki elinde kılıç var gibi oldugu yerde dönsün, whirlwind gibi",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 1089949987,
+    "w3CTraceId": "adb300676dcc6c8ab6b59a85b53dd653",
+    "isTrimmed": false
+}

@@ -4,6 +4,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 {
     public PlayerSkillController skillController;
     public PlayerStateMachine stateMachine;
+    public PlayerVFX playerVFX;
 
     #region Skill
 
@@ -27,6 +28,11 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void OnAttackAnimationEnd()
     {
         stateMachine?.OnAttackAnimationEnd();        
+    }
+
+    public void SlashEffect()
+    {
+        playerVFX.AttackSlashEffect();
     }
 
     #endregion

@@ -1,0 +1,11 @@
+{
+    "asset": "f097eac8c3034324e8bba325662370f8",
+    "fileName": "019b9e1f-dbab-732e-887a-e6a7b5c3ce74.pose.json",
+    "prompt": "Create a humanoid character animation similar to a “whirlwind” skill.\nThe character spreads both arms horizontally to the sides, as if holding a sword in each hand.\nWhile keeping arms extended, the character spins rapidly around its vertical (Y) axis.\nThe rotation should be centered on the hips, with stable foot placement and slight knee bend.\nUpper body remains upright, arms rigid, hands aligned forward as if gripping weapons.\nAnimation should loop cleanly and be suitable for a combat skill.\nNo jumping, no forward movement, rotation in place only.",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 2072622000,
+    "w3CTraceId": "f0d3a37430713cc6acec84be549feb9f",
+    "isTrimmed": false
+}

@@ -1,0 +1,11 @@
+{
+    "asset": "f097eac8c3034324e8bba325662370f8",
+    "fileName": "019b9e1d-b551-7fe8-9f06-e501fc0f25c9.pose.json",
+    "prompt": "karakter iki elinde kılıç var gibi oldugu yerde dönsün, iki kolunu yanlara doğru açsın topaç gibi dönsün",
+    "negativePrompt": "",
+    "model": "9e46c009-67d8-4254-a3a0-32e3168247ee",
+    "modelName": "Text to Motion",
+    "customSeed": 2129619784,
+    "w3CTraceId": "51979715c473c18cabd608292112ef5b",
+    "isTrimmed": false
+}
