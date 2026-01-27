@@ -3,7 +3,7 @@ using UnityEngine;
 public class WhirlwindSkill : SkillBehaviour
 {
     // Base deðerler burada durup exp aldýkça base + SO deðerleri yükseltirebilir
-
+    public ParticleSystem shockwawePrefab;
     bool isActive;
     float tickTimer;
 
@@ -15,6 +15,7 @@ public class WhirlwindSkill : SkillBehaviour
         if (tickTimer >= skillData.tickInterval)
         {
             DealDamage();
+            ShockwaweSpawn();
             tickTimer = 0;
         }
     }
@@ -55,6 +56,11 @@ public class WhirlwindSkill : SkillBehaviour
                 });
             }
         }
+    }
+
+    public void ShockwaweSpawn()
+    {
+        Instantiate(shockwawePrefab, transform.position, Quaternion.identity);
     }
 
     private void OnDrawGizmosSelected()
