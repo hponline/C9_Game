@@ -10,6 +10,7 @@ public enum SkillType
 [CreateAssetMenu(menuName = "C9/SkillData")]
 public class SkillDataSO : ScriptableObject
 {
+    [Header("GamePlay")]
     public SkillType skillType;
     public string displayName;
     public float damage = 50f;
@@ -20,6 +21,7 @@ public class SkillDataSO : ScriptableObject
     public float pullForce = 5f;
     public float tickInterval = 0.15f;
 
+    [Header("Presentation")]
     public Sprite skillIcon;
     public string animationTriggerName;
     public GameObject skillPrefab; // VFX/Projectile prefab

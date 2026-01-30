@@ -16,6 +16,7 @@ public class WhirlwindSkill : SkillBehaviour
         {
             DealDamage();
             ShockwaweSpawn();
+            TriggerCameraEffect(); // burasý her frame mi çalýþýyor kontrol et
             tickTimer = 0;
         }
     }
@@ -58,9 +59,9 @@ public class WhirlwindSkill : SkillBehaviour
         }
     }
 
-    public void ShockwaweSpawn()
+    public void ShockwaweSpawn() // Refocter ?
     {
-        Instantiate(shockwawePrefab, transform.position, Quaternion.identity);
+        Instantiate(shockwawePrefab, transform.position, Quaternion.identity);        
     }
 
     private void OnDrawGizmosSelected()
