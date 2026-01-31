@@ -18,4 +18,4 @@ MonoBehaviour:
   lensIntensity: 0.5
   useDepthOfField: 1
   depthOfFieldStart: 0.5
-  duration: 0.25
+  duration: 1.25

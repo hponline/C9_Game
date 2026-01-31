@@ -3,7 +3,7 @@ using UnityEngine;
 public class WhirlwindSkill : SkillBehaviour
 {
     // Base deðerler burada durup exp aldýkça base + SO deðerleri yükseltirebilir
-    public ParticleSystem shockwawePrefab;
+    [SerializeField] ParticleSystem[] shockwawePrefab;
     bool isActive;
     float tickTimer;
 
@@ -12,11 +12,9 @@ public class WhirlwindSkill : SkillBehaviour
         if (!isActive) return;
 
         tickTimer += Time.deltaTime;
-        if (tickTimer >= skillData.tickInterval)
+        if (tickTimer >= skillData.tickInterval) // ====== 13 DEFA ÇAÐIIRYOR
         {
-            DealDamage();
-            ShockwaweSpawn();
-            TriggerCameraEffect(); // burasý her frame mi çalýþýyor kontrol et
+            DealDamage();            
             tickTimer = 0;
         }
     }
@@ -25,11 +23,14 @@ public class WhirlwindSkill : SkillBehaviour
     {
         tickTimer = 0;
         isActive = true;
+        TriggerCameraEffect();
+        StartShockWawe();
     }
 
     public override void Stop()
     {
         isActive = false;
+        StopShockWawe();
     }
 
     void DealDamage()
@@ -59,9 +60,20 @@ public class WhirlwindSkill : SkillBehaviour
         }
     }
 
-    public void ShockwaweSpawn() // Refocter ?
+    // Shockwawe
+    void StartShockWawe()
     {
-        Instantiate(shockwawePrefab, transform.position, Quaternion.identity);        
+        foreach (var item in shockwawePrefab)
+        {
+            item.Play();
+        }
+    }
+    void StopShockWawe()
+    {
+        foreach (var item in shockwawePrefab)
+        {
+            item.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
     }
 
     private void OnDrawGizmosSelected()

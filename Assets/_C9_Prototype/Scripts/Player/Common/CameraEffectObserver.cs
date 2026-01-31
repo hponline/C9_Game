@@ -47,7 +47,7 @@ public class CameraEffectObserver : MonoBehaviour
                     x => chromaticAberration.intensity.value = x,
                     data.chromaticIntensity,
                     data.duration
-                    ).SetEase(Ease.InOutSine));
+                    ).SetEase(Ease.OutBack));
         }
 
         if (data.useLens)
@@ -58,7 +58,7 @@ public class CameraEffectObserver : MonoBehaviour
                     x => lens.intensity.value = x,
                     data.lensIntensity,
                     data.duration
-                    ).SetEase(Ease.InOutSine));
+                    ).SetEase(Ease.OutBack));
         }
 
         if (data.useChromatic)

@@ -24,9 +24,8 @@ public abstract class SkillBehaviour : MonoBehaviour
             useDepthOfField = cameraEffectSO.useDepthOfField,
             depthOfFieldStart = cameraEffectSO.depthOfFieldStart,
 
-            duration = cameraEffectSO.duration,
+            duration = cameraEffectSO.duration,            
         };
-
         SkillEffectEvents.OnSkillCameraEffect?.Invoke(data);
     }
 
