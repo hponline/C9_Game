@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class VioletCrossSkill : SkillBehaviour
@@ -11,7 +10,7 @@ public class VioletCrossSkill : SkillBehaviour
     {
         var projectile = Instantiate(violetCrossProjectilePrefab, firePoint.position, firePoint.rotation);
 
-        projectile.Init(firePoint.forward, skillData.projectileSpeed, skillData.damage, skillData.hitMask);
+        projectile.Init(firePoint.forward, skillData.projectileSpeed, skillData.damage, skillData.skillRange);
     }
 
     public override void Stop()
