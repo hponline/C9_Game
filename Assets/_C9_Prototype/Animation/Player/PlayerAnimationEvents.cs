@@ -11,11 +11,9 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void OnSkillStart()
     {
         skillController.OnSkillStart();
-        playerVFX.StartTrail();
     }
     public void OnSkillEnd()
     {
-        playerVFX.EndTrail();
         skillController.OnSkillEnd();
     }
 

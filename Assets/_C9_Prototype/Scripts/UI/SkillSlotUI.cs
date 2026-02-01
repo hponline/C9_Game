@@ -3,12 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SkillSlotUI : MonoBehaviour
-{    
+{
     [SerializeField] string skillKeyInput;
     public TextMeshProUGUI skillKeyTxt;
 
-    public Image cooldownFill;
-    public Image icon;
+    [SerializeField] Image cooldownFill;
+    [SerializeField] Image icon;
 
     SkillSlot slot;
 

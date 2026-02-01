@@ -4,6 +4,8 @@ public class WhirlwindSkill : SkillBehaviour
 {
     // Base deðerler burada durup exp aldýkça base + SO deðerleri yükseltirebilir
     [SerializeField] ParticleSystem[] shockwawePrefab;
+    [SerializeField] PlayerVFX playerVFX;
+
     bool isActive;
     float tickTimer;
 
@@ -25,12 +27,14 @@ public class WhirlwindSkill : SkillBehaviour
         isActive = true;
         TriggerCameraEffect();
         StartShockWawe();
+        playerVFX.StartTrail();
     }
 
     public override void Stop()
     {
         isActive = false;
         StopShockWawe();
+        playerVFX.EndTrail();
     }
 
     void DealDamage()

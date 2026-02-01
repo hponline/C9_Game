@@ -20,6 +20,7 @@ public class SkillDataSO : ScriptableObject
     public float pullRadius = 10f;
     public float pullForce = 5f;
     public float tickInterval = 0.15f;
+    public float projectileSpeed = 5f;
 
     [Header("Presentation")]
     public Sprite skillIcon;
