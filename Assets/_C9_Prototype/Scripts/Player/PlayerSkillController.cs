@@ -34,11 +34,6 @@ public class PlayerSkillController : MonoBehaviour
         attackSource = GetComponent<IAttackSource>();
     }
 
-    private void Start()
-    {
-        Debug.Log("Yeni skil ekle veya Mevcut skile efekt ekle");
-    }
-
     private void Update()
     {
         foreach (var slot in skillSlots)

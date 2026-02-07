@@ -136,6 +136,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkillDestiny"",
+                    ""type"": ""Button"",
+                    ""id"": ""f764e361-6b0a-4072-ac90-5f787b225c78"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -237,6 +246,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""SkillWhirlwind"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ab450bc-c02d-4c17-9e9a-e39dfb072b7c"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SkillDestiny"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -290,6 +310,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_PrimaryAttack = m_Player.FindAction("PrimaryAttack", throwIfNotFound: true);
         m_Player_SkillWhirlwind = m_Player.FindAction("SkillWhirlwind", throwIfNotFound: true);
         m_Player_SkillLine = m_Player.FindAction("SkillLine", throwIfNotFound: true);
+        m_Player_SkillDestiny = m_Player.FindAction("SkillDestiny", throwIfNotFound: true);
         // CameraControls
         m_CameraControls = asset.FindActionMap("CameraControls", throwIfNotFound: true);
         m_CameraControls_MouseZoom = m_CameraControls.FindAction("MouseZoom", throwIfNotFound: true);
@@ -379,6 +400,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PrimaryAttack;
     private readonly InputAction m_Player_SkillWhirlwind;
     private readonly InputAction m_Player_SkillLine;
+    private readonly InputAction m_Player_SkillDestiny;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -410,6 +432,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/SkillLine".
         /// </summary>
         public InputAction @SkillLine => m_Wrapper.m_Player_SkillLine;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SkillDestiny".
+        /// </summary>
+        public InputAction @SkillDestiny => m_Wrapper.m_Player_SkillDestiny;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -451,6 +477,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SkillLine.started += instance.OnSkillLine;
             @SkillLine.performed += instance.OnSkillLine;
             @SkillLine.canceled += instance.OnSkillLine;
+            @SkillDestiny.started += instance.OnSkillDestiny;
+            @SkillDestiny.performed += instance.OnSkillDestiny;
+            @SkillDestiny.canceled += instance.OnSkillDestiny;
         }
 
         /// <summary>
@@ -477,6 +506,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SkillLine.started -= instance.OnSkillLine;
             @SkillLine.performed -= instance.OnSkillLine;
             @SkillLine.canceled -= instance.OnSkillLine;
+            @SkillDestiny.started -= instance.OnSkillDestiny;
+            @SkillDestiny.performed -= instance.OnSkillDestiny;
+            @SkillDestiny.canceled -= instance.OnSkillDestiny;
         }
 
         /// <summary>
@@ -661,6 +693,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSkillLine(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SkillDestiny" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSkillDestiny(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "CameraControls" which allows adding and removing callbacks.

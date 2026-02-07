@@ -22,7 +22,7 @@ public abstract class SkillBehaviour : MonoBehaviour
             lensIntensity = cameraEffectSO.lensIntensity,
 
             useDepthOfField = cameraEffectSO.useDepthOfField,
-            depthOfFieldStart = cameraEffectSO.depthOfFieldStart,
+            depthOfFieldStart = cameraEffectSO.depthOfFieldStart,            
 
             duration = cameraEffectSO.duration,            
         };

@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
     PlayerInput playerInput;
-    PlayerSkillController skillController;
-    WhirlwindSkill whirlwindSkill;
 
     public Vector2 moveInput;
     public bool jumpPressed;
@@ -19,8 +17,6 @@ public class InputHandler : MonoBehaviour
     private void Awake()
     {
         playerInput = new PlayerInput();
-        skillController = GetComponent<PlayerSkillController>();
-        whirlwindSkill = GetComponent<WhirlwindSkill>();
     }
 
     private void OnEnable()
@@ -35,6 +31,7 @@ public class InputHandler : MonoBehaviour
 
         playerInput.Player.SkillWhirlwind.performed += SkillWhirlwind;
         playerInput.Player.SkillLine.performed += SkillLine;
+        playerInput.Player.SkillDestiny.performed += SkillDestiny;
     }
 
     private void OnDisable()
@@ -47,6 +44,7 @@ public class InputHandler : MonoBehaviour
 
         playerInput.Player.SkillWhirlwind.performed -= SkillWhirlwind;
         playerInput.Player.SkillLine.performed -= SkillLine;
+        playerInput.Player.SkillDestiny.performed -= SkillDestiny;
 
         playerInput.Player.Disable();
     }
@@ -97,6 +95,10 @@ public class InputHandler : MonoBehaviour
     void SkillLine(InputAction.CallbackContext ctx)
     {
         OnSkillInput?.Invoke(1);        
+    }
+    void SkillDestiny(InputAction.CallbackContext ctx)
+    {
+        OnSkillInput?.Invoke(2);
     }
 
 

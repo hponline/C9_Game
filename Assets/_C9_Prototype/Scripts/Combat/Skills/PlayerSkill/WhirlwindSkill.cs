@@ -14,7 +14,7 @@ public class WhirlwindSkill : SkillBehaviour
         if (!isActive) return;
 
         tickTimer += Time.deltaTime;
-        if (tickTimer >= skillData.tickInterval) // ====== 13 DEFA ÇAÐIIRYOR
+        if (tickTimer >= skillData.tickInterval)
         {
             DealDamage();            
             tickTimer = 0;
@@ -64,7 +64,6 @@ public class WhirlwindSkill : SkillBehaviour
         }
     }
 
-    // Shockwawe
     void StartShockWawe()
     {
         foreach (var item in shockwawePrefab)

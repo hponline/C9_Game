@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c69d47d9ed7df9e438524045b39caf50, type: 3}
   m_Name: CameraEffect_Violet
   m_EditorClassIdentifier: 
-  useChromatic: 1
+  useChromatic: 0
   chromaticIntensity: 0.5
   useLens: 1
-  lensIntensity: 0.5
+  lensIntensity: 10
   useDepthOfField: 0
-  depthOfFieldStart: 0.5
-  duration: 1.25
+  depthOfFieldStart: 2
+  duration: 0.5
