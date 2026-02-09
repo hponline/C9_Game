@@ -61,7 +61,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Destiny
+    m_ConditionEvent: YoneUltSkill
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 137991374937282072}
@@ -372,7 +372,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Destiny
+  - m_Name: YoneUltSkill
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -851,10 +851,10 @@ AnimatorStateMachine:
     m_Position: {x: 140, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 555701673242117235}
-    m_Position: {x: 390, y: 230, z: 0}
+    m_Position: {x: 390, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5484164605933403391}
-    m_Position: {x: 630, y: 240, z: 0}
+    m_Position: {x: 630, y: 230, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

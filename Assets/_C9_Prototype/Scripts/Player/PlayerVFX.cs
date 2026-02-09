@@ -1,22 +1,23 @@
+using System;
 using UnityEngine;
 
 public class PlayerVFX : MonoBehaviour
 {
     [SerializeField] ParticleSystem slashVFX;
-    [SerializeField] TrailRenderer trailRenderer;
+    [SerializeField] TrailRenderer whirlWindSkillTrailRenderer;
 
     public void AttackSlashEffect()
     {
         slashVFX.Play();
     }
 
-    public void StartTrail()
+    public void StartWhirlwindTrail()
     {
-        trailRenderer.Clear();
-        trailRenderer.emitting = true;
+        whirlWindSkillTrailRenderer.Clear();
+        whirlWindSkillTrailRenderer.emitting = true;
     }
-    public void EndTrail()
+    public void EndWhirlwindTrail()
     {
-        trailRenderer.emitting = false;
+        whirlWindSkillTrailRenderer.emitting = false;
     }
 }

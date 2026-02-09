@@ -6,6 +6,7 @@ public class WaweSpawner : MonoBehaviour
 {
     [SerializeField] WaweConfigSO waweConfigSO;
     [SerializeField] EnemySpawnPoint[] spawnPoints;
+    [SerializeField] Transform enemyParentHierarchy;
 
     private void Start()
     {
@@ -34,6 +35,7 @@ public class WaweSpawner : MonoBehaviour
     {
         if (enemyConfigSO == null) return;
         var point = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-        Instantiate(enemyConfigSO.prefab, point.Transform.position, point.Transform.rotation);
+        var enemy = Instantiate(enemyConfigSO.prefab, point.Transform.position, point.Transform.rotation);
+        enemy.transform.SetParent(enemyParentHierarchy, true);
     }
 }

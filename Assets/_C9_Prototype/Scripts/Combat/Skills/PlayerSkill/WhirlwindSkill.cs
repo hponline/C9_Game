@@ -3,11 +3,18 @@ using UnityEngine;
 public class WhirlwindSkill : SkillBehaviour
 {
     // Base deðerler burada durup exp aldýkça base + SO deðerleri yükseltirebilir
+    [SerializeField] int maxTarget = 30;
     [SerializeField] ParticleSystem[] shockwawePrefab;
-    [SerializeField] PlayerVFX playerVFX;
+    [SerializeField] PlayerVFX playerWhirlwindTrailVFX;
+    Collider[] hitBuffer;
 
     bool isActive;
     float tickTimer;
+
+    private void Awake()
+    {
+        hitBuffer = new Collider[maxTarget];
+    }
 
     private void Update()
     {
@@ -16,34 +23,30 @@ public class WhirlwindSkill : SkillBehaviour
         tickTimer += Time.deltaTime;
         if (tickTimer >= skillData.tickInterval)
         {
+            tickTimer -= skillData.tickInterval;
             DealDamage();            
-            tickTimer = 0;
         }
     }
 
     public override void Execute()
-    {
-        tickTimer = 0;
-        isActive = true;
-        TriggerCameraEffect();
-        StartShockWawe();
-        playerVFX.StartTrail();
+    {       
+        StartShockWawe();        
     }
 
     public override void Stop()
-    {
-        isActive = false;
-        StopShockWawe();
-        playerVFX.EndTrail();
+    {        
+        StopShockWawe();        
     }
 
     void DealDamage()
     {
-        var hits = Physics.OverlapSphere(transform.position, skillData.pullRadius, skillData.hitMask);
+        int hits = Physics.OverlapSphereNonAlloc(transform.position, skillData.pullRadius, hitBuffer, skillData.hitMask);
 
-        foreach (var hit in hits)
+        for (int i = 0; i < hits; i++)
         {
-            var rb = hit.GetComponent<Rigidbody>();
+            var hit = hitBuffer[i];
+
+            var rb = hit.attachedRigidbody;
             if (rb)
             {
                 var dir = (transform.position - hit.transform.position).normalized;
@@ -51,6 +54,7 @@ public class WhirlwindSkill : SkillBehaviour
             }
 
             if (!hit.TryGetComponent<IDamageable>(out var damageable)) continue;
+
             float distance = Vector3.Distance(hit.transform.position, transform.position);
             if (distance <= skillData.damageRadius)
             {
@@ -61,21 +65,32 @@ public class WhirlwindSkill : SkillBehaviour
                     hitNormal = (hit.transform.position - transform.position).normalized
                 });
             }
-        }
+        }        
     }
 
     void StartShockWawe()
     {
-        foreach (var item in shockwawePrefab)
+        if (isActive) return;
+        isActive = true;
+
+        tickTimer = 0;
+        TriggerCameraEffect();
+        playerWhirlwindTrailVFX.StartWhirlwindTrail();
+
+        foreach (var shockwawe in shockwawePrefab)
         {
-            item.Play();
+            shockwawe.Play();
         }
     }
     void StopShockWawe()
     {
-        foreach (var item in shockwawePrefab)
+        if (!isActive) return;
+        isActive = false;
+
+        playerWhirlwindTrailVFX.EndWhirlwindTrail();
+        foreach (var shockwawe in shockwawePrefab)
         {
-            item.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            shockwawe.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
     }
 
