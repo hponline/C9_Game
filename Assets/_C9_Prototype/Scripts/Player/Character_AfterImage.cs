@@ -26,8 +26,6 @@ public class Character_AfterImage : MonoBehaviour
     {
         if (isTrailActive) return;
         trailCoroutine = StartCoroutine(ActiveTrail(activeTime));
-
-        Debug.Log("Her zaman efekti atmýyor");
     }
 
     public void StopAfterImage()

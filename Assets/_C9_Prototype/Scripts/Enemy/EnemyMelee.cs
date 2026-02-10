@@ -107,7 +107,7 @@ public class EnemyMelee : Enemy
     {
         isAttacking = false;
         canDealDamage = false;
-        Debug.Log($"{name} attack cancel");
+
         animator.ResetTrigger(GameTags.EnemyAnimationTags.ENEMY_ATTACK_TAG);
         animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_GETHIT_TAG);
     }
@@ -133,7 +133,6 @@ public class EnemyMelee : Enemy
     {
         // Animasyon, loot, event, pool vs.
         //lootDropper?.DropLoot(transform.position); //drobu event ile yap baþka scriptte
-        Debug.Log($"{name}: öldü");
 
         if (deathVFX != null)
         {

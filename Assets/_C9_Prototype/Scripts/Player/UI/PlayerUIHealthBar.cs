@@ -6,6 +6,10 @@ public class PlayerUIHealthBar : MonoBehaviour
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] Image playerHealthImage;
 
+    private void Awake()
+    {
+        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+    }
 
     private void OnEnable()
     {

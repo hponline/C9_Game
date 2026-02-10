@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemies:
   - enemyConfigSO: {fileID: 11400000, guid: 3d3992ea2fbb3484ca42c2b6c4b5fffe, type: 2}
-    count: 20
+    count: 40
   spawnInternal: 1

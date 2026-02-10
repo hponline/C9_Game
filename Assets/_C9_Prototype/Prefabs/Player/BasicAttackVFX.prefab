@@ -14806,7 +14806,7 @@ GameObject:
   - component: {fileID: 6717889069926357776}
   - component: {fileID: 9127551096705794818}
   m_Layer: 0
-  m_Name: Slash Earth VFX
+  m_Name: BasicAttackVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

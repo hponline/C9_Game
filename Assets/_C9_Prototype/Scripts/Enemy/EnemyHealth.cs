@@ -12,13 +12,19 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public event Action OnDied;
     public event Action<DamageContext> OnDamaged;
 
-    [Header("HealthBar")]
-    [HideInInspector] public float CurrentHealth => enemyRunTimeStats.CurrentHealth;
-    [HideInInspector] public float MaxHealth => enemyRunTimeStats.MaxHealth;
+    HealthBarUI healthBarUI;
 
     private void Awake()
     {
         enemyRunTimeStats = GetComponent<EnemyRunTimeStats>();
+    }
+
+    private void Start()
+    {
+        healthBarUI = EnemyHealthBarPool.instance.Get();
+        healthBarUI.Bind(transform);
+        healthBarUI.SetValue(1f);
+        healthBarUI.Hide();
     }
 
     public void TakeDamage(DamageContext ctx)
@@ -26,6 +32,11 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         if (!IsAlive) return;
 
         enemyRunTimeStats.TakeDamage(ctx.amount);
+
+        if (!healthBarUI.IsVisible)
+            healthBarUI.Show();
+
+        healthBarUI.SetValue(enemyRunTimeStats.CurrentHealth / enemyRunTimeStats.MaxHealth);
         OnDamaged?.Invoke(ctx);
 
         if (!IsAlive)
@@ -35,5 +46,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     void Die()
     {
         OnDied?.Invoke();
+        healthBarUI.UnBind();
+        EnemyHealthBarPool.instance.Release(healthBarUI);
     }
 }
