@@ -555,6 +555,28 @@ Transform:
   - {fileID: 1085165870}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &258405888 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 29611934525355819, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
+  m_PrefabInstance: {fileID: 7048232566776689485}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a66b0afd42803a47ac4aea5a4489bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &258405891 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1804362717788879066, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
+  m_PrefabInstance: {fileID: 7048232566776689485}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,6 +2795,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4267410387000727142, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
+      propertyPath: cinemachineCamera
+      value: 
+      objectReference: {fileID: 258405891}
+    - target: {fileID: 4267410387000727142, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
+      propertyPath: cinemachineCameraFOV
+      value: 
+      objectReference: {fileID: 258405888}
     - target: {fileID: 7780254247887995537, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
       propertyPath: m_Name
       value: Player

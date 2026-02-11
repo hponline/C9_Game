@@ -9,6 +9,10 @@ public class YoneUltSkill : SkillBehaviour
 
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
+    [SerializeField] float camDefaultFov = 60f;
+    [SerializeField] float camUltFov = 80f;
+    [SerializeField] float m_LensDuration = 1f;
+    [SerializeField] CameraController cinemachineCameraFOV;
 
     private void Start()
     {
@@ -22,7 +26,7 @@ public class YoneUltSkill : SkillBehaviour
         StartDash();
 
         character_AfterImage.StartAfterImage();
-
+        cinemachineCameraFOV.SetFov(camUltFov, m_LensDuration);
         yoneUltHitbox.ResetHits();
         yoneUltHitbox.gameObject.SetActive(true);
     }
@@ -30,7 +34,7 @@ public class YoneUltSkill : SkillBehaviour
     public override void Stop()
     {
         character_AfterImage.StopAfterImage();
-
+        cinemachineCameraFOV.SetFov(camDefaultFov, m_LensDuration);
         YoneUltDamage();
         yoneUltHitbox.gameObject.SetActive(false);
     }
