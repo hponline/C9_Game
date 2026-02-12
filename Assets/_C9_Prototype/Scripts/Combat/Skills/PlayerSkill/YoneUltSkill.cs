@@ -1,4 +1,6 @@
 using DG.Tweening;
+using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class YoneUltSkill : SkillBehaviour
@@ -11,8 +13,10 @@ public class YoneUltSkill : SkillBehaviour
     [SerializeField] float dashDuration;
     [SerializeField] float camDefaultFov = 60f;
     [SerializeField] float camUltFov = 80f;
-    [SerializeField] float m_LensDuration = 1f;
+    [SerializeField] float fovDuration = 1f;
     [SerializeField] CameraController cinemachineCameraFOV;
+    [SerializeField] ParticleSystem duskEffect;
+
 
     private void Start()
     {
@@ -24,9 +28,11 @@ public class YoneUltSkill : SkillBehaviour
     public override void Execute()
     {
         StartDash();
-
+        PlayDuskEffect();
+        TriggerCameraEffect();
         character_AfterImage.StartAfterImage();
-        cinemachineCameraFOV.SetFov(camUltFov, m_LensDuration);
+
+        cinemachineCameraFOV.SetFov(camUltFov, fovDuration);
         yoneUltHitbox.ResetHits();
         yoneUltHitbox.gameObject.SetActive(true);
     }
@@ -34,9 +40,20 @@ public class YoneUltSkill : SkillBehaviour
     public override void Stop()
     {
         character_AfterImage.StopAfterImage();
-        cinemachineCameraFOV.SetFov(camDefaultFov, m_LensDuration);
+        StopDuskEffect();
         YoneUltDamage();
+
+        cinemachineCameraFOV.SetFov(camDefaultFov, fovDuration);
         yoneUltHitbox.gameObject.SetActive(false);
+    }
+
+    public void PlayDuskEffect()
+    {
+        duskEffect.Play();
+    }
+    public void StopDuskEffect()
+    {
+        duskEffect.Stop();
     }
 
     public void YoneUltDamage()
@@ -57,6 +74,7 @@ public class YoneUltSkill : SkillBehaviour
                 hitNormal = hit.hitNormal,
             });
         }
+        HitStopManager.instance.PlayHitStop();
     }
 
     void StartDash()
@@ -76,14 +94,13 @@ public class YoneUltSkill : SkillBehaviour
         }
 
         transform.DOMove(targetPos, dashDuration)
-            .SetEase(Ease.InOutExpo)
+            .SetEase(Ease.OutExpo)
             .OnComplete(() =>
             {
                 rb.useGravity = true;
                 rb.isKinematic = false;
             });
     }
-
 
     private void OnDrawGizmosSelected()
     {

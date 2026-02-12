@@ -22,7 +22,7 @@ MonoBehaviour:
   pullForce: 20
   tickInterval: 0
   projectileSpeed: 0
-  skillIcon: {fileID: 21300000, guid: 9fcbba8b82203a6448b0a80420f0d6fc, type: 3}
+  skillIcon: {fileID: 21300000, guid: 5260642783e0c2748bb723c24fc5aee5, type: 3}
   animationTriggerName: YoneUltSkill
   skillPrefab: {fileID: 0}
   hitMask:

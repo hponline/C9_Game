@@ -17,14 +17,25 @@ public abstract class SkillBehaviour : MonoBehaviour
         {
             useChromatic = cameraEffectSO.useChromatic,
             chromaticIntensity = cameraEffectSO.chromaticIntensity,
+            chromaticDuration = cameraEffectSO.chromaticDuration,
 
             useLens = cameraEffectSO.useLens,
             lensIntensity = cameraEffectSO.lensIntensity,
+            lensDuration = cameraEffectSO.lensDuration,
 
             useDepthOfField = cameraEffectSO.useDepthOfField,
-            depthOfFieldStart = cameraEffectSO.depthOfFieldStart,            
+            depthFocusDistance = cameraEffectSO.depthFocusDistance, 
+            depthDuration = cameraEffectSO.depthDuration,
+            
+            useMotionBlur = cameraEffectSO.useMotionBlur,
+            motionBlurIntensity = cameraEffectSO.motionBlurIntensity,
+            motionBlurClamp = cameraEffectSO.motionBlurClamp,
+            motionBlurDuration = cameraEffectSO.motionBlurDuration,
 
-            duration = cameraEffectSO.duration,            
+            useCameraShake = cameraEffectSO.useCameraShake,
+            cameraShakeAmplitude = cameraEffectSO.cameraShakeAmplitude,
+            cameraShakeFrequency = cameraEffectSO.cameraShakeFrequency,
+            cameraShakeDuration = cameraEffectSO.cameraShakeDuration,
         };
         SkillEffectEvents.OnSkillCameraEffect?.Invoke(data);
     }

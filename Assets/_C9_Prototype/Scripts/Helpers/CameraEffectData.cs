@@ -2,13 +2,23 @@ public class CameraEffectData
 {
     public bool useChromatic;
     public float chromaticIntensity;
+    public float chromaticDuration;
 
     public bool useLens;
     public float lensIntensity;
+    public float lensDuration;
 
     public bool useDepthOfField;
-    public float depthOfFieldStart;
+    public float depthFocusDistance;
+    public float depthDuration;
 
-    public float duration;
+    public bool useMotionBlur;
+    public float motionBlurIntensity;
+    public float motionBlurClamp;
+    public float motionBlurDuration;
 
+    public bool useCameraShake;
+    public float cameraShakeAmplitude;
+    public float cameraShakeFrequency;
+    public float cameraShakeDuration;
 }

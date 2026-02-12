@@ -7,7 +7,7 @@ public class Character_AfterImage : MonoBehaviour
     [SerializeField] Transform parentAfterImageHierarchy;
     [SerializeField] Transform playerAfterImage;
     [SerializeField] Material mat;
-    SkinnedMeshRenderer[] skinnedMeshRenderers;
+    SkinnedMeshRenderer[] skinnedMeshRenderers;    
 
     [Header("Variables")]
     [SerializeField] float activeTime = 2f;

@@ -30,12 +30,12 @@ public class WhirlwindSkill : SkillBehaviour
 
     public override void Execute()
     {       
-        StartShockWawe();        
+        StartShockWawe();
     }
 
     public override void Stop()
     {        
-        StopShockWawe();        
+        StopShockWawe();
     }
 
     void DealDamage()
