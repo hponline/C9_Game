@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillType: 1
   displayName: VioletCross
-  damage: 500
+  damage: 20
   cooldown: 1
   skillRange: 20
   damageRadius: 0

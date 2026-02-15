@@ -21,4 +21,8 @@ public class CameraEffectData
     public float cameraShakeAmplitude;
     public float cameraShakeFrequency;
     public float cameraShakeDuration;
+
+    public bool useFOV;
+    public float fovTarget;
+    public float fovDuration;
 }

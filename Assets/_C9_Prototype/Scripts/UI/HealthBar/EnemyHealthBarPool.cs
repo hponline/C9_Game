@@ -5,6 +5,7 @@ public class EnemyHealthBarPool : MonoBehaviour
 {
     public static EnemyHealthBarPool instance;
 
+    [SerializeField] int initialSize = 100;
     [SerializeField] HealthBarUI EnemyHealthBarUIPrefab;
     [SerializeField] Transform container;
 
@@ -13,7 +14,17 @@ public class EnemyHealthBarPool : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        // pool ve HealthBar scriptlerini tekrar incele
+        Initialized();
+    }
+
+    public void Initialized()
+    {
+        for (int i = 0; i < initialSize; i++)
+        {
+            var obj = Instantiate(EnemyHealthBarUIPrefab, container);
+            obj.gameObject.SetActive(false);
+            pool.Enqueue(obj);
+        }
     }
 
     public HealthBarUI Get()

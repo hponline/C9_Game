@@ -36,6 +36,10 @@ public abstract class SkillBehaviour : MonoBehaviour
             cameraShakeAmplitude = cameraEffectSO.cameraShakeAmplitude,
             cameraShakeFrequency = cameraEffectSO.cameraShakeFrequency,
             cameraShakeDuration = cameraEffectSO.cameraShakeDuration,
+
+            useFOV = cameraEffectSO.useFOV,
+            fovTarget = cameraEffectSO.fovTarget,
+            fovDuration = cameraEffectSO.fovDuration,
         };
         SkillEffectEvents.OnSkillCameraEffect?.Invoke(data);
     }

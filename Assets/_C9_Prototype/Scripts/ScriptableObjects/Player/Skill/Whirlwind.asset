@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillType: 2
   displayName: Whirlwind
-  damage: 100
+  damage: 20
   cooldown: 3
   skillRange: 0
   damageRadius: 5

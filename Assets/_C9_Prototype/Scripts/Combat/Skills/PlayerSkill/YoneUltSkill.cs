@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -14,7 +15,6 @@ public class YoneUltSkill : SkillBehaviour
     [SerializeField] float camDefaultFov = 60f;
     [SerializeField] float camUltFov = 80f;
     [SerializeField] float fovDuration = 1f;
-    [SerializeField] CameraController cinemachineCameraFOV;
     [SerializeField] ParticleSystem duskEffect;
 
 
@@ -32,7 +32,6 @@ public class YoneUltSkill : SkillBehaviour
         TriggerCameraEffect();
         character_AfterImage.StartAfterImage();
 
-        cinemachineCameraFOV.SetFov(camUltFov, fovDuration);
         yoneUltHitbox.ResetHits();
         yoneUltHitbox.gameObject.SetActive(true);
     }
@@ -43,7 +42,6 @@ public class YoneUltSkill : SkillBehaviour
         StopDuskEffect();
         YoneUltDamage();
 
-        cinemachineCameraFOV.SetFov(camDefaultFov, fovDuration);
         yoneUltHitbox.gameObject.SetActive(false);
     }
 
@@ -74,7 +72,8 @@ public class YoneUltSkill : SkillBehaviour
                 hitNormal = hit.hitNormal,
             });
         }
-        HitStopManager.instance.PlayHitStop();
+        if (yoneUltHitbox.hitTargets.Count > 0)        
+            HitStopManager.instance.PlayHitStop();        
     }
 
     void StartDash()

@@ -26,6 +26,9 @@ MonoBehaviour:
   motionBlurClamp: 0.2
   motionBlurDuration: 0.5
   useCameraShake: 1
-  cameraShakeAmplitude: 2
-  cameraShakeFrequency: 2
-  cameraShakeDuration: 0.1
+  cameraShakeAmplitude: 1.5
+  cameraShakeFrequency: 1.5
+  cameraShakeDuration: 0.05
+  useFOV: 1
+  fovTarget: 70
+  fovDuration: 0.5

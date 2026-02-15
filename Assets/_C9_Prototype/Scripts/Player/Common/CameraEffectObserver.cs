@@ -3,6 +3,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using DG.Tweening;
 using Unity.Cinemachine;
+using System;
 
 public class CameraEffectObserver : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class CameraEffectObserver : MonoBehaviour
     MotionBlur motionBlur;
 
     [SerializeField] CinemachineBasicMultiChannelPerlin cameraShake;
+    [SerializeField] CinemachineCamera cinemachineCamera;
 
     Sequence effectSequence;
 
@@ -44,6 +46,7 @@ public class CameraEffectObserver : MonoBehaviour
         Sequence rise = DOTween.Sequence();
         Sequence fall = DOTween.Sequence();
 
+        UseFOV(data, rise, fall);
         UseChromatic(data, rise, fall);
         UseLens(data, rise, fall);
         UseDepthOfField(data, rise, fall);
@@ -52,6 +55,28 @@ public class CameraEffectObserver : MonoBehaviour
 
         effectSequence.Append(rise);
         effectSequence.Append(fall);
+    }
+
+    void UseFOV(CameraEffectData data, Sequence rise, Sequence fall)
+    {
+        if (!data.useFOV) return;
+
+        float startFov = cinemachineCamera.Lens.FieldOfView;
+        
+        rise.Join(
+            DOTween.To(
+            () => cinemachineCamera.Lens.FieldOfView,
+            x => cinemachineCamera.Lens.FieldOfView = x,
+            data.fovTarget,
+            data.fovDuration
+            ).SetEase(Ease.OutExpo));
+        fall.Join(
+            DOTween.To(
+            () => cinemachineCamera.Lens.FieldOfView,
+            x => cinemachineCamera.Lens.FieldOfView = x,
+            startFov,
+            data.fovDuration
+            ).SetEase(Ease.OutExpo));
     }
 
     void UseChromatic(CameraEffectData data, Sequence rise, Sequence fall)

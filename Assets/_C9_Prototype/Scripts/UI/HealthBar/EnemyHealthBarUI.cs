@@ -42,7 +42,6 @@ public class HealthBarUI : MonoBehaviour
     {
         canvasGroup.alpha = 1f;
     }
-
     public void Hide()
     {
         canvasGroup.alpha = 0f;

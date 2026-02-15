@@ -13,9 +13,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float minDistance = 3f;
     [SerializeField] float maxDistance = 15f;
 
-    CinemachineCamera cinemachineCamera;
     CinemachineOrbitalFollow orbitalCam;
-    Tween fovTween;
 
     Vector2 scrollDelta;
     float targetZoom;
@@ -30,7 +28,6 @@ public class CameraController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
 
-        cinemachineCamera = GetComponent<CinemachineCamera>();
         orbitalCam = GetComponent<CinemachineOrbitalFollow>();
         targetZoom = currentZoom = orbitalCam.Radius;
     }
@@ -51,25 +48,6 @@ public class CameraController : MonoBehaviour
     {
         scrollDelta = ctx.ReadValue<Vector2>();
     }
-
-    #region cinemachine FieldOfView
-    public void SetFov(float targetFov, float fovDuration)
-    {
-        fovTween?.Kill();
-
-        fovTween = DOTween.To(
-            () => cinemachineCamera.Lens.FieldOfView,
-            x =>
-            {
-                var lens = cinemachineCamera.Lens;
-                lens.FieldOfView = x;
-                cinemachineCamera.Lens = lens;
-            },
-            targetFov,
-            fovDuration
-            ).SetEase(Ease.OutExpo);
-    }
-    #endregion
 
     private void OnEnable()
     {

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillType: 2
   displayName: 
-  damage: 800
+  damage: 20
   cooldown: 2
   skillRange: 0
   damageRadius: 0

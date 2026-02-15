@@ -29,4 +29,9 @@ public class CameraEffectSO : ScriptableObject
     public float cameraShakeAmplitude;
     public float cameraShakeFrequency;
     public float cameraShakeDuration = 0.5f;
+
+    [Header("FieldOfView")]
+    public bool useFOV;
+    public float fovTarget;
+    public float fovDuration;
 }

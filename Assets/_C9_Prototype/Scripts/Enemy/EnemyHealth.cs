@@ -37,6 +37,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             healthBarUI.Show();
 
         healthBarUI.SetValue(enemyRunTimeStats.CurrentHealth / enemyRunTimeStats.MaxHealth);
+        DamageEvents.OnDamageDealt?.Invoke(ctx.amount, transform);
         OnDamaged?.Invoke(ctx);
 
         if (!IsAlive)

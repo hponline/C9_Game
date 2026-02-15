@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useChromatic: 1
   chromaticIntensity: 0.5
-  chromaticDuration: 1.25
+  chromaticDuration: 0.5
   useLens: 1
   lensIntensity: 0.25
   lensDuration: 1.25
-  useDepthOfField: 1
+  useDepthOfField: 0
   depthFocusDistance: 2
   depthDuration: 1.25
   useMotionBlur: 0
@@ -29,3 +29,6 @@ MonoBehaviour:
   cameraShakeAmplitude: 0
   cameraShakeFrequency: 0
   cameraShakeDuration: 0.5
+  useFOV: 0
+  fovTarget: 0
+  fovDuration: 0
