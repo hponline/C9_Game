@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 [System.Serializable]
@@ -17,11 +16,8 @@ public class PlayerSkillController : MonoBehaviour
 
     public SkillSlot[] GetSkillSlots() => skillSlots;
 
-    IAttackSource attackSource;
     SkillBehaviour currentSkill;
-
     Animator animator;
-    IAttackSource cachedSource = null; // Saldýranýn sahibi (player)
 
     // Skill
     public bool isBusy;
@@ -31,7 +27,6 @@ public class PlayerSkillController : MonoBehaviour
     {
         inputHandler = GetComponent<InputHandler>();
         animator = GetComponentInChildren<Animator>();
-        attackSource = GetComponent<IAttackSource>();
     }
 
     private void Update()
@@ -44,18 +39,14 @@ public class PlayerSkillController : MonoBehaviour
     }
 
     #region Basic Attack
-    // Baþka yere taþýnabilir
-    public void UseBasicAttack(IAttackSource source)
+    public void UseBasicAttack()
     {
-        cachedSource = source;
         animator.SetTrigger(GameTags.PlayerAnimationTags.PLAYER_ATTACK_TAG);
     }
 
     public void OnAnimationHit()
     {
-        if (cachedSource == null) return;
         basicAttackSkill.Execute();
-        cachedSource = null;
     }
 
     #endregion

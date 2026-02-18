@@ -43,7 +43,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         if (health != null && !health.IsAlive)
         {
-            Debug.Log($"DeadState");
+            Debug.Log("DeadState");
             return;
         }
 

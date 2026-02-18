@@ -3,33 +3,36 @@ using UnityEngine;
 public class MeleSkillBehaviour : SkillBehaviour
 {
     [SerializeField] float radius = 2f;
+    [SerializeField] int maxTarget = 10;
     Vector3 gizmosRadius;
+    Collider[] hitBuffer;
 
+    private void Start()
+    {
+        hitBuffer = new Collider[maxTarget];
+    }
     public override void Execute()
     {
-        //Vector3 origin = source.AttackOrigin.position;
-        //gizmosRadius = source.AttackOrigin.position;
+        if (hitBuffer == null) return;
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, radius, skillData.hitMask); //NonAlloc yapýlabilir
-        foreach (var hit in hits)
+        int hits = Physics.OverlapSphereNonAlloc(transform.position, radius, hitBuffer, skillData.hitMask);
+        for (int i = 0; i < hits; i++)
         {
-            if (!hit.TryGetComponent<IDamageable>(out var target)) continue;
-            var ctx = new DamageContext
+            var hit = hitBuffer[i];
+            var rb = hit.attachedRigidbody;
+            if (rb != null)
             {
-                amount = skillData.damage,
-                hitPoint = hit.ClosestPoint(transform.position),
-                hitNormal = (hit.transform.position - transform.position).normalized,
-                //sourceOwner = source.Owner // ??
-            };
-            target.TakeDamage(ctx);
-            // damagePopup   
-            // DamagePopupManager.Instance.Spawn(ctx.hitPoint + vector3.up * 0.5f, ctx.amount);
-        }
+                var dir = (hit.transform.position - transform.position).normalized;
+                rb.AddForce(dir * 4f, ForceMode.Impulse);
+            }
 
-        //if (skillData.skillPrefab != null)
-        //{
-        //    // skillData.SkillPrefab üzerinden Vfx/Sound/Spawn tetikleme yeri
-        //}
+            if (!hit.TryGetComponent<IDamageable>(out var target)) continue;
+
+            Vector3 hitPoint = hit.ClosestPoint(transform.position);
+            Vector3 hitNormal = (hit.transform.position - transform.position).normalized;
+            var ctx = DamageCalculator.Calculate(skillData, playerRunTimeStats, hitPoint, hitNormal);
+            target.TakeDamage(ctx);
+        }
     }
 
     public override void Stop()

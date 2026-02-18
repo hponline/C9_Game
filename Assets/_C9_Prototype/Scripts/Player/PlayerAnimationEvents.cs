@@ -11,10 +11,18 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void OnSkillStart()
     {
         skillController.OnSkillStart();
+        PlayerMoveEnd();
     }
     public void OnSkillEnd()
     {
         skillController.OnSkillEnd();
+        PlayerMoveStart();
+    }
+
+    // Whirlwind atarken hareket edebilmesi için
+    public void WhirlwindSkillStart()
+    {
+        skillController.OnSkillStart();
     }
 
     #endregion
@@ -22,12 +30,14 @@ public class PlayerAnimationEvents : MonoBehaviour
     #region Basic Attack
     public void OnAnimationHit()
     {
-        skillController?.OnAnimationHit();        
+        skillController?.OnAnimationHit();
+        PlayerMoveEnd();
     }
 
     public void OnAttackAnimationEnd()
     {
-        stateMachine?.OnAttackAnimationEnd();        
+        stateMachine?.OnAttackAnimationEnd();
+        PlayerMoveStart();
     }
 
     public void SlashEffect()

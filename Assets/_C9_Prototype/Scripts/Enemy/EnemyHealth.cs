@@ -5,12 +5,13 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
     EnemyRunTimeStats enemyRunTimeStats;
+    [SerializeField] int expReward = 10;
 
     public bool IsAlive => enemyRunTimeStats.CurrentHealth > 0f;
-    public Transform Transform => transform;
 
     public event Action OnDied;
     public event Action<DamageContext> OnDamaged;
+    public static event Action<int> OnExpGain;
 
     HealthBarUI healthBarUI;
 
@@ -37,7 +38,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             healthBarUI.Show();
 
         healthBarUI.SetValue(enemyRunTimeStats.CurrentHealth / enemyRunTimeStats.MaxHealth);
-        DamageEvents.OnDamageDealt?.Invoke(ctx.amount, transform);
+        DamageEvents.OnDamagePopup?.Invoke(ctx);
         OnDamaged?.Invoke(ctx);
 
         if (!IsAlive)
@@ -46,6 +47,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     void Die()
     {
+        OnExpGain?.Invoke(expReward);
         OnDied?.Invoke();
         healthBarUI.UnBind();
         EnemyHealthBarPool.instance.Release(healthBarUI);

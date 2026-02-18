@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillType: 1
   displayName: VioletCross
-  damage: 20
+  damage: 200
   cooldown: 1
   skillRange: 20
   damageRadius: 0
@@ -22,6 +22,7 @@ MonoBehaviour:
   pullForce: 0
   tickInterval: 0
   projectileSpeed: 12
+  variance: 0.2
   skillIcon: {fileID: 21300000, guid: 9fcbba8b82203a6448b0a80420f0d6fc, type: 3}
   animationTriggerName: Violet
   skillPrefab: {fileID: 3512557575257334590, guid: ad0a7926da9b3a04482bb29c99288a2a, type: 3}

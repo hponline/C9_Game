@@ -4,30 +4,26 @@ public class PlayerRunTimeStats : MonoBehaviour
 {
     [Header("Base Stats -- SO dan geliyor")]
     float baseHealth;
-    float baseDamage;
+    int baseDamage;
     float baseMoveSpeed;
     float baseAttackSpeed;
     float jumpForce;
+    float baseCritChance;
+    float baseCritMultiplier;
 
     [SerializeField] float currentHealth;
 
-    [Header("Stat Çarpanlarý")]
-    [Tooltip("1f deðerin kendisi (1.2f) %20 buff // 0.5f %50 debuff anlamýna gelir")]    
-    float healthMultiplier = 1f;
-    float damageMultiplier = 1f;
-    float moveSpeedMultiplier = 1f;
-    float attackSpeedMultiplier = 1f;
-    float jumpForceMultiplier = 1f;
 
     [Header("RUNTIME STATS")]
     public float MaxHealth { get; private set; }
     public float CurrentHealth => currentHealth;
-    public float Health => baseHealth * healthMultiplier;
-    public float Damage => baseDamage * damageMultiplier;
-    public float MoveSpeed => baseMoveSpeed * moveSpeedMultiplier;
-    public float AttackSpeed => baseAttackSpeed * attackSpeedMultiplier;
-    public float JumpForce => jumpForce * jumpForceMultiplier;
-    // Player Statlarý levele göre artmýcak
+    public float Health => baseHealth * BuffController.Instance.GetMultiplier(StatType.Health);
+    public float Damage => baseDamage * BuffController.Instance.GetMultiplier(StatType.AttackDamage);
+    public float MoveSpeed => baseMoveSpeed * BuffController.Instance.GetMultiplier(StatType.MoveSpeed);
+    public float AttackSpeed => baseAttackSpeed * BuffController.Instance.GetMultiplier(StatType.AttackSpeed);
+    public float JumpForce => jumpForce * BuffController.Instance.GetMultiplier(StatType.Health);
+    public float CritChange => baseCritChance * BuffController.Instance.GetMultiplier(StatType.Health);
+    public float CritMultiplier => baseCritMultiplier * BuffController.Instance.GetMultiplier(StatType.Health);
 
     public void Init(PlayerConfigSO playerConfigSO)
     {
@@ -36,6 +32,8 @@ public class PlayerRunTimeStats : MonoBehaviour
         baseMoveSpeed = playerConfigSO.baseMoveSpeed;
         baseAttackSpeed = playerConfigSO.baseAttackSpeed;
         jumpForce = playerConfigSO.jumpForce;
+        baseCritChance = playerConfigSO.critChangeMultiplier;
+        baseCritMultiplier = playerConfigSO.critMultiplier;
 
         RecalculateHealth();
     }
@@ -48,34 +46,13 @@ public class PlayerRunTimeStats : MonoBehaviour
 
     public void SetHealth(float amount)
     {
-        currentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);        
+        currentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
     }
-
-
-    #region Buff
-
-    public void AppylHealhtBuff(float multiplier)
-    {
-        // Heal alma vfx
-        healthMultiplier *= multiplier;
-        RecalculateHealth();
-    }
-
-    public void ApplyAttackDamageBuff(float multiplier)
-    {
-        baseDamage *= multiplier;
-    }
-
-    public void AppylAttackSpeedBuff(float multiplier)
-    {
-        attackSpeedMultiplier *= multiplier;
-    }
-
-    #endregion
 
     void RecalculateHealth()
     {
-        MaxHealth = baseHealth * healthMultiplier;
+        //MaxHealth = baseHealth * healthMultiplier;
+        MaxHealth = baseHealth;
         currentHealth = MaxHealth;
     }
 }

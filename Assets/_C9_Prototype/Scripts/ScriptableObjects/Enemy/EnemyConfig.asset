@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyRace: 0
   prefab: {fileID: 3754542838646516549, guid: d6fb5ae6fcc68f840a4dfd97ee351aed, type: 3}
   baseHealth: 1000
-  baseDamage: 10
+  baseDamage: 100
   baseMoveSpeed: 5
   baseAttackSpeed: 1
   healthPerLevel: 20

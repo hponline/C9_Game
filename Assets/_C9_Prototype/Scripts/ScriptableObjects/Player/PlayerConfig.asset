@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d360d831f11d67742b6ff3071024e11d, type: 3}
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
-  baseHealth: 100
+  baseHealth: 1000
   baseDamage: 10
   baseMoveSpeed: 3
   baseAttackSpeed: 1
   jumpForce: 3
-  basicAttack: {fileID: 0}
-  startingSkills: []
+  critChangeMultiplier: 0.2
+  critMultiplier: 1.5

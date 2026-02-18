@@ -12,12 +12,17 @@ public class VioletCrossProjectile : MonoBehaviour
     float range;
     bool isDying;
 
-    public void Init(Vector3 dir, float speed, float damage, float range)
+    SkillDataSO skillDataSO;
+    PlayerRunTimeStats playerRunTimeStats;
+
+    public void Init(Vector3 dir, SkillDataSO skillDataSO, PlayerRunTimeStats stats)
     {
         this.direction = dir;
-        this.speed = speed;
-        this.damage = damage;
-        this.range = range;
+        this.speed = skillDataSO.projectileSpeed;
+        this.damage = skillDataSO.damage + stats.Damage;
+        this.range = skillDataSO.skillRange;
+        this.skillDataSO = skillDataSO;
+        this.playerRunTimeStats = stats;
 
         startPos = transform.position;
     }
@@ -37,13 +42,11 @@ public class VioletCrossProjectile : MonoBehaviour
             StartCoroutine(PushOverTime(rb, other.transform.localPosition, 5, .25f));
         }
 
+        Vector3 hitPoint = other.ClosestPoint(transform.position);
+        Vector3 hitNormal = (other.transform.position - transform.position).normalized;
 
-        damageable.TakeDamage(new DamageContext
-        {
-            amount = damage,
-            hitPoint = other.transform.position,
-            hitNormal = (other.transform.position - transform.position).normalized,
-        });
+        var ctx = DamageCalculator.Calculate(skillDataSO, playerRunTimeStats, hitPoint, hitNormal);
+        damageable.TakeDamage(ctx);
     }
 
     IEnumerator PushOverTime(Rigidbody rb, Vector3 dir, float force, float duration)

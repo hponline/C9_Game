@@ -27,6 +27,8 @@ public class EnemyRunTimeStats : MonoBehaviour
         MaxHealth = baseHealth;
         Damage = baseDamage;
         currentHealth = MaxHealth;
+
+        //  level çarpanlarýný yap
     }
 
     public void TakeDamage(float amount)

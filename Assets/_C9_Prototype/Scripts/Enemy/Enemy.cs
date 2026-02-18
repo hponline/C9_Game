@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(EnemyRunTimeStats))]
 [RequireComponent(typeof(EnemyHealth))]
-public abstract class Enemy : MonoBehaviour, IAttackSource
+public abstract class Enemy : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] protected EnemyConfigSO enemyConfigSO;
@@ -12,18 +12,11 @@ public abstract class Enemy : MonoBehaviour, IAttackSource
     protected EnemyRunTimeStats runTimeStats;
     protected EnemyHealth health;
 
-    public GameObject Owner => throw new NotImplementedException();
-    public Transform AttackOrigin => attackOrigin;
-
-    //[Header("Level Scaling")]
-    //public int level = 1;
-
-
     protected virtual void Awake()
     {
         runTimeStats = GetComponent<EnemyRunTimeStats>();
         health = GetComponent<EnemyHealth>();
-        animator= GetComponent<Animator>();
+        animator = GetComponent<Animator>();
 
         health.OnDied += OnEnemyDead;
 

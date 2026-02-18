@@ -17,10 +17,10 @@ public class DamagePopup : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
     }
 
-    public void Play(float damage, Vector3 worldPos ,Camera cam, bool isCrit)
+    public void Play(DamageContext ctx, Camera cam)
     {
         this.cam = cam;
-        Vector3 screenPos = cam.WorldToScreenPoint(worldPos + offset);
+        Vector3 screenPos = cam.WorldToScreenPoint(ctx.hitPoint + offset);
         rectTransform.position = screenPos;
 
         Vector2 randomOffset = new Vector2(
@@ -33,11 +33,11 @@ public class DamagePopup : MonoBehaviour
         Vector2 startPos = rectTransform.anchoredPosition;
         Vector2 targetPos = startPos + randomOffset;
 
-        damageTxt.SetText("{0}", damage);
+        damageTxt.SetText("{0}", Mathf.RoundToInt(ctx.amount));
         damageTxt.alpha = 1f;
         transform.localScale = Vector3.one;
-        damageTxt.color = isCrit ? Color.yellowNice : Color.white;
-        float scaleValue = isCrit ? 1f : 0.7f;
+        damageTxt.color = ctx.isCrit ? new Color32(216,219,121, 255) : Color.white;
+        float scaleValue = ctx.isCrit ? 1.25f : 0.7f;
 
         Sequence sequence = DOTween.Sequence();
         sequence.Append(rectTransform.DOAnchorPos(targetPos, 0.6f).SetEase(Ease.OutBack));

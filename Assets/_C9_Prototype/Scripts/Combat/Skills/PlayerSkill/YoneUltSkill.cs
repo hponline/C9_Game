@@ -1,7 +1,4 @@
 using DG.Tweening;
-using System;
-using System.Collections;
-using Unity.Cinemachine;
 using UnityEngine;
 
 public class YoneUltSkill : SkillBehaviour
@@ -12,9 +9,6 @@ public class YoneUltSkill : SkillBehaviour
 
     [SerializeField] float dashDistance;
     [SerializeField] float dashDuration;
-    [SerializeField] float camDefaultFov = 60f;
-    [SerializeField] float camUltFov = 80f;
-    [SerializeField] float fovDuration = 1f;
     [SerializeField] ParticleSystem duskEffect;
 
 
@@ -64,13 +58,8 @@ public class YoneUltSkill : SkillBehaviour
                 Vector3 dir = (transform.position - rb.position).normalized;
                 rb.AddForce(dir * skillData.pullForce, ForceMode.Impulse);
             }
-
-            hit.damageable.TakeDamage(new DamageContext
-            {
-                amount = skillData.damage,
-                hitPoint = hit.hitPoint,
-                hitNormal = hit.hitNormal,
-            });
+            var ctx = DamageCalculator.Calculate(skillData, playerRunTimeStats, hit.hitPoint, hit.hitNormal);
+            hit.damageable.TakeDamage(ctx);
         }
         if (yoneUltHitbox.hitTargets.Count > 0)        
             HitStopManager.instance.PlayHitStop();        

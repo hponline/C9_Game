@@ -19,8 +19,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] bool canMove = true;
     [SerializeField] bool requestJump = false;
 
-    public bool CanMove => canMove;
-
     Rigidbody rb;
     Vector2 currentMoveInput = Vector2.zero;
 

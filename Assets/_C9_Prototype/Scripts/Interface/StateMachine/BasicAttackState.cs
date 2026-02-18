@@ -12,8 +12,7 @@ public class BasicAttackState : IState
     public void EnterState()
     {
         owner.playerMovement.SetCanMove(false);
-        var attackSource = owner.GetComponent<IAttackSource>();
-        owner.playerSkillController.UseBasicAttack(attackSource);
+        owner.playerSkillController.UseBasicAttack();
     }
     public void UpdateState()
     {

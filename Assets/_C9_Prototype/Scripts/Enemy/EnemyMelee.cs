@@ -15,7 +15,6 @@ public class EnemyMelee : Enemy
     [SerializeField] Transform target;
     [SerializeField] EnemyHealth enemyHealth;
 
-
     [Header("Patrol")]
     [SerializeField] float chaseRange = 15f;
 
@@ -37,7 +36,6 @@ public class EnemyMelee : Enemy
     [SerializeField] AudioClip deathSound;
     [SerializeField] float destroyDelay = 1.5f;
 
-    public Collider[] hits;
     protected override void Awake()
     {
         base.Awake();
@@ -72,25 +70,29 @@ public class EnemyMelee : Enemy
                 break;
         }
     }
+    void EnemyMoveToPlayer()
+    {
+        Vector3 moveDir = (target.position - transform.position).normalized;
+        transform.position += moveDir * enemyConfigSO.baseMoveSpeed * Time.deltaTime;
+        moveDir.y = 0;
+        if (moveDir != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(moveDir);
+    }
 
     #region Attack
     public void DoAttack()
     {
         if (target == null) return;
 
-        hits = Physics.OverlapSphere(AttackOrigin.transform.position, attackRange, layerMask);
+        var hits = Physics.OverlapSphere(attackOrigin.transform.position, attackRange, layerMask);
         foreach (var hit in hits)
         {
-            var damageable = hit.GetComponentInParent<IDamageable>();
+            var damageable = hit.GetComponent<IDamageable>();
             if (damageable == null) continue;
 
-            var ctx = new DamageContext
-            {
-                amount = runTimeStats.Damage,
-                hitPoint = transform.position,
-                hitNormal = transform.forward,
-                //sourceOwner = this
-            };
+            Vector3 hitPoint = hit.transform.position;
+            Vector3 hitNormal = transform.forward;
+            var ctx = DamageCalculator.EnemyCalculate(enemyConfigSO, runTimeStats, hitPoint, hitNormal);
             damageable.TakeDamage(ctx);
         }
     }
@@ -103,7 +105,7 @@ public class EnemyMelee : Enemy
         }
     }
 
-    public void CancelAttack()
+    void CancelAttack()
     {
         isAttacking = false;
         canDealDamage = false;
@@ -119,21 +121,10 @@ public class EnemyMelee : Enemy
     }
 
     #endregion
-    void EnemyMoveToPlayer()
-    {
-        Vector3 moveDir = (target.position - transform.position).normalized;
-        transform.position += moveDir * enemyConfigSO.baseMoveSpeed * Time.deltaTime;
-        moveDir.y = 0;
-        if (moveDir != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(moveDir);
-    }
 
     #region Death
     protected override void HandleDeath(EnemyHealth health)
     {
-        // Animasyon, loot, event, pool vs.
-        //lootDropper?.DropLoot(transform.position); //drobu event ile yap baþka scriptte
-
         if (deathVFX != null)
         {
             Debug.Log("ölüm vfx tetikle");
@@ -176,11 +167,6 @@ public class EnemyMelee : Enemy
         if (rb) rb.isKinematic = true;
     }
 
-    public void OnDeathAnimationFinished()
-    {
-        gameObject.SetActive(false);
-    }
-
     #endregion
 
     #region StateMachine
@@ -220,9 +206,6 @@ public class EnemyMelee : Enemy
             return;
         }
         animator.SetBool(GameTags.EnemyAnimationTags.ENEMY_RUN_TAG, false);
-
-        //if (isAttacking) return;
-        //isAttacking = true;
         animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_ATTACK_TAG);
     }
 

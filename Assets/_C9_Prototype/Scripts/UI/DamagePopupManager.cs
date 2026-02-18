@@ -6,7 +6,6 @@ public class DamagePopupManager : MonoBehaviour
     [SerializeField] DamagePopup damagePopupPrefab;
     [SerializeField] RectTransform damagePopupContainer;
     [SerializeField] int poolSize = 50;
-    [SerializeField] float critChance = 0.15f; // test
 
     Queue<DamagePopup> pool = new();
     Camera cam;
@@ -28,17 +27,13 @@ public class DamagePopupManager : MonoBehaviour
         }
     }
 
-    void Spawn(float damage, Transform target)
+    void Spawn(DamageContext ctx)
     {
         if (pool.Count == 0) return;
-        bool isCrit = Random.value < critChance;
 
         DamagePopup damagePopup = pool.Dequeue();
         damagePopup.gameObject.SetActive(true);
-        damagePopup.Play(damage, target.position, cam, isCrit);
-
-        // crit ctx içinden verilecek
-        // 
+        damagePopup.Play(ctx, cam);
     }
 
     public void ReturnToPool(DamagePopup damagePopup)
@@ -49,10 +44,10 @@ public class DamagePopupManager : MonoBehaviour
 
     private void OnEnable()
     {
-        DamageEvents.OnDamageDealt += Spawn;
+        DamageEvents.OnDamagePopup += Spawn;
     }
     private void OnDisable()
     {
-        DamageEvents.OnDamageDealt -= Spawn;
+        DamageEvents.OnDamagePopup -= Spawn;
     }
 }

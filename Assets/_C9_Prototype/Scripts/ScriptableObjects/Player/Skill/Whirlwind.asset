@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillType: 2
   displayName: Whirlwind
-  damage: 20
+  damage: 100
   cooldown: 3
   skillRange: 0
   damageRadius: 5
@@ -22,6 +22,7 @@ MonoBehaviour:
   pullForce: 3
   tickInterval: 0.15
   projectileSpeed: 0
+  variance: 0.2
   skillIcon: {fileID: 21300000, guid: 30d7dc87fded082498856e8a2dbe6cb5, type: 3}
   animationTriggerName: Whirlwind
   skillPrefab: {fileID: 0}

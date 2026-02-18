@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class WhirlwindSkill : SkillBehaviour
 {
-    // Base deðerler burada durup exp aldýkça base + SO deðerleri yükseltirebilir
     [SerializeField] int maxTarget = 30;
     [SerializeField] ParticleSystem[] shockwawePrefab;
     [SerializeField] PlayerVFX playerWhirlwindTrailVFX;
@@ -31,6 +30,7 @@ public class WhirlwindSkill : SkillBehaviour
     public override void Execute()
     {       
         StartShockWawe();
+        BuffController.Instance.ApplyBuffs(StatType.MoveSpeed, 2f, 2f);
     }
 
     public override void Stop()
@@ -47,7 +47,7 @@ public class WhirlwindSkill : SkillBehaviour
             var hit = hitBuffer[i];
 
             var rb = hit.attachedRigidbody;
-            if (rb)
+            if (rb != null)
             {
                 var dir = (transform.position - hit.transform.position).normalized;
                 rb.AddForce(dir * skillData.pullForce, ForceMode.Impulse);
@@ -58,12 +58,10 @@ public class WhirlwindSkill : SkillBehaviour
             float distance = Vector3.Distance(hit.transform.position, transform.position);
             if (distance <= skillData.damageRadius)
             {
-                damageable.TakeDamage(new DamageContext
-                {
-                    amount = skillData.damage,
-                    hitPoint = hit.transform.position,
-                    hitNormal = (hit.transform.position - transform.position).normalized
-                });
+                Vector3 hitPoint = hit.ClosestPoint(transform.position);
+                Vector3 hitNormal = (hit.transform.position - transform.position).normalized;
+                var ctx = DamageCalculator.Calculate(skillData, playerRunTimeStats, hitPoint, hitNormal);
+                damageable.TakeDamage(ctx);
             }
         }        
     }

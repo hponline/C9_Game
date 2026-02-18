@@ -12,7 +12,7 @@ public class VioletCrossSkill : SkillBehaviour
         var projectile = Instantiate(violetCrossProjectilePrefab, firePoint.position, firePoint.rotation);
         StartParticle();
         TriggerCameraEffect();
-        projectile.Init(firePoint.forward, skillData.projectileSpeed, skillData.damage, skillData.skillRange);
+        projectile.Init(firePoint.forward, skillData, playerRunTimeStats);
     }
 
     public override void Stop()

@@ -7,6 +7,7 @@ public abstract class SkillBehaviour : MonoBehaviour
 
     [SerializeField] protected SkillDataSO skillData;
     [SerializeField] protected CameraEffectSO cameraEffectSO;
+    [SerializeField] protected PlayerRunTimeStats playerRunTimeStats;
     public SkillDataSO PlayerSkillSOData => skillData;
 
     protected void TriggerCameraEffect()
@@ -43,7 +44,4 @@ public abstract class SkillBehaviour : MonoBehaviour
         };
         SkillEffectEvents.OnSkillCameraEffect?.Invoke(data);
     }
-
-    //public abstract void Execute(IAttackSource source);
-    //Player/Enemy skill atarsa farklý skiller atan birimler eklenirse dmg kim tarafýndan atýlýyor bilmek için
 }

@@ -4,11 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerRunTimeStats))]
 [RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(PlayerSkillController))]
-public class PlayerCharacter : MonoBehaviour, IAttackSource
+public class PlayerCharacter : MonoBehaviour
 {
     public Transform AttackOrigin => attackOrigin;
-
-    //public GameObject Owner => throw new System.NotImplementedException();
 
     [SerializeField] Transform attackOrigin;
     [SerializeField] PlayerSkillController skillController;
