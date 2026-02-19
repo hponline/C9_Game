@@ -13,19 +13,25 @@ public class PlayerStateMachine : MonoBehaviour
 
     [Header("Skill State Setting")]
     public IState idleState;
-    IState runState;
-    IState jumpState;
-    IState skillState;
-    IState basicAttackState;
+    public IState runState;
+    IState jumpState; // zýplama opsiyonel
+    public IState basicAttackState;
+    public IState deadState;
+
+    public bool attackFinished;
+
+    public bool CanUseAbilities => health.IsAlive && currentState != deadState;
 
     IState currentState;
 
     private void Awake()
     {
+        // monobehavior olmadýgý için + null olmamasý için biz newliyoruz
         idleState = new IdleState(this);
         runState = new RunState(this);
         jumpState = new JumpState(this);
         basicAttackState = new BasicAttackState(this);
+        deadState = new DeadState(this);
 
         InputHandler = GetComponent<InputHandler>();
         animator = GetComponentInChildren<Animator>();
@@ -36,70 +42,27 @@ public class PlayerStateMachine : MonoBehaviour
     private void Start()
     {
         ChangeState(idleState);
-        //Debug.Log("Player koþarken attack yapýnca attackState direkt geçmiyor");
     }
 
     private void Update()
     {
-        if (health != null && !health.IsAlive)
+        if (!health.IsAlive && currentState != deadState)
         {
-            Debug.Log("DeadState");
+            ChangeState(deadState);
             return;
         }
 
-        if (InputHandler.primaryAttackPressed)
-        {
-            if (currentState != basicAttackState)
-            {
-                ChangeState(basicAttackState);
-            }
-        }
-
-        else if (InputHandler.skill1Pressed)
-        {
-            // Skill basýldýysa ("C") burasý çalýþcak
-            if (currentState != skillState) ChangeState(skillState);
-            // Debug.Log($"SkillState");
-        }
-
-        else if (InputHandler.jumpPressed)
-        {
-            // Karakter Zýpladýysa burasý çalýþcak
-            Debug.Log($"JumpState");
-            //if (currentState != jumpState) ChangeState(jumpState);
-        }
-
-        else if (InputHandler.moveInput.sqrMagnitude > 0.01f)
-        {
-            if (currentState != runState) ChangeState(runState);
-        }
-
-        else
-        {
-            if (currentState != idleState) ChangeState(idleState);
-        }
-
         currentState?.UpdateState();
-
-        if (currentState == runState)
-            playerMovement?.SetMoveInput(InputHandler.moveInput);
-        else
-            playerMovement?.SetMoveInput(Vector2.zero);
-
-
         InputHandler.ConsumeInputs();
     }
 
     public void ChangeState(IState newState)
     {
+        if (!health.IsAlive && newState != deadState) return;
         if (newState == currentState) return;
+
         currentState?.ExitState();
         currentState = newState;
         currentState?.EnterState();
-    }
-
-    public void OnAttackAnimationEnd()
-    {
-        ChangeState(idleState);
     }
 }

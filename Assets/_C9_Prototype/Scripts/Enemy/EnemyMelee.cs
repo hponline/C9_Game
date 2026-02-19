@@ -13,7 +13,7 @@ public class EnemyMelee : Enemy
     [SerializeField] EnemyState curretState;
     [SerializeField] SkillBehaviour meleeSkill;
     [SerializeField] Transform target;
-    [SerializeField] EnemyHealth enemyHealth;
+    [SerializeField] PlayerHealth playerHealth;
 
     [Header("Patrol")]
     [SerializeField] float chaseRange = 15f;
@@ -44,6 +44,8 @@ public class EnemyMelee : Enemy
     private void Start()
     {
         target = GameObject.FindWithTag("Player").transform;
+        playerHealth = target.GetComponent<PlayerHealth>();
+
         attackCooldown = 1f / baseAttackSpeed;
 
         //Debug.Log("EnemyRuntimeStats scriptini baðla");
@@ -53,6 +55,11 @@ public class EnemyMelee : Enemy
     {
         if (target == null) return;
         if (!health.IsAlive) return;
+
+        if (!playerHealth.IsAlive)
+        {
+            curretState = EnemyState.Idle;
+        }
 
         float distance = Vector3.Distance(transform.position, target.position);
         switch (curretState)
@@ -200,6 +207,7 @@ public class EnemyMelee : Enemy
 
     void AttackState(float distance)
     {
+        if (target == null) curretState = EnemyState.Idle;
         if (distance > attackRange)
         {
             curretState = EnemyState.Chase;
@@ -237,12 +245,12 @@ public class EnemyMelee : Enemy
 
     private void OnEnable()
     {
-        enemyHealth.OnDamaged += HandleDamaged;
+        health.OnDamaged += HandleDamaged;
     }
 
     private void OnDisable()
     {
-        enemyHealth.OnDamaged -= HandleDamaged;
+        health.OnDamaged -= HandleDamaged;
     }
 
 }

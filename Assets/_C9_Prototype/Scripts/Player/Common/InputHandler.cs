@@ -9,7 +9,6 @@ public class InputHandler : MonoBehaviour
     public Vector2 moveInput;
     public bool jumpPressed;
     public bool primaryAttackPressed;
-    public bool skill1Pressed;
 
     [Header("Skill Action")]
     public Action<int> OnSkillInput;
@@ -30,8 +29,8 @@ public class InputHandler : MonoBehaviour
         playerInput.Player.PrimaryAttack.performed += OnPrimaryAttack;
 
         playerInput.Player.SkillWhirlwind.performed += SkillWhirlwind;
-        playerInput.Player.SkillLine.performed += SkillLine;
-        playerInput.Player.SkillDestiny.performed += SkillDestiny;
+        playerInput.Player.SkillVioletCross.performed += SkillVioletCross;
+        playerInput.Player.SkillYoneUlt.performed += SkillYoneUlt;
     }
 
     private void OnDisable()
@@ -43,8 +42,8 @@ public class InputHandler : MonoBehaviour
         playerInput.Player.PrimaryAttack.performed -= OnPrimaryAttack;
 
         playerInput.Player.SkillWhirlwind.performed -= SkillWhirlwind;
-        playerInput.Player.SkillLine.performed -= SkillLine;
-        playerInput.Player.SkillDestiny.performed -= SkillDestiny;
+        playerInput.Player.SkillVioletCross.performed -= SkillVioletCross;
+        playerInput.Player.SkillYoneUlt.performed -= SkillYoneUlt;
 
         playerInput.Player.Disable();
     }
@@ -81,7 +80,6 @@ public class InputHandler : MonoBehaviour
     {
         jumpPressed = false;
         primaryAttackPressed = false;
-        skill1Pressed = false;
     }
 
     #endregion
@@ -92,11 +90,11 @@ public class InputHandler : MonoBehaviour
     {
         OnSkillInput?.Invoke(0);
     }
-    void SkillLine(InputAction.CallbackContext ctx)
+    void SkillVioletCross(InputAction.CallbackContext ctx)
     {
         OnSkillInput?.Invoke(1);        
     }
-    void SkillDestiny(InputAction.CallbackContext ctx)
+    void SkillYoneUlt(InputAction.CallbackContext ctx)
     {
         OnSkillInput?.Invoke(2);
     }

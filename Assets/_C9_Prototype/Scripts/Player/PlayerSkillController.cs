@@ -13,7 +13,8 @@ public class PlayerSkillController : MonoBehaviour
     InputHandler inputHandler;
     [SerializeField] SkillBehaviour basicAttackSkill;
     [SerializeField] SkillSlot[] skillSlots;
-
+    [SerializeField] PlayerStateMachine playerStateMachine;
+    [SerializeField] PlayerVFX playerVFX;
     public SkillSlot[] GetSkillSlots() => skillSlots;
 
     SkillBehaviour currentSkill;
@@ -27,10 +28,11 @@ public class PlayerSkillController : MonoBehaviour
     {
         inputHandler = GetComponent<InputHandler>();
         animator = GetComponentInChildren<Animator>();
+        playerStateMachine = GetComponent<PlayerStateMachine>();
     }
 
     private void Update()
-    {
+    {       
         foreach (var slot in skillSlots)
         {
             if (slot.CooldownRemaining > 0f)
@@ -44,10 +46,10 @@ public class PlayerSkillController : MonoBehaviour
         animator.SetTrigger(GameTags.PlayerAnimationTags.PLAYER_ATTACK_TAG);
     }
 
-    public void OnAnimationHit()
+    public void OnBasicAttackAnimationHit()
     {
         basicAttackSkill.Execute();
-    }
+    }    
 
     #endregion
 
@@ -63,6 +65,7 @@ public class PlayerSkillController : MonoBehaviour
 
     void UseSkill(SkillSlot slot)
     {
+        if (!playerStateMachine.CanUseAbilities) return;
         if (slot.CooldownRemaining > 0f) return;
 
         isBusy = true;

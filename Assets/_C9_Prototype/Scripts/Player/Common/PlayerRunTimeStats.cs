@@ -46,7 +46,7 @@ public class PlayerRunTimeStats : MonoBehaviour
 
     public void SetHealth(float amount)
     {
-        currentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
+        currentHealth = Mathf.Min(MaxHealth, currentHealth + amount);
     }
 
     void RecalculateHealth()

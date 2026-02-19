@@ -7081,6 +7081,7 @@ MonoBehaviour:
   meleeSkill: {fileID: 0}
   target: {fileID: 0}
   enemyHealth: {fileID: 7069869131774990790}
+  playerHealth: {fileID: 0}
   chaseRange: 15
   attackRange: 2
   layerMask:
@@ -7091,7 +7092,6 @@ MonoBehaviour:
   deathVFX: {fileID: 0}
   deathSound: {fileID: 0}
   destroyDelay: 5
-  hits: []
 --- !u!114 &258854287436734176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7117,6 +7117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 390c0765a38345942bdce132aeb9effb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  expReward: 10
 --- !u!114 &8292475352246607612
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -129,7 +129,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SkillLine"",
+                    ""name"": ""SkillVioletCross"",
                     ""type"": ""Button"",
                     ""id"": ""0f373893-45dc-4228-8ce5-f8e5e8a4c03a"",
                     ""expectedControlType"": """",
@@ -138,7 +138,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SkillDestiny"",
+                    ""name"": ""SkillYoneUlt"",
                     ""type"": ""Button"",
                     ""id"": ""f764e361-6b0a-4072-ac90-5f787b225c78"",
                     ""expectedControlType"": """",
@@ -232,7 +232,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SkillLine"",
+                    ""action"": ""SkillVioletCross"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -254,7 +254,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SkillDestiny"",
+                    ""action"": ""SkillYoneUlt"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -309,8 +309,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_PrimaryAttack = m_Player.FindAction("PrimaryAttack", throwIfNotFound: true);
         m_Player_SkillWhirlwind = m_Player.FindAction("SkillWhirlwind", throwIfNotFound: true);
-        m_Player_SkillLine = m_Player.FindAction("SkillLine", throwIfNotFound: true);
-        m_Player_SkillDestiny = m_Player.FindAction("SkillDestiny", throwIfNotFound: true);
+        m_Player_SkillVioletCross = m_Player.FindAction("SkillVioletCross", throwIfNotFound: true);
+        m_Player_SkillYoneUlt = m_Player.FindAction("SkillYoneUlt", throwIfNotFound: true);
         // CameraControls
         m_CameraControls = asset.FindActionMap("CameraControls", throwIfNotFound: true);
         m_CameraControls_MouseZoom = m_CameraControls.FindAction("MouseZoom", throwIfNotFound: true);
@@ -399,8 +399,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_PrimaryAttack;
     private readonly InputAction m_Player_SkillWhirlwind;
-    private readonly InputAction m_Player_SkillLine;
-    private readonly InputAction m_Player_SkillDestiny;
+    private readonly InputAction m_Player_SkillVioletCross;
+    private readonly InputAction m_Player_SkillYoneUlt;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -429,13 +429,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @SkillWhirlwind => m_Wrapper.m_Player_SkillWhirlwind;
         /// <summary>
-        /// Provides access to the underlying input action "Player/SkillLine".
+        /// Provides access to the underlying input action "Player/SkillVioletCross".
         /// </summary>
-        public InputAction @SkillLine => m_Wrapper.m_Player_SkillLine;
+        public InputAction @SkillVioletCross => m_Wrapper.m_Player_SkillVioletCross;
         /// <summary>
-        /// Provides access to the underlying input action "Player/SkillDestiny".
+        /// Provides access to the underlying input action "Player/SkillYoneUlt".
         /// </summary>
-        public InputAction @SkillDestiny => m_Wrapper.m_Player_SkillDestiny;
+        public InputAction @SkillYoneUlt => m_Wrapper.m_Player_SkillYoneUlt;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -474,12 +474,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SkillWhirlwind.started += instance.OnSkillWhirlwind;
             @SkillWhirlwind.performed += instance.OnSkillWhirlwind;
             @SkillWhirlwind.canceled += instance.OnSkillWhirlwind;
-            @SkillLine.started += instance.OnSkillLine;
-            @SkillLine.performed += instance.OnSkillLine;
-            @SkillLine.canceled += instance.OnSkillLine;
-            @SkillDestiny.started += instance.OnSkillDestiny;
-            @SkillDestiny.performed += instance.OnSkillDestiny;
-            @SkillDestiny.canceled += instance.OnSkillDestiny;
+            @SkillVioletCross.started += instance.OnSkillVioletCross;
+            @SkillVioletCross.performed += instance.OnSkillVioletCross;
+            @SkillVioletCross.canceled += instance.OnSkillVioletCross;
+            @SkillYoneUlt.started += instance.OnSkillYoneUlt;
+            @SkillYoneUlt.performed += instance.OnSkillYoneUlt;
+            @SkillYoneUlt.canceled += instance.OnSkillYoneUlt;
         }
 
         /// <summary>
@@ -503,12 +503,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SkillWhirlwind.started -= instance.OnSkillWhirlwind;
             @SkillWhirlwind.performed -= instance.OnSkillWhirlwind;
             @SkillWhirlwind.canceled -= instance.OnSkillWhirlwind;
-            @SkillLine.started -= instance.OnSkillLine;
-            @SkillLine.performed -= instance.OnSkillLine;
-            @SkillLine.canceled -= instance.OnSkillLine;
-            @SkillDestiny.started -= instance.OnSkillDestiny;
-            @SkillDestiny.performed -= instance.OnSkillDestiny;
-            @SkillDestiny.canceled -= instance.OnSkillDestiny;
+            @SkillVioletCross.started -= instance.OnSkillVioletCross;
+            @SkillVioletCross.performed -= instance.OnSkillVioletCross;
+            @SkillVioletCross.canceled -= instance.OnSkillVioletCross;
+            @SkillYoneUlt.started -= instance.OnSkillYoneUlt;
+            @SkillYoneUlt.performed -= instance.OnSkillYoneUlt;
+            @SkillYoneUlt.canceled -= instance.OnSkillYoneUlt;
         }
 
         /// <summary>
@@ -687,19 +687,19 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSkillWhirlwind(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "SkillLine" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SkillVioletCross" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSkillLine(InputAction.CallbackContext context);
+        void OnSkillVioletCross(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "SkillDestiny" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SkillYoneUlt" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSkillDestiny(InputAction.CallbackContext context);
+        void OnSkillYoneUlt(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "CameraControls" which allows adding and removing callbacks.

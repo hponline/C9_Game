@@ -14,6 +14,7 @@ public static class GameTags
         public const string PLAYER_RUN_TAG = "IsRun";
         public const string PLAYER_SKILL_TAG = "Whirlwind";
         public const string PLAYER_JUMP_TAG = "IsJump";
+        public const string PLAYER_DEAD_TAG = "IsDead";
     }
 
     public static class EnemyAnimationTags

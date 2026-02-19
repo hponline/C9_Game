@@ -51,11 +51,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public bool SetMove()
-    {
-        return canMove;
-    }
-
     void PlayerMove()
     {
         if (!canMove) return;

@@ -27,19 +27,16 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     #endregion
 
-    #region Basic Attack
-    public void OnAnimationHit()
+    #region Basic Attack 
+    public void OnBasicAttackAnimationHit()
     {
-        skillController?.OnAnimationHit();
-        PlayerMoveEnd();
+        skillController?.OnBasicAttackAnimationHit();
+        SlashEffect();
     }
-
-    public void OnAttackAnimationEnd()
+    public void OnBasicAttackAnimationEnd()
     {
-        stateMachine?.OnAttackAnimationEnd();
-        PlayerMoveStart();
+        stateMachine.attackFinished = false;
     }
-
     public void SlashEffect()
     {
         playerVFX.AttackSlashEffect();

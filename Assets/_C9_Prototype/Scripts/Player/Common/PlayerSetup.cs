@@ -15,8 +15,6 @@ public class PlayerSetup : MonoBehaviour
     public TextMeshProUGUI expTxt;
     public TextMeshProUGUI LvlTxt;
 
-
-
     [Header("Config")]
     [SerializeField] PlayerConfigSO playerConfig;
 

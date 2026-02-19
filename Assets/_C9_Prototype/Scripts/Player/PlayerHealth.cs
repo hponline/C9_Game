@@ -4,15 +4,14 @@ using UnityEngine;
 [RequireComponent (typeof(PlayerRunTimeStats))]
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
+    public event Action<DamageContext> OnDamaged;
     PlayerRunTimeStats playerRunTimeStats;
-    public bool IsAlive => playerRunTimeStats.CurrentHealth > 0f;
 
     [Header("HealthBar")]
+    public bool IsAlive => playerRunTimeStats.CurrentHealth > 0f;
     public float CurrentHealth => playerRunTimeStats.CurrentHealth;
     public float MaxHealth => playerRunTimeStats.MaxHealth;
 
-    public event Action OnDied;
-    public event Action<DamageContext> OnDamaged;
 
     private void Awake()
     {
@@ -32,7 +31,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     void Die()
     {
-        Debug.Log("Player öldü");
-        OnDied?.Invoke();
+        Debug.Log("Player öldü");        
     }
 }
