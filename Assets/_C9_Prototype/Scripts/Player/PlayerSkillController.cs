@@ -14,7 +14,9 @@ public class PlayerSkillController : MonoBehaviour
     [SerializeField] SkillBehaviour basicAttackSkill;
     [SerializeField] SkillSlot[] skillSlots;
     [SerializeField] PlayerStateMachine playerStateMachine;
+    [SerializeField] PlayerRunTimeStats playerRunTimeStats;
     [SerializeField] PlayerVFX playerVFX;
+
     public SkillSlot[] GetSkillSlots() => skillSlots;
 
     SkillBehaviour currentSkill;
@@ -24,32 +26,63 @@ public class PlayerSkillController : MonoBehaviour
     public bool isBusy;
 
 
+    [Header("BasicAttack")]
+    [SerializeField] float basicAttackTimer = 0;
+    [SerializeField] float basicAttackCooldown;
+    [SerializeField] bool isAttackLock;
+    public bool IsAttackLocked => isAttackLock;
+
+
     private void Awake()
     {
         inputHandler = GetComponent<InputHandler>();
         animator = GetComponentInChildren<Animator>();
         playerStateMachine = GetComponent<PlayerStateMachine>();
+        playerRunTimeStats = GetComponent<PlayerRunTimeStats>();
+    }
+
+    private void Start()
+    {
+        basicAttackCooldown = 1f / playerRunTimeStats.AttackSpeed;
     }
 
     private void Update()
-    {       
+    {
         foreach (var slot in skillSlots)
         {
             if (slot.CooldownRemaining > 0f)
                 slot.CooldownRemaining -= Time.deltaTime;
         }
+
+        if (basicAttackTimer > 0)
+        {
+            basicAttackTimer -= Time.deltaTime;
+        }
+        else
+            isAttackLock = false;
     }
 
     #region Basic Attack
     public void UseBasicAttack()
     {
+        if (isAttackLock) return;
+        isAttackLock = true;
+
         animator.SetTrigger(GameTags.PlayerAnimationTags.PLAYER_ATTACK_TAG);
+        animator.SetFloat("AttackSpeed", playerRunTimeStats.AttackSpeed); // fonksiyon yap
+        OnBasicAttackAnimationHit();
+
+        basicAttackTimer = basicAttackCooldown;
+    }
+    public void SlashEffect()
+    {
+        playerVFX.AttackSlashEffect();
     }
 
     public void OnBasicAttackAnimationHit()
     {
         basicAttackSkill.Execute();
-    }    
+    }
 
     #endregion
 

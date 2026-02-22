@@ -7077,11 +7077,13 @@ MonoBehaviour:
   enemyConfigSO: {fileID: 11400000, guid: 3d3992ea2fbb3484ca42c2b6c4b5fffe, type: 2}
   attackOrigin: {fileID: 5039173611316508594}
   animator: {fileID: 176898083492965846}
+  runTimeStats: {fileID: 0}
+  health: {fileID: 0}
+  gameManager: {fileID: 0}
+  target: {fileID: 0}
+  playerHealth: {fileID: 0}
   curretState: 0
   meleeSkill: {fileID: 0}
-  target: {fileID: 0}
-  enemyHealth: {fileID: 7069869131774990790}
-  playerHealth: {fileID: 0}
   chaseRange: 15
   attackRange: 2
   layerMask:
@@ -7117,7 +7119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 390c0765a38345942bdce132aeb9effb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expReward: 10
+  enemyConfigSO: {fileID: 11400000, guid: 3d3992ea2fbb3484ca42c2b6c4b5fffe, type: 2}
+  waweSpawner: {fileID: 0}
 --- !u!114 &8292475352246607612
 MonoBehaviour:
   m_ObjectHideFlags: 0

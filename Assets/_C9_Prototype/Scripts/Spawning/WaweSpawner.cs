@@ -1,41 +1,44 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class WaweSpawner : MonoBehaviour
 {
-    [SerializeField] WaweConfigSO waweConfigSO;
-    [SerializeField] EnemySpawnPoint[] spawnPoints;
+    [SerializeField] GameManager gameManager;
+
+    //[SerializeField] WaweConfigSO waweConfigSO;
+    [SerializeField] Transform[] spawnPoints;
     [SerializeField] Transform enemyParentHierarchy;
 
-    private void Start()
-    {
+    [SerializeField] EnemyConfigSO enemyConfigSO;
+    public int enemiesToSpawnPerLevel = 10;
+    int aliveEnemyCount = 0;
 
-        StartWawe();        
-    }
+    public int AliveEnemyCount => aliveEnemyCount;
 
-    public void StartWawe()
+    void StartNextWave()
     {
-        StartCoroutine(SpawnWaweCoroutine());
-    }
+        Debug.Log("Level " + gameManager.currentLevel);
 
-    IEnumerator SpawnWaweCoroutine()
-    {
-        foreach (var enemy in waweConfigSO.enemies)
+        aliveEnemyCount = 0;
+
+        for (int i = 0; i < enemiesToSpawnPerLevel; i++)
         {
-            for (int i = 0; i < enemy.count; i++)
-            {
-                SpawnEnemy(enemy.enemyConfigSO);
-                yield return new WaitForSeconds(waweConfigSO.spawnInternal);
-            }
+            var point = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            var enemy = Instantiate(enemyConfigSO.prefab, point.transform.position, point.transform.rotation);
+            EnemyRunTimeStats currentEnemy = enemy.GetComponent<EnemyRunTimeStats>();
+            currentEnemy.Init(enemyConfigSO, gameManager.currentLevel);
+            enemy.transform.SetParent(enemyParentHierarchy, true);
+
+            aliveEnemyCount++;
         }
     }
 
-    private void SpawnEnemy(EnemyConfigSO enemyConfigSO)
+    public void EnemyDied() // event + enemyhealth
     {
-        if (enemyConfigSO == null) return;
-        var point = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-        var enemy = Instantiate(enemyConfigSO.prefab, point.Transform.position, point.Transform.rotation);
-        enemy.transform.SetParent(enemyParentHierarchy, true);
+        aliveEnemyCount--;
+        if (aliveEnemyCount <= 0)
+        {
+            gameManager.currentLevel ++;
+            StartNextWave();
+        }
     }
 }

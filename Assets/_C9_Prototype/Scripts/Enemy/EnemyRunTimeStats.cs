@@ -6,7 +6,6 @@ public class EnemyRunTimeStats : MonoBehaviour
     float baseHealth;
     float baseDamage;
     float baseMoveSpeed;
-    float baseAttackSpeed;
 
     [SerializeField] float currentHealth;
 
@@ -14,26 +13,23 @@ public class EnemyRunTimeStats : MonoBehaviour
     public float MaxHealth { get; private set; }
     public float Damage { get; private set; }
     public float MoveSpeed => baseMoveSpeed;
-    public float AttackSpeed => baseAttackSpeed;
     public float CurrentHealth => currentHealth;
 
-    public void Init(EnemyConfigSO enemyConfigSO, int level)
+    public void Init(EnemyConfigSO enemyConfigSO, int currentLvl)
     {
-        baseHealth = enemyConfigSO.baseHealth + enemyConfigSO.healthPerLevel * (level - 1);
-        baseDamage = enemyConfigSO.baseDamage + enemyConfigSO.damagePerLevel * (level - 1);
+        baseHealth = enemyConfigSO.baseHealth * Mathf.Pow(enemyConfigSO.healthPerLevelMultiplier, currentLvl - 1);
+        baseDamage = enemyConfigSO.baseDamage * Mathf.Pow(enemyConfigSO.damagePerLevelMultiplier, currentLvl - 1);
+
         baseMoveSpeed = enemyConfigSO.baseMoveSpeed;
-        baseAttackSpeed = enemyConfigSO.baseAttackSpeed;
 
         MaxHealth = baseHealth;
         Damage = baseDamage;
         currentHealth = MaxHealth;
-
-        //  level çarpanlarýný yap
     }
 
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, MaxHealth);        
+        currentHealth = Mathf.Clamp(currentHealth, 0f, MaxHealth);
     }
 }

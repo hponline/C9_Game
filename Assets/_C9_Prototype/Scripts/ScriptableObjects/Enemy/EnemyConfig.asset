@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb01b495f9f87f34cbaf6f0af4868bd4, type: 3}
   m_Name: EnemyConfig
   m_EditorClassIdentifier: 
-  enemyRace: 0
   prefab: {fileID: 3754542838646516549, guid: d6fb5ae6fcc68f840a4dfd97ee351aed, type: 3}
-  baseHealth: 1000
-  baseDamage: 100
+  baseHealth: 500
+  baseDamage: 10
   baseMoveSpeed: 5
-  baseAttackSpeed: 1
-  healthPerLevel: 20
-  damagePerLevel: 3
+  expReward: 10
+  healthPerLevelMultiplier: 1.2
+  damagePerLevelMultiplier: 1.2

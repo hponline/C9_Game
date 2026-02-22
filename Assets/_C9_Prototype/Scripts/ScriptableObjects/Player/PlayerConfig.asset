@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseHealth: 1000
   baseDamage: 10
-  baseMoveSpeed: 3
-  baseAttackSpeed: 1
+  baseMoveSpeed: 4
+  baseAttackSpeed: 2
   jumpForce: 3
   critChangeMultiplier: 0.2
   critMultiplier: 1.5

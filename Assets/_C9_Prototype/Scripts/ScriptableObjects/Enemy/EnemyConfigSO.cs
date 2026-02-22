@@ -9,9 +9,9 @@ public class EnemyConfigSO : ScriptableObject
     public float baseHealth = 100f;
     public float baseDamage = 10f;
     public float baseMoveSpeed = 3f;
-    public float baseAttackSpeed = 1f;
 
     [Header("Level Scaling")]
-    public float healthPerLevel = 20f;
-    public float damagePerLevel = 3f;
+    public int expReward = 10;
+    public float healthPerLevelMultiplier = 1.2f;
+    public float damagePerLevelMultiplier = 1.2f;
 }

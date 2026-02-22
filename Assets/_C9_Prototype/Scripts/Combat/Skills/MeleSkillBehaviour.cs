@@ -4,13 +4,15 @@ public class MeleSkillBehaviour : SkillBehaviour
 {
     [SerializeField] float radius = 2f;
     [SerializeField] int maxTarget = 10;
+
     Vector3 gizmosRadius;
     Collider[] hitBuffer;
 
     private void Start()
     {
-        hitBuffer = new Collider[maxTarget];
+        hitBuffer = new Collider[maxTarget];        
     }
+
     public override void Execute()
     {
         if (hitBuffer == null) return;
@@ -33,6 +35,7 @@ public class MeleSkillBehaviour : SkillBehaviour
             var ctx = DamageCalculator.Calculate(skillData, playerRunTimeStats, hitPoint, hitNormal);
             target.TakeDamage(ctx);
         }
+
     }
 
     public override void Stop()

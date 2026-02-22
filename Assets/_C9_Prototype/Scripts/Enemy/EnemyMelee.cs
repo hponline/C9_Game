@@ -12,8 +12,6 @@ public class EnemyMelee : Enemy
     [Header("References")]
     [SerializeField] EnemyState curretState;
     [SerializeField] SkillBehaviour meleeSkill;
-    [SerializeField] Transform target;
-    [SerializeField] PlayerHealth playerHealth;
 
     [Header("Patrol")]
     [SerializeField] float chaseRange = 15f;
@@ -23,13 +21,6 @@ public class EnemyMelee : Enemy
     [SerializeField] LayerMask layerMask;
     public bool isAttacking;
     public bool canDealDamage;
-
-    float finalAttackSpeed;
-    float attackSpeedMultiplier;
-    float baseAttackSpeed = 1f;
-    float attackCooldown;
-    float attackTimer;
-
 
     [Header("Death")]
     [SerializeField] GameObject deathVFX;
@@ -43,11 +34,6 @@ public class EnemyMelee : Enemy
 
     private void Start()
     {
-        target = GameObject.FindWithTag("Player").transform;
-        playerHealth = target.GetComponent<PlayerHealth>();
-
-        attackCooldown = 1f / baseAttackSpeed;
-
         //Debug.Log("EnemyRuntimeStats scriptini baðla");
     }
 
@@ -213,28 +199,13 @@ public class EnemyMelee : Enemy
             curretState = EnemyState.Chase;
             return;
         }
+
         animator.SetBool(GameTags.EnemyAnimationTags.ENEMY_RUN_TAG, false);
         animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_ATTACK_TAG);
+
     }
 
     #endregion
-
-
-    #region AttackSpeed
-    public void AttackSpeedBuff(float multiplier)
-    {
-        attackSpeedMultiplier *= multiplier;
-        RecalculateAttackSpeed();
-    }
-
-    void RecalculateAttackSpeed()
-    {
-        finalAttackSpeed = baseAttackSpeed * attackSpeedMultiplier;
-        attackCooldown = 1f / finalAttackSpeed;
-        attackTimer = Mathf.Min(attackTimer, attackCooldown);
-    }
-    #endregion
-
 
     private void OnDrawGizmosSelected()
     {
