@@ -7,10 +7,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     EnemyRunTimeStats enemyRunTimeStats;
 
     [SerializeField] EnemyConfigSO enemyConfigSO;
-    [SerializeField] WaweSpawner waweSpawner;
     public bool IsAlive => enemyRunTimeStats.CurrentHealth > 0f;
 
-    public event Action OnDied;
+    public event Action<EnemyHealth> OnDied;
     public event Action<DamageContext> OnDamaged;
     public static event Action<int> OnExpGain;
 
@@ -19,7 +18,6 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private void Awake()
     {
         enemyRunTimeStats = GetComponent<EnemyRunTimeStats>();
-        waweSpawner = GameObject.FindWithTag("WaweSpawner").GetComponent<WaweSpawner>();
     }
 
     private void Start()
@@ -49,9 +47,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     void Die()
     {
-        waweSpawner.EnemyDied();
+        OnDied?.Invoke(this);
         OnExpGain?.Invoke(enemyConfigSO.expReward);
-        OnDied?.Invoke();
         healthBarUI.UnBind();
         EnemyHealthBarPool.instance.Release(healthBarUI);
     }

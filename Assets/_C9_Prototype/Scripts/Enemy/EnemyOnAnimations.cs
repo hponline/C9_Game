@@ -6,20 +6,16 @@ public class EnemyOnAnimations : MonoBehaviour
 
     public void StartAttack()
     {
-        enemyMelee.isAttacking = true;
-        enemyMelee.canDealDamage = false;
+        enemyMelee.AttackStart();
     }
 
     public void OnAnimationHit()
     {
-        if (!enemyMelee.isAttacking) return;
-        enemyMelee.canDealDamage = true;
-
-        enemyMelee?.DoAttack();
+        enemyMelee.DoAttack();
     }
 
-    public void OnAttackFinished()
+    public void StopAttack()
     {
-        enemyMelee?.AttackFinished();
+        enemyMelee.AttackFinish();
     }
 }

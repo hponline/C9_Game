@@ -1,32 +1,49 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHitVFXController : MonoBehaviour
 {
-    [SerializeField] ParticleSystem getHitVfx;
-    EnemyHealth enemyHealth;
-    Animator animator;
+    public static EnemyHitVFXController instance;
+    [SerializeField] ParticleSystem getHitVfxPrefab;
 
+    [SerializeField] int poolSize = 100;
+    Queue<ParticleSystem> pool = new();
 
     private void Awake()
     {
-        enemyHealth = GetComponent<EnemyHealth>();
-        animator = GetComponent<Animator>();
+        instance = this;
     }
 
-    void OnDamaged(DamageContext ctx)
+    private void Start()
     {
-        animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_GETHIT_TAG);
-        if (getHitVfx != null)
-            Instantiate(getHitVfx, ctx.hitPoint + new Vector3(0,1,0), Quaternion.LookRotation(ctx.hitNormal));
+        for (int i = 0; i < poolSize; i++)
+        {
+            CreatPool();
+        }
+    }
+
+    ParticleSystem CreatPool()
+    {
+        var obj = Instantiate(getHitVfxPrefab, transform);
+        obj.gameObject.SetActive(false);
+        pool.Enqueue(obj);
+        return obj;
+    }
+
+    public ParticleSystem Get(Vector3 position, Quaternion rotation)
+    {
+        if (pool.Count == 0)
+            CreatPool();
+
+        var obj = pool.Dequeue();
+        obj.gameObject.SetActive(true);
+        obj.transform.SetPositionAndRotation(position, rotation);
+        return obj;
+    }
+
+    public void ReturnPool(ParticleSystem obj)
+    {
+        obj.gameObject.SetActive(false);
+        pool.Enqueue(obj);
     }    
-
-    private void OnEnable()
-    {
-        enemyHealth.OnDamaged += OnDamaged; 
-    }
-
-    private void OnDisable()
-    {
-        enemyHealth.OnDamaged -= OnDamaged;
-    }
 }

@@ -20,7 +20,6 @@ public class EnemyMelee : Enemy
     [SerializeField] float attackRange = 3f;
     [SerializeField] LayerMask layerMask;
     public bool isAttacking;
-    public bool canDealDamage;
 
     [Header("Death")]
     [SerializeField] GameObject deathVFX;
@@ -32,15 +31,10 @@ public class EnemyMelee : Enemy
         base.Awake();
     }
 
-    private void Start()
-    {
-        //Debug.Log("EnemyRuntimeStats scriptini baðla");
-    }
-
     private void Update()
     {
         if (target == null) return;
-        if (!health.IsAlive) return;
+        if (!enemyHealth.IsAlive) return;
 
         if (!playerHealth.IsAlive)
         {
@@ -92,7 +86,13 @@ public class EnemyMelee : Enemy
 
     void HandleDamaged(DamageContext ctx)
     {
-        if (isAttacking && !canDealDamage)
+        animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_GETHIT_TAG);
+
+            EnemyHitVFXController.instance.Get(
+                ctx.hitPoint + new Vector3(0, 1, 0),
+                Quaternion.LookRotation(ctx.hitNormal));
+
+        if (isAttacking)
         {
             CancelAttack();
         }
@@ -100,17 +100,19 @@ public class EnemyMelee : Enemy
 
     void CancelAttack()
     {
-        isAttacking = false;
-        canDealDamage = false;
+        AttackFinish();
 
-        animator.ResetTrigger(GameTags.EnemyAnimationTags.ENEMY_ATTACK_TAG);
         animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_GETHIT_TAG);
     }
 
-    public void AttackFinished()
+    public void AttackStart()
+    {
+        isAttacking = true;
+    }
+
+    public void AttackFinish()
     {
         isAttacking = false;
-        canDealDamage = false;
     }
 
     #endregion
@@ -201,8 +203,12 @@ public class EnemyMelee : Enemy
         }
 
         animator.SetBool(GameTags.EnemyAnimationTags.ENEMY_RUN_TAG, false);
-        animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_ATTACK_TAG);
 
+        if (!isAttacking)
+        {
+            isAttacking = true;
+            animator.SetTrigger(GameTags.EnemyAnimationTags.ENEMY_ATTACK_TAG);
+        }
     }
 
     #endregion
@@ -216,12 +222,13 @@ public class EnemyMelee : Enemy
 
     private void OnEnable()
     {
-        health.OnDamaged += HandleDamaged;
+        enemyHealth.OnDamaged += HandleDamaged;
+        enemyHealth.OnDied += HandleDeath;
     }
 
     private void OnDisable()
     {
-        health.OnDamaged -= HandleDamaged;
+        enemyHealth.OnDamaged -= HandleDamaged;
+        enemyHealth.OnDied -= HandleDeath;
     }
-
 }

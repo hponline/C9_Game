@@ -1,16 +1,36 @@
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public WaweSpawner waweSpawner;
+    public EnemyManager enemyManager;
+    [SerializeField] TextMeshProUGUI enemyCountTxt;
+    [SerializeField] TextMeshProUGUI levelTxt;
 
     public int currentLevel = 1;
 
     private void Start()
     {
-        if (waweSpawner.AliveEnemyCount == 0)
-            waweSpawner.EnemyDied();
+        enemyManager.StartNextWave();
+        ShowEnemyCount(enemyManager.AliveEnemyCount);
+    }
 
-        Debug.Log("WaweSpawner, gameManager, enemy + enemy kalýtým, enemyHealth exp + died düzenle");
+    public void ShowEnemyCount(int count)
+    {
+        enemyCountTxt.SetText("Alive Enemy: {0} ", count);        
+    }
+
+    public void ShowLevel()
+    {
+        levelTxt.SetText("Level: {0} ", currentLevel + 1);
+    }
+
+    private void OnEnable()
+    {
+        enemyManager.OnAliveEnemyChanged += ShowEnemyCount;
+    }
+    private void OnDisable()
+    {
+        enemyManager.OnAliveEnemyChanged -= ShowEnemyCount;
     }
 }
