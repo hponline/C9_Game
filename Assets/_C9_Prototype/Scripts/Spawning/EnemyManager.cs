@@ -16,7 +16,7 @@ public class EnemyManager : MonoBehaviour
 
     public void StartNextWave()
     {
-        Debug.Log("Level " + gameManager.currentLevel);
+        Debug.Log("Level " + gameManager.globalLevel);
 
         aliveEnemyCount = 0;
 
@@ -28,7 +28,7 @@ public class EnemyManager : MonoBehaviour
             enemyGO.transform.SetParent(enemyParentHierarchy, true);
 
             EnemyRunTimeStats runTimeStats = enemyGO.GetComponent<EnemyRunTimeStats>();
-            runTimeStats.Init(enemyConfigSO, gameManager.currentLevel);
+            runTimeStats.Init(enemyConfigSO, gameManager.globalLevel);
 
             var health = enemyGO.GetComponent<EnemyHealth>();
             health.OnDied += EnemyDied;
@@ -46,7 +46,7 @@ public class EnemyManager : MonoBehaviour
 
         if (aliveEnemyCount <= 0)
         {
-            gameManager.currentLevel++;
+            gameManager.globalLevel++;
             StartNextWave();
         }
     }

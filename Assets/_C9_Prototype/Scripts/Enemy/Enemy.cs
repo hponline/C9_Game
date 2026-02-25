@@ -24,7 +24,7 @@ public abstract class Enemy : MonoBehaviour
         playerHealth = target.GetComponent<PlayerHealth>();
         gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 
-        runTimeStats.Init(enemyConfigSO, gameManager.currentLevel);
+        runTimeStats.Init(enemyConfigSO, gameManager.globalLevel);
     }
 
     protected abstract void HandleDeath(EnemyHealth health);

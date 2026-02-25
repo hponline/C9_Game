@@ -1,19 +1,73 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     public EnemyManager enemyManager;
     [SerializeField] TextMeshProUGUI enemyCountTxt;
     [SerializeField] TextMeshProUGUI levelTxt;
 
-    public int currentLevel = 1;
+    [Header("Level Up")]
+    [SerializeField] int currentExp;
+    [SerializeField] int expToLevel = 100;
+    [SerializeField] float expGrowthMultiplier = 1.2f;
+    public Slider expSlider;
+    public TextMeshProUGUI expTxt;
+    public TextMeshProUGUI LvlTxt;
+
+
+    public event Action OnLevelUp;
+    public int globalLevel = 1;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
         enemyManager.StartNextWave();
         ShowEnemyCount(enemyManager.AliveEnemyCount);
     }
+
+    #region LevelUP
+
+    public void GainExperience(int amont)
+    {
+        currentExp += amont;
+        if (currentExp >= expToLevel)
+        {
+            LevelUp();
+        }
+        UpdateUI();
+    }
+
+    public void LevelUp()
+    {
+        globalLevel++;
+        currentExp -= expToLevel;
+        expToLevel = Mathf.RoundToInt(expToLevel * expGrowthMultiplier);
+
+        OnLevelUp?.Invoke(); // Kart UI tetikleme
+    }
+
+    public void UpdateUI()
+    {
+        expSlider.maxValue = expToLevel;
+        expSlider.value = currentExp;
+
+        float expPercent = (float) currentExp / expToLevel * 100f;
+
+        expTxt.SetText("%{0:0} ", expPercent);
+        LvlTxt.SetText("Level {0} ", globalLevel);
+    }
+
+    #endregion
+
 
     public void ShowEnemyCount(int count)
     {
@@ -22,15 +76,17 @@ public class GameManager : MonoBehaviour
 
     public void ShowLevel()
     {
-        levelTxt.SetText("Level: {0} ", currentLevel + 1);
+        levelTxt.SetText("Level: {0} ", globalLevel + 1);
     }
 
     private void OnEnable()
     {
+        EnemyHealth.OnExpGain += GainExperience;
         enemyManager.OnAliveEnemyChanged += ShowEnemyCount;
     }
     private void OnDisable()
     {
+        EnemyHealth.OnExpGain -= GainExperience;
         enemyManager.OnAliveEnemyChanged -= ShowEnemyCount;
     }
 }
