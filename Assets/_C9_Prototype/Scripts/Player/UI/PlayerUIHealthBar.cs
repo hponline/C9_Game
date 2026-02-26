@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,18 +7,23 @@ public class PlayerUIHealthBar : MonoBehaviour
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] Image playerHealthImage;
 
+    [SerializeField] TextMeshProUGUI playerHealthTxt;
+
     private void Awake()
     {
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        playerHealthTxt = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void OnEnable()
     {
         playerHealth.OnDamaged += OnDamaged;
+        playerHealth.OnDamaged += ShowHealthTxt;
     }
     private void OnDisable()
     {
         playerHealth.OnDamaged -= OnDamaged;
+        playerHealth.OnDamaged -= ShowHealthTxt;
     }
 
     void OnDamaged(DamageContext ctx)
@@ -29,5 +35,10 @@ public class PlayerUIHealthBar : MonoBehaviour
     {
         float target = current / max;
         playerHealthImage.fillAmount = target;        
+    }
+
+    void ShowHealthTxt(DamageContext ctx)
+    {
+        playerHealthTxt.SetText("{0:0} / {1}", playerHealth.CurrentHealth, playerHealth.MaxHealth);
     }
 }

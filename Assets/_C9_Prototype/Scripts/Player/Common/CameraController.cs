@@ -25,9 +25,7 @@ public class CameraController : MonoBehaviour
     }
 
     private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-
+    {       
         orbitalCam = GetComponent<CinemachineOrbitalFollow>();
         targetZoom = currentZoom = orbitalCam.Radius;
     }

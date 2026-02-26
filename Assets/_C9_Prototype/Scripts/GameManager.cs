@@ -30,8 +30,23 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        CursorLock();
+
         enemyManager.StartNextWave();
         ShowEnemyCount(enemyManager.AliveEnemyCount);
+
+        Debug.Log("Buraya bak");
+        // Stat kýsýmlarýna Butonlar eklenecek
+        // PlayerRunTimeStats a statlar kalýcý olarak eklenecek
+    }
+
+    void CursorOpen()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+    void CursorLock()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     #region LevelUP
@@ -53,6 +68,7 @@ public class GameManager : MonoBehaviour
         expToLevel = Mathf.RoundToInt(expToLevel * expGrowthMultiplier);
 
         OnLevelUp?.Invoke(); // Kart UI tetikleme
+        CursorOpen();
     }
 
     public void UpdateUI()

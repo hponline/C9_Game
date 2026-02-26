@@ -21,8 +21,8 @@ public class PlayerRunTimeStats : MonoBehaviour
     public float Damage => baseDamage * BuffController.Instance.GetMultiplier(StatType.AttackDamage);
     public float MoveSpeed => baseMoveSpeed * BuffController.Instance.GetMultiplier(StatType.MoveSpeed);
     public float AttackSpeed => baseAttackSpeed * BuffController.Instance.GetMultiplier(StatType.AttackSpeed);
-    public float JumpForce => jumpForce * BuffController.Instance.GetMultiplier(StatType.Health);
-    public float CritChange => baseCritChance * BuffController.Instance.GetMultiplier(StatType.Health);
+    public float JumpForce => jumpForce * BuffController.Instance.GetMultiplier(StatType.Health); // Opsiyonel
+    public float CritChange => baseCritChance * BuffController.Instance.GetMultiplier(StatType.CritChange);
     public float CritMultiplier => baseCritMultiplier * BuffController.Instance.GetMultiplier(StatType.Health);
 
     public void Init(PlayerConfigSO playerConfigSO)

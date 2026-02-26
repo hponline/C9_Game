@@ -7,7 +7,8 @@ public enum StatType
     MoveSpeed,
     AttackDamage,
     AttackSpeed,
-    Health
+    Health,
+    CritChange
 }
 
 public class BuffController : MonoBehaviour
@@ -30,7 +31,7 @@ public class BuffController : MonoBehaviour
             StopCoroutine(activeCoroutines[statType]);
             activeBuffs[statType] = multiplier;
         }
-        else        
+        else
             activeBuffs.Add(statType, multiplier);
 
         activeCoroutines[statType] = StartCoroutine(BuffRoutine(statType, duration));

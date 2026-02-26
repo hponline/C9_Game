@@ -16,6 +16,6 @@ MonoBehaviour:
   baseHealth: 500
   baseDamage: 10
   baseMoveSpeed: 5
-  expReward: 5
+  expReward: 10
   healthPerLevelMultiplier: 1.2
   damagePerLevelMultiplier: 1.2
