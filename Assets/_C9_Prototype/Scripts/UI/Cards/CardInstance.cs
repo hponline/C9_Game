@@ -3,7 +3,7 @@ using UnityEngine;
 public class CardInstance
 {
     public CardDataSO cardDataSO;
-    public float randomValue;
+    public int randomValue;
     float variance = 0.2f;
 
     public CardInstance(CardDataSO cardDataSO)
@@ -16,6 +16,7 @@ public class CardInstance
     {
         float min = cardDataSO.CardValue * (1 - variance);
         float max = cardDataSO.CardValue * (1 + variance);
-        randomValue = Random.Range(min, max);
+        int temp = (int)Random.Range(min, max);
+        randomValue = temp;
     }
 }

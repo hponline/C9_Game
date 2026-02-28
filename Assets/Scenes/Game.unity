@@ -3668,7 +3668,8 @@ MonoBehaviour:
   cardPrefab: {fileID: 9160516858408091550, guid: f564f397c3ff6de4784914de78e2fa71, type: 3}
   cardContainer: {fileID: 2041576660}
   cardCounter: 3
-  cardUIPanel: {fileID: 1821900542}
+  cardUIPanel:
+  - {fileID: 1821900542}
 --- !u!4 &1543665611
 Transform:
   m_ObjectHideFlags: 0
@@ -5697,7 +5698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3754542838646516549, guid: d6fb5ae6fcc68f840a4dfd97ee351aed, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

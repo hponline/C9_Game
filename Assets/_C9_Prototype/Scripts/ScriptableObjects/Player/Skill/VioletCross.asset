@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ee1e872871a1d4cb244948163e46e9, type: 3}
   m_Name: VioletCross
   m_EditorClassIdentifier: 
-  skillType: 1
-  displayName: VioletCross
-  damage: 200
+  damage: 10
   cooldown: 1
   skillRange: 20
   damageRadius: 0

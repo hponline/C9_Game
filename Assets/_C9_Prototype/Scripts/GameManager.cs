@@ -34,10 +34,6 @@ public class GameManager : MonoBehaviour
 
         enemyManager.StartNextWave();
         ShowEnemyCount(enemyManager.AliveEnemyCount);
-
-        Debug.Log("Buraya bak");
-        // Stat kýsýmlarýna Butonlar eklenecek
-        // PlayerRunTimeStats a statlar kalýcý olarak eklenecek
     }
 
     void CursorOpen()

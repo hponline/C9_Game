@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
+
     [SerializeField] GameManager gameManager;
 
     [SerializeField] List<CardDataSO> cardDataSOList;
@@ -10,8 +12,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] Transform cardContainer;
     [SerializeField] int cardCounter;
 
-    [SerializeField] GameObject cardUIPanel;
+    [SerializeField] GameObject[] cardUIPanel;
 
+    private void Awake()
+    {
+        Instance = this;
+        Debug.Log("Her level aldýgýnda kartlar stackleniyor ");
+        Debug.Log("level atladýgýnda max 'cardCounter' sayýsý kadar kart gösterilmeli ve resetlenmeli");
+        Debug.Log("card Stat çarpanlarý yüzliðe çevrilecek critchange örnek: 0-1 arasý, attack damage %10-15");
+        Debug.Log("Health arttýgýnda UI güncellenmiyor düzelt");
+    }
 
     void CardSpawn()
     {
@@ -28,7 +38,16 @@ public class UIManager : MonoBehaviour
     void ShowCardPanel()
     {
         StopTime();
-        cardUIPanel.SetActive(true);
+        cardUIPanel[0].SetActive(true);
+    }
+
+    public void HideCardPanel()
+    {
+        foreach (var cardPanel in cardUIPanel)
+        {
+            cardPanel.SetActive(false);
+        }
+        StartTime();
     }
 
     void StartTime() => Time.timeScale = 1.0f;

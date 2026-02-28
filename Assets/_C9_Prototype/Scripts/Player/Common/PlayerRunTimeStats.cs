@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class PlayerRunTimeStats : MonoBehaviour
 {
+    public static PlayerRunTimeStats Instance;
+
     [Header("Base Stats -- SO dan geliyor")]
-    float baseHealth;
-    int baseDamage;
+    public float baseHealth;
+    public float baseDamage;
     float baseMoveSpeed;
-    float baseAttackSpeed;
+    public float baseAttackSpeed;
     float jumpForce;
-    float baseCritChance;
+    public float baseCritChance;
     float baseCritMultiplier;
 
     [SerializeField] float currentHealth;
@@ -24,6 +26,11 @@ public class PlayerRunTimeStats : MonoBehaviour
     public float JumpForce => jumpForce * BuffController.Instance.GetMultiplier(StatType.Health); // Opsiyonel
     public float CritChange => baseCritChance * BuffController.Instance.GetMultiplier(StatType.CritChange);
     public float CritMultiplier => baseCritMultiplier * BuffController.Instance.GetMultiplier(StatType.Health);
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void Init(PlayerConfigSO playerConfigSO)
     {
@@ -44,15 +51,31 @@ public class PlayerRunTimeStats : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, MaxHealth);
     }
 
-    public void SetHealth(float amount)
-    {
-        currentHealth = Mathf.Min(MaxHealth, currentHealth + amount);
-    }
-
     void RecalculateHealth()
     {
-        //MaxHealth = baseHealth * healthMultiplier;
         MaxHealth = baseHealth;
         currentHealth = MaxHealth;
+    }
+
+    public void UpgradeStats(ValueType type, float value)
+    {
+        switch (type)
+        {
+            case ValueType.AttackDamage:
+                baseDamage += value;
+                break;
+            case ValueType.AttackSpeed:
+                baseAttackSpeed = Mathf.Clamp(baseAttackSpeed, 1, 15);
+                baseAttackSpeed += value;
+                break;
+            case ValueType.Health:
+                baseHealth += value;
+                MaxHealth = baseHealth;
+                currentHealth += value;
+                break;
+            case ValueType.CritChange:
+                baseCritChance += value;
+                break;
+        }
     }
 }
