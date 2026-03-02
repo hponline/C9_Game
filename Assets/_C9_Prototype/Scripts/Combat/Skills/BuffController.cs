@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,9 @@ public enum StatType
 public class BuffController : MonoBehaviour
 {
     public static BuffController Instance;
+
+    public event Action OnBuffAdded;
+    public event Action OnBuffRemoved;
 
     Dictionary<StatType, float> activeBuffs = new();
     Dictionary<StatType, Coroutine> activeCoroutines = new();
@@ -35,6 +39,8 @@ public class BuffController : MonoBehaviour
             activeBuffs.Add(statType, multiplier);
 
         activeCoroutines[statType] = StartCoroutine(BuffRoutine(statType, duration));
+
+        OnBuffAdded?.Invoke();
     }
 
     IEnumerator BuffRoutine(StatType statType, float duration)
@@ -42,6 +48,8 @@ public class BuffController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         activeBuffs.Remove(statType);
         activeCoroutines.Remove(statType);
+
+        OnBuffRemoved?.Invoke();
     }
 
     public float GetMultiplier(StatType statType)

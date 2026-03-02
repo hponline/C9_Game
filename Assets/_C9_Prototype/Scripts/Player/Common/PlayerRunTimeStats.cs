@@ -1,8 +1,12 @@
+using System;
 using UnityEngine;
 
 public class PlayerRunTimeStats : MonoBehaviour
 {
     public static PlayerRunTimeStats Instance;
+
+    public event Action OnStatsChanged;
+    [SerializeField] BuffController buffController;
 
     [Header("Base Stats -- SO dan geliyor")]
     public float baseHealth;
@@ -15,21 +19,32 @@ public class PlayerRunTimeStats : MonoBehaviour
 
     [SerializeField] float currentHealth;
 
-
     [Header("RUNTIME STATS")]
     public float MaxHealth { get; private set; }
     public float CurrentHealth => currentHealth;
-    public float Health => baseHealth * BuffController.Instance.GetMultiplier(StatType.Health);
-    public float Damage => baseDamage * BuffController.Instance.GetMultiplier(StatType.AttackDamage);
-    public float MoveSpeed => baseMoveSpeed * BuffController.Instance.GetMultiplier(StatType.MoveSpeed);
-    public float AttackSpeed => baseAttackSpeed * BuffController.Instance.GetMultiplier(StatType.AttackSpeed);
-    public float JumpForce => jumpForce * BuffController.Instance.GetMultiplier(StatType.Health); // Opsiyonel
-    public float CritChange => baseCritChance * BuffController.Instance.GetMultiplier(StatType.CritChange);
-    public float CritMultiplier => baseCritMultiplier * BuffController.Instance.GetMultiplier(StatType.Health);
+    public float Health => baseHealth * buffController.GetMultiplier(StatType.Health);
+    public float Damage => baseDamage * buffController.GetMultiplier(StatType.AttackDamage);
+    public float MoveSpeed => baseMoveSpeed * buffController.GetMultiplier(StatType.MoveSpeed);
+    public float AttackSpeed => baseAttackSpeed * buffController.GetMultiplier(StatType.AttackSpeed);
+    public float JumpForce => jumpForce * buffController.GetMultiplier(StatType.Health); // Opsiyonel
+    public float CritChange => baseCritChance * buffController.GetMultiplier(StatType.CritChange);
+    public float CritMultiplier => baseCritMultiplier * buffController.GetMultiplier(StatType.Health);
 
     private void Awake()
     {
         Instance = this;
+        buffController = GetComponent<BuffController>();
+    }
+
+    private void OnEnable()
+    {
+        buffController.OnBuffAdded += HandleBuffChanged;
+        buffController.OnBuffRemoved += HandleBuffChanged;
+    }
+    private void OnDisable()
+    {
+        buffController.OnBuffAdded -= HandleBuffChanged;        
+        buffController.OnBuffRemoved -= HandleBuffChanged;        
     }
 
     public void Init(PlayerConfigSO playerConfigSO)
@@ -44,6 +59,11 @@ public class PlayerRunTimeStats : MonoBehaviour
 
         RecalculateHealth();
     }
+    void RecalculateHealth()
+    {
+        MaxHealth = baseHealth;
+        currentHealth = MaxHealth;
+    }
 
     public void TakeDamage(float amount)
     {
@@ -51,10 +71,10 @@ public class PlayerRunTimeStats : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, MaxHealth);
     }
 
-    void RecalculateHealth()
+
+    void HandleBuffChanged()
     {
-        MaxHealth = baseHealth;
-        currentHealth = MaxHealth;
+        OnStatsChanged?.Invoke();
     }
 
     public void UpgradeStats(ValueType type, float value)
@@ -77,5 +97,8 @@ public class PlayerRunTimeStats : MonoBehaviour
                 baseCritChance += value;
                 break;
         }
+
+        OnStatsChanged?.Invoke();
     }
+
 }

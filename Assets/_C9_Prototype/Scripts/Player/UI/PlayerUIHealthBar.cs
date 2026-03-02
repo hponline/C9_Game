@@ -8,6 +8,7 @@ public class PlayerUIHealthBar : MonoBehaviour
     [SerializeField] Image playerHealthImage;
 
     [SerializeField] TextMeshProUGUI playerHealthTxt;
+    [SerializeField] PlayerRunTimeStats playerRunTimeStats;
 
     private void Awake()
     {
@@ -18,12 +19,12 @@ public class PlayerUIHealthBar : MonoBehaviour
     private void OnEnable()
     {
         playerHealth.OnDamaged += OnDamaged;
-        playerHealth.OnDamaged += ShowHealthTxt;
+        playerHealth.OnHealthChanged += UpdateHealthBar;
     }
     private void OnDisable()
     {
         playerHealth.OnDamaged -= OnDamaged;
-        playerHealth.OnDamaged -= ShowHealthTxt;
+        playerHealth.OnHealthChanged -= UpdateHealthBar;
     }
 
     void OnDamaged(DamageContext ctx)
@@ -34,10 +35,12 @@ public class PlayerUIHealthBar : MonoBehaviour
     void UpdateHealthBar(float current, float max)
     {
         float target = current / max;
-        playerHealthImage.fillAmount = target;        
+        playerHealthImage.fillAmount = target;  
+        
+        ShowHealthTxt();
     }
 
-    void ShowHealthTxt(DamageContext ctx)
+    void ShowHealthTxt()
     {
         playerHealthTxt.SetText("{0:0} / {1}", playerHealth.CurrentHealth, playerHealth.MaxHealth);
     }

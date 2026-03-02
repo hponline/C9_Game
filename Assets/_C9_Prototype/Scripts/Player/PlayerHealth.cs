@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     public event Action<DamageContext> OnDamaged;
+    public event Action<float, float> OnHealthChanged;
+    public event Action OnDied;
+
     PlayerRunTimeStats playerRunTimeStats;
 
     [Header("HealthBar")]
@@ -23,7 +26,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (!IsAlive) return;
 
         playerRunTimeStats.TakeDamage(ctx.amount);
+
         OnDamaged?.Invoke(ctx);
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
 
         if (!IsAlive)
             Die();
@@ -31,6 +36,21 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     void Die()
     {
+        OnDied?.Invoke();
         Debug.Log("Player öldü");        
+    }
+
+    void UpdateHealthUI()
+    {
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+    }
+
+    private void OnEnable()
+    {
+        playerRunTimeStats.OnStatsChanged += UpdateHealthUI;
+    }
+    private void OnDisable()
+    {
+        playerRunTimeStats.OnStatsChanged -= UpdateHealthUI;
     }
 }
