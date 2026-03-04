@@ -27,7 +27,7 @@ public class CardView : MonoBehaviour
     {
         cardSprite.sprite = cardInstance.cardDataSO.cardSprite;
         cardTxt.SetText(cardInstance.cardDataSO.cardName);
-        cardValue.SetText("{0:0}", cardInstance.randomValue);
+        cardValue.SetText(cardInstance.displayValue);
     }
 
     void OnCardSelected()

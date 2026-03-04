@@ -286,7 +286,6 @@ GameObject:
   m_Component:
   - component: {fileID: 48930043}
   - component: {fileID: 48930045}
-  - component: {fileID: 48930044}
   m_Layer: 5
   m_Name: ExpPanel
   m_TagString: Untagged
@@ -315,36 +314,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 37.722504}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &48930044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 48930042}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &48930045
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3675,6 +3644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 317495010}
+  playerRuntimeStats: {fileID: 4552137266966426567}
   cardDataSOList:
   - {fileID: 11400000, guid: 817093f32e416a64f93eae2c0538021b, type: 2}
   - {fileID: 11400000, guid: 33eb4cdc98bf8034db3cde87addf39d4, type: 2}

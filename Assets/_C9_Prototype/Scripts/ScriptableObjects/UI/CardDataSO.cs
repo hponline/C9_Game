@@ -13,6 +13,6 @@ public class CardDataSO : ScriptableObject
 {
     public Sprite cardSprite;
     public string cardName;
-    public float CardValue;
+    public float CardValue; // playerRuntimestats içinden % yüzdelik deðer çekilip variance aralýgýnda uygulanacak
     public ValueType valueType;
 }

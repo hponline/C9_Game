@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] GameManager gameManager;
+    [SerializeField] PlayerRunTimeStats playerRuntimeStats;
 
     [Header("Card UI")]
     [SerializeField] List<CardDataSO> cardDataSOList;
@@ -79,8 +80,6 @@ public class UIManager : MonoBehaviour
 
     void UpdateStatUI()
     {
-        var playerRuntimeStats = PlayerRunTimeStats.Instance;
-
         attackDamageValue.SetText("{0}", playerRuntimeStats.Damage);
         attackSpeedValue.SetText("{0}", playerRuntimeStats.AttackSpeed);
         critChangeValue.SetText("{0}", playerRuntimeStats.CritChange);
@@ -90,11 +89,11 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         gameManager.OnLevelUp += CardSpawn;
-        PlayerRunTimeStats.Instance.OnStatsChanged += UpdateStatUI;
+        playerRuntimeStats.OnStatsChanged += UpdateStatUI;
     }
     private void OnDisable()
     {
         gameManager.OnLevelUp -= CardSpawn;
-        PlayerRunTimeStats.Instance.OnStatsChanged -= UpdateStatUI;
+        playerRuntimeStats.OnStatsChanged -= UpdateStatUI;
     }
 }

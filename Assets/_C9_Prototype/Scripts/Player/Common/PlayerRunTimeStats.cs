@@ -43,8 +43,8 @@ public class PlayerRunTimeStats : MonoBehaviour
     }
     private void OnDisable()
     {
-        buffController.OnBuffAdded -= HandleBuffChanged;        
-        buffController.OnBuffRemoved -= HandleBuffChanged;        
+        buffController.OnBuffAdded -= HandleBuffChanged;
+        buffController.OnBuffRemoved -= HandleBuffChanged;
     }
 
     public void Init(PlayerConfigSO playerConfigSO)
@@ -85,8 +85,8 @@ public class PlayerRunTimeStats : MonoBehaviour
                 baseDamage += value;
                 break;
             case ValueType.AttackSpeed:
-                baseAttackSpeed = Mathf.Clamp(baseAttackSpeed, 1, 15);
                 baseAttackSpeed += value;
+                baseAttackSpeed = Mathf.Clamp(baseAttackSpeed, 1, 15);
                 break;
             case ValueType.Health:
                 baseHealth += value;
@@ -95,6 +95,7 @@ public class PlayerRunTimeStats : MonoBehaviour
                 break;
             case ValueType.CritChange:
                 baseCritChance += value;
+                baseCritChance += Mathf.Clamp(baseCritChance, 0f, 1f);
                 break;
         }
 
