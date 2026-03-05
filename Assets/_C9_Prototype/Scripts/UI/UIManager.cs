@@ -80,10 +80,10 @@ public class UIManager : MonoBehaviour
 
     void UpdateStatUI()
     {
-        attackDamageValue.SetText("{0}", playerRuntimeStats.Damage);
-        attackSpeedValue.SetText("{0}", playerRuntimeStats.AttackSpeed);
-        critChangeValue.SetText("{0}", playerRuntimeStats.CritChange);
-        healthValue.SetText("{0}", playerRuntimeStats.MaxHealth);
+        attackDamageValue.SetText("{0:0}", playerRuntimeStats.Damage);
+        attackSpeedValue.SetText("{0:0.0}", playerRuntimeStats.AttackSpeed);
+        critChangeValue.SetText("%{0:0}", playerRuntimeStats.CritChange * 100);
+        healthValue.SetText("{0:0}", playerRuntimeStats.MaxHealth);
     }
 
     private void OnEnable()

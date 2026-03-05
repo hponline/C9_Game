@@ -26,33 +26,31 @@ public class CardInstance
             case ValueType.AttackDamage:
                 min = stats.baseDamage * minVariance;
                 max = stats.baseDamage * maxVariance;
-                randomValue = Mathf.Round(Random.Range(min, max));
+                randomValue = Mathf.RoundToInt(Random.Range(min, max));
                 percent = (randomValue / stats.baseDamage) * 100;
                 displayValue = $"+{percent:0}%";
                 break;
 
             case ValueType.AttackSpeed:
-                min = stats.baseAttackSpeed * minVariance;
-                max = stats.baseAttackSpeed * maxVariance;
+                min = minVariance;
+                max = maxVariance;
                 randomValue = Random.Range(min, max);
-                percent = (randomValue / stats.baseAttackSpeed) * 100;
-                displayValue = $"+{percent:0}%";
+                displayValue = $"+{randomValue * 100:0}%";
                 break;
 
             case ValueType.Health:
                 min = stats.baseHealth * minVariance;
                 max = stats.baseHealth * maxVariance;
-                randomValue = Random.Range(min, max);
+                randomValue = Mathf.RoundToInt(Random.Range(min, max));
                 percent = (randomValue / stats.baseHealth) * 100;
                 displayValue = $"+{percent:0}%";
                 break;
 
             case ValueType.CritChange:
-                min = stats.baseCritChance * minVariance;
-                max = stats.baseCritChance * maxVariance;
+                min = minVariance;
+                max = 0.10f;
                 randomValue = Random.Range(min, max);
-                percent = (randomValue / stats.baseCritChance) * 100;
-                displayValue = $"+{percent:0}%"; // randomValue ile displayvalue uyuþuyor mu bak
+                displayValue = $"+{randomValue * 100:0}%";
                 break;
         }
     }

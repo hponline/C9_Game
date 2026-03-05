@@ -95,7 +95,7 @@ public class PlayerRunTimeStats : MonoBehaviour
                 break;
             case ValueType.CritChange:
                 baseCritChance += value;
-                baseCritChance += Mathf.Clamp(baseCritChance, 0f, 1f);
+                baseCritChance = Mathf.Clamp(baseCritChance, 0f, 1f);
                 break;
         }
 

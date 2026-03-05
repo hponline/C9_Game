@@ -69,7 +69,7 @@ public class PlayerSkillController : MonoBehaviour
         isAttackLock = true;
 
         animator.SetTrigger(GameTags.PlayerAnimationTags.PLAYER_ATTACK_TAG);
-        animator.SetFloat("AttackSpeed", playerRunTimeStats.AttackSpeed); // fonksiyon yap
+        animator.SetFloat("AttackSpeed", playerRunTimeStats.AttackSpeed);
         OnBasicAttackAnimationHit();
 
         basicAttackTimer = basicAttackCooldown;
