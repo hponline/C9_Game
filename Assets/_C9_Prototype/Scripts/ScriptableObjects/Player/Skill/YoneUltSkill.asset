@@ -17,7 +17,7 @@ MonoBehaviour:
   skillRange: 0
   damageRadius: 0
   pullRadius: 0
-  pullForce: 20
+  pullForce: 30
   tickInterval: 0
   projectileSpeed: 0
   variance: 0.2

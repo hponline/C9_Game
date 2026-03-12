@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyRunTimeStats))]
-public class EnemyHealth : MonoBehaviour, IDamageable
+public class EnemyHealth : MonoBehaviour, IDamageable, IPoolable
 {
     EnemyRunTimeStats enemyRunTimeStats;
 
@@ -20,7 +20,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         enemyRunTimeStats = GetComponent<EnemyRunTimeStats>();
     }
 
-    private void Start()
+    void Initialized()
     {
         healthBarUI = EnemyHealthBarPool.instance.Get();
         healthBarUI.Bind(transform);
@@ -50,6 +50,16 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         OnDied?.Invoke(this);
         OnExpGain?.Invoke(enemyConfigSO.expReward);
         healthBarUI.UnBind();
+    }
+
+    public void OnSpawn()
+    {
+        Initialized();
+    }
+
+    public void OnDespawn()
+    {
         EnemyHealthBarPool.instance.Release(healthBarUI);
+        healthBarUI = null;
     }
 }

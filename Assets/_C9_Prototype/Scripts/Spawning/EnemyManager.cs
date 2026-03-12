@@ -3,13 +3,17 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    [Header("Referances")]
     [SerializeField] GameManager gameManager;
     [SerializeField] Transform[] spawnPoints;
     [SerializeField] Transform enemyParentHierarchy;
     [SerializeField] EnemyConfigSO enemyConfigSO;
+    [SerializeField] EnemyObjectPool enemyObjectPool;
 
-    public int enemiesToSpawnPerLevel = 10;
+
+    [SerializeField] int baseEnemyCount = 20;
     [SerializeField] float spawnRadius = 1f;
+    public int totalEnemy;
     int aliveEnemyCount;
     public int AliveEnemyCount => aliveEnemyCount;
 
@@ -18,25 +22,30 @@ public class EnemyManager : MonoBehaviour
     public void StartNextWave()
     {
         aliveEnemyCount = 0;
+        totalEnemy = GetEnemyCount();
 
-        for (int i = 0; i < enemiesToSpawnPerLevel; i++)
+        for (int i = 0; i < totalEnemy; i++)
         {
             var point = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-            Vector2 randomPos = UnityEngine.Random.insideUnitSphere * spawnRadius;
+            Vector2 randomPos = UnityEngine.Random.insideUnitCircle * spawnRadius;
             Vector3 spawnPos = point.position + new Vector3(randomPos.x, 0, randomPos.y);
 
-            var enemyGO = Instantiate(enemyConfigSO.prefab, spawnPos, Quaternion.identity);
-            enemyGO.transform.SetParent(enemyParentHierarchy, true);
+            var enemy = enemyObjectPool.Get();
+            enemy.transform.position = spawnPos;
+            enemy.transform.SetParent(enemyParentHierarchy, true);
 
-            EnemyRunTimeStats runTimeStats = enemyGO.GetComponent<EnemyRunTimeStats>();
+            EnemyRunTimeStats runTimeStats = enemy.GetComponent<EnemyRunTimeStats>();
             runTimeStats.Init(enemyConfigSO, gameManager.globalLevel);
 
-            var health = enemyGO.GetComponent<EnemyHealth>();
+            var health = enemy.GetComponent<EnemyHealth>();
+            enemy.gameObject.SetActive(true);
+
             health.OnDied += EnemyDied;
 
             aliveEnemyCount++;
         }
         gameManager.ShowLevel();
+
     }
 
     public void EnemyDied(EnemyHealth enemy)
@@ -46,9 +55,13 @@ public class EnemyManager : MonoBehaviour
         enemy.OnDied -= EnemyDied;
 
         if (aliveEnemyCount <= 0)
-        {
-            gameManager.globalLevel++;
             StartNextWave();
-        }
+    }
+
+    public int GetEnemyCount()
+    {
+        int baseEnemy = baseEnemyCount;
+        float multiplier = 1.2f;
+        return Mathf.RoundToInt(baseEnemy * Mathf.Pow(multiplier, gameManager.globalLevel - 1));
     }
 }

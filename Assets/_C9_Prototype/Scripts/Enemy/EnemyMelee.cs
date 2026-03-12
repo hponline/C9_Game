@@ -22,8 +22,6 @@ public class EnemyMelee : Enemy
     public bool isAttacking;
 
     [Header("Death")]
-    [SerializeField] GameObject deathVFX;
-    [SerializeField] AudioClip deathSound;
     [SerializeField] float destroyDelay = 1.5f;
 
     protected override void Awake()
@@ -120,18 +118,6 @@ public class EnemyMelee : Enemy
     #region Death
     protected override void HandleDeath(EnemyHealth health)
     {
-        if (deathVFX != null)
-        {
-            Debug.Log("ölüm vfx tetikle");
-            //Instantiate(deathVFX, transform.position, Quaternion.identity);
-        }
-
-        if (deathSound != null)
-        {
-            Debug.Log("ölüm sound tetikle");
-            //AudioSource.PlayClipAtPoint(deathSound, transform.position); // Geçici olarak o yerde 3d ses ekler ve siler, -- AudioManager a geç
-        }
-
         OnDeath();
     }
 
@@ -151,6 +137,7 @@ public class EnemyMelee : Enemy
     {
         yield return new WaitForSeconds(destroyDelay);
         gameObject.SetActive(false);
+        EnemyObjectPool.instance.Release(enemyHealth);
     }
 
     void DisableEnemy()
@@ -160,6 +147,15 @@ public class EnemyMelee : Enemy
 
         var rb = GetComponent<Rigidbody>();
         if (rb) rb.isKinematic = true;
+    }
+
+    public void ReSpawn()
+    {
+        var collider = GetComponent<Collider>();
+        if (collider) collider.enabled = true;
+
+        var rb = GetComponent<Rigidbody>();
+        if (rb) rb.isKinematic = false;
     }
 
     #endregion
@@ -222,6 +218,8 @@ public class EnemyMelee : Enemy
 
     private void OnEnable()
     {
+        ReSpawn();
+
         enemyHealth.OnDamaged += HandleDamaged;
         enemyHealth.OnDied += HandleDeath;
     }

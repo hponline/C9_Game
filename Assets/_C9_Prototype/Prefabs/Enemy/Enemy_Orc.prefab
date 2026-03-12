@@ -7089,8 +7089,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   isAttacking: 0
-  deathVFX: {fileID: 0}
-  deathSound: {fileID: 0}
   destroyDelay: 5
 --- !u!114 &258854287436734176
 MonoBehaviour:
@@ -9414,7 +9412,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.005
   m_Center: {x: 0, y: 0, z: 0}

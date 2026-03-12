@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System;
 using TMPro;
 using UnityEngine;
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     public void ShowEnemyCount(int count)
     {
-        enemyCountTxt.SetText("Enemy: {0}/{1} ", count, enemyManager.enemiesToSpawnPerLevel);        
+        enemyCountTxt.SetText("Enemy: {0}/{1} ", count, enemyManager.totalEnemy);        
     }
 
     public void ShowLevel()

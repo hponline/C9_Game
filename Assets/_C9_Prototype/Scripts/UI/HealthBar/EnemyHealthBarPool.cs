@@ -29,10 +29,15 @@ public class EnemyHealthBarPool : MonoBehaviour
 
     public HealthBarUI Get()
     {
-        if (pool.Count > 0)
-            return pool.Dequeue();
+        HealthBarUI bar;
 
-        return Instantiate(EnemyHealthBarUIPrefab, container);
+        if (pool.Count > 0)
+            bar = pool.Dequeue();
+        else
+            bar = Instantiate(EnemyHealthBarUIPrefab, container);
+
+        bar.gameObject.SetActive(true);
+        return bar;
     }
 
     public void Release(HealthBarUI bar)
