@@ -36,11 +36,11 @@ public class GameManager : MonoBehaviour
         ShowEnemyCount(enemyManager.AliveEnemyCount);
     }
 
-    void CursorOpen()
+    public void CursorOpen()
     {
         Cursor.lockState = CursorLockMode.None;
     }
-    void CursorLock()
+    public void CursorLock()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         currentExp -= expToLevel;
         expToLevel = Mathf.RoundToInt(expToLevel * expGrowthMultiplier);
 
-        OnLevelUp?.Invoke(); // Kart UI tetikleme
+        OnLevelUp?.Invoke();
         CursorOpen();
     }
 
@@ -74,8 +74,8 @@ public class GameManager : MonoBehaviour
 
         float expPercent = (float) currentExp / expToLevel * 100f;
 
-        expTxt.SetText("%{0:0} ", expPercent);
-        LvlTxt.SetText("Level {0} ", globalLevel);
+        expTxt.SetText("Exp %{0:0} ", expPercent);
+        LvlTxt.SetText("{0} ", globalLevel);
     }
 
     #endregion
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 
     public void ShowEnemyCount(int count)
     {
-        enemyCountTxt.SetText("Alive Enemy: {0} ", count);        
+        enemyCountTxt.SetText("Enemy: {0}/{1} ", count, enemyManager.enemiesToSpawnPerLevel);        
     }
 
     public void ShowLevel()

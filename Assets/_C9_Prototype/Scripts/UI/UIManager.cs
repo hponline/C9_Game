@@ -27,7 +27,6 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Debug.Log("card Stat çarpanlarý yüzliðe çevrilecek critchange örnek: 0-1 arasý, attack damage %10-15");
     }
 
     private void Start()

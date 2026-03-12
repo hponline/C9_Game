@@ -9,6 +9,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] EnemyConfigSO enemyConfigSO;
 
     public int enemiesToSpawnPerLevel = 10;
+    [SerializeField] float spawnRadius = 1f;
     int aliveEnemyCount;
     public int AliveEnemyCount => aliveEnemyCount;
 
@@ -16,15 +17,15 @@ public class EnemyManager : MonoBehaviour
 
     public void StartNextWave()
     {
-        Debug.Log("Level " + gameManager.globalLevel);
-
         aliveEnemyCount = 0;
 
         for (int i = 0; i < enemiesToSpawnPerLevel; i++)
         {
             var point = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-            var enemyGO = Instantiate(enemyConfigSO.prefab, point.transform.position, point.transform.rotation);
+            Vector2 randomPos = UnityEngine.Random.insideUnitSphere * spawnRadius;
+            Vector3 spawnPos = point.position + new Vector3(randomPos.x, 0, randomPos.y);
 
+            var enemyGO = Instantiate(enemyConfigSO.prefab, spawnPos, Quaternion.identity);
             enemyGO.transform.SetParent(enemyParentHierarchy, true);
 
             EnemyRunTimeStats runTimeStats = enemyGO.GetComponent<EnemyRunTimeStats>();

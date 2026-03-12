@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   baseHealth: 1000
-  baseDamage: 500
+  baseDamage: 10
   baseMoveSpeed: 4
   baseAttackSpeed: 2
   jumpForce: 3
