@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ee1e872871a1d4cb244948163e46e9, type: 3}
   m_Name: Whirlwind
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 50
   cooldown: 3
   skillRange: 0
   damageRadius: 5
-  pullRadius: 10
+  pullRadius: 20
   pullForce: 3
   tickInterval: 0.15
   projectileSpeed: 0
   variance: 0.2
-  skillIcon: {fileID: 21300000, guid: 30d7dc87fded082498856e8a2dbe6cb5, type: 3}
+  skillIcon: {fileID: 21300000, guid: 51fa284df63ae034f9acb04f1f4b9f92, type: 3}
   animationTriggerName: Whirlwind
   skillPrefab: {fileID: 0}
   hitMask:

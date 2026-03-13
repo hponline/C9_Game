@@ -37,13 +37,13 @@ public class VioletCrossProjectile : MonoBehaviour
         if (!other.CompareTag("Enemy")) return;
         if (!other.TryGetComponent<IDamageable>(out var damageable)) return;
 
-        if (other.TryGetComponent<Rigidbody>(out var rb))
-        {
-            StartCoroutine(PushOverTime(rb, other.transform.localPosition, 5, .25f));
-        }
-
         Vector3 hitPoint = other.ClosestPoint(transform.position);
         Vector3 hitNormal = (other.transform.position - transform.position).normalized;
+
+        if (other.TryGetComponent<Rigidbody>(out var rb))
+        {
+            StartCoroutine(PushOverTime(rb, hitPoint, 5, .25f));
+        }
 
         var ctx = DamageCalculator.Calculate(skillDataSO, playerRunTimeStats, hitPoint, hitNormal);
         damageable.TakeDamage(ctx);

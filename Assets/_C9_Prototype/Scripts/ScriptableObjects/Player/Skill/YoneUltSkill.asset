@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ee1e872871a1d4cb244948163e46e9, type: 3}
   m_Name: YoneUltSkill
   m_EditorClassIdentifier: 
-  damage: 500
-  cooldown: 2
+  damage: 700
+  cooldown: 4
   skillRange: 0
   damageRadius: 0
   pullRadius: 0

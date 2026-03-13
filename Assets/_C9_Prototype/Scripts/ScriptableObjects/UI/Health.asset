@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3faffe59a944a5b4c9cc240eb2c0a715, type: 3}
   m_Name: Health
   m_EditorClassIdentifier: 
-  cardSprite: {fileID: 1942916587, guid: f928c2a12f364bd4e87eb5f4758bbf0f, type: 3}
+  cardSprite: {fileID: 952771016, guid: dcc986d308cd14f48b5d724a4e4e25a4, type: 3}
   cardName: Health
   CardValue: 50
-  minValue: 3
-  maxValue: 10
   valueType: 2

@@ -7083,7 +7083,7 @@ MonoBehaviour:
   playerHealth: {fileID: 0}
   curretState: 0
   meleeSkill: {fileID: 0}
-  chaseRange: 15
+  chaseRange: 20
   attackRange: 2
   layerMask:
     serializedVersion: 2

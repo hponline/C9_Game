@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         float expPercent = (float) currentExp / expToLevel * 100f;
 
         expTxt.SetText("Exp %{0:0} ", expPercent);
-        LvlTxt.SetText("{0} ", globalLevel);
+        LvlTxt.SetText("{0} ", globalLevel + 1);
     }
 
     #endregion
