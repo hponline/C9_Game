@@ -15018,6 +15018,22 @@ PrefabInstance:
       propertyPath: parentAfterImageHierarchy
       value: 
       objectReference: {fileID: 1844925789}
+    - target: {fileID: 1595302822785981264, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595302822785981264, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
+      propertyPath: LightsModule.light
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1670554424144634715, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1911504711909233561, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3527651101674843316, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -15058,6 +15074,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4054949635042406575, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7780254247887995537, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
       propertyPath: m_Name
       value: Player
@@ -15067,7 +15087,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4674178771624490691, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cf77aea85b88264fa012e4a1f2a1f8b, type: 3}
