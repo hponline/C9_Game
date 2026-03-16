@@ -1,7 +1,7 @@
-using DG.Tweening.Core.Easing;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     public Slider expSlider;
     public TextMeshProUGUI expTxt;
     public TextMeshProUGUI LvlTxt;
-
 
     public event Action OnLevelUp;
     public int globalLevel = 1;
@@ -81,6 +80,15 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1.0f;
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
     public void ShowEnemyCount(int count)
     {

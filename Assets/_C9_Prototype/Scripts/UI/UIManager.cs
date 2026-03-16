@@ -9,19 +9,23 @@ public class UIManager : MonoBehaviour
     [Header("References")]
     [SerializeField] GameManager gameManager;
     [SerializeField] PlayerRunTimeStats playerRuntimeStats;
+    [SerializeField] PlayerHealth playerHealth;
 
     [Header("Card UI")]
     [SerializeField] List<CardDataSO> cardDataSOList;
     [SerializeField] CardView cardPrefab;
     [SerializeField] Transform cardContainer;
     [SerializeField] int cardCounter;
-    [SerializeField] GameObject[] cardUIPanel;
+    [SerializeField] Transform cardUIPanel;
 
     [Header("Player Panel Stat UI")]
     [SerializeField] TextMeshProUGUI attackDamageValue;
     [SerializeField] TextMeshProUGUI attackSpeedValue;
     [SerializeField] TextMeshProUGUI critChangeValue;
     [SerializeField] TextMeshProUGUI healthValue;
+
+    [Header("Player Panel Stat UI")]
+    [SerializeField] GameObject[] panels;
 
 
     private void Awake()
@@ -32,6 +36,21 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         UpdateStatUI();
+    }
+
+    public void DeadPanel()
+    {
+        CloseAllPanels();
+        gameManager.CursorOpen();
+        panels[1].gameObject.SetActive(true);
+        Time.timeScale = 0f;
+    }
+    void CloseAllPanels()
+    {
+        foreach (var panel in panels)
+            panel.SetActive(false);
+        
+        Time.timeScale = 1f;
     }
 
     void CardSpawn()
@@ -59,23 +78,14 @@ public class UIManager : MonoBehaviour
 
     void ShowCardPanel()
     {
-        StopTime();
-        cardUIPanel[0].SetActive(true);
+        Time.timeScale = 0f;
+        cardUIPanel.gameObject.SetActive(true);
     }
 
     public void HideCardPanel()
     {
-        foreach (var cardPanel in cardUIPanel)
-        {
-            cardPanel.SetActive(false);
-        }
-        StartTime();
+        CloseAllPanels();
     }
-
-    void StartTime() => Time.timeScale = 1.0f;
-
-    void StopTime() => Time.timeScale = 0f;
-
 
     void UpdateStatUI()
     {
@@ -89,10 +99,12 @@ public class UIManager : MonoBehaviour
     {
         gameManager.OnLevelUp += CardSpawn;
         playerRuntimeStats.OnStatsChanged += UpdateStatUI;
+        playerHealth.OnDied += DeadPanel;
     }
     private void OnDisable()
     {
         gameManager.OnLevelUp -= CardSpawn;
         playerRuntimeStats.OnStatsChanged -= UpdateStatUI;
+        playerHealth.OnDied -= DeadPanel;
     }
 }
